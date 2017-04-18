@@ -59,6 +59,15 @@ const reducer = (state: IMembersState = initial, action: modRedux.IAction<any>):
         }
     }
 
+    if (isType(action, ApiActions.members.AddMemberSuccess) &&
+        action.payload.request.request_id == Constants.edit_member) {
+        return {
+            ...state,
+            memberSelected: (state.memberSelected && state.memberSelected.id == action.payload.request.Request.member.id) ?
+                action.payload.response : state.memberSelected
+        }
+    }
+
 
     return state;
 }

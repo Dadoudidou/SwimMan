@@ -12,6 +12,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Col, Row, Container } from "react-grid-system";
 import * as moment from "moment";
 import { PageTitle } from "applications/main/components"
+import { hashHistory } from "react-router";
 
 import Infos from "./../../components/Infos";
 
@@ -90,7 +91,6 @@ class View extends React.Component<IViewProps, IViewState>
         if (!this.props.member) return <div>Chargement ...</div>
         return (
             <Container fluid>
-
                 <Row>
                     <Col md={3}>
 
@@ -98,7 +98,9 @@ class View extends React.Component<IViewProps, IViewState>
                         <div>
                             <Row>
                                 <Col sm={3}>
-                                    <IconButton iconClassName="fa fa-arrow-left" tooltip="retour" style={{ color: this.props.muiTheme.palette.accent3Color }} />
+                                    <IconButton iconClassName="fa fa-arrow-left" tooltip="retour"
+                                        iconStyle={{ color: this.props.muiTheme.palette.secondaryTextColor }}
+                                        onClick={() => { hashHistory.goBack(); }} />
                                 </Col>
                             </Row>
                         </div>

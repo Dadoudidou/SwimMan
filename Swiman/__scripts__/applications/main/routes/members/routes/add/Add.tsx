@@ -4,7 +4,7 @@ import {
     Tab, Tabs, Paper,
     Card, CardActions, CardHeader, CardMedia, CardText, CardTitle,
     Divider, Subheader, List, ListItem,
-    RaisedButton,
+    RaisedButton, FlatButton,
     BottomNavigation, BottomNavigationItem,
     TextField, SelectField, MenuItem, DatePicker
 } from "material-ui";
@@ -35,6 +35,7 @@ interface IAddProps extends __MaterialUI.Styles.MuiThemeProviderProps {
     onChangeParams?: (params: IAddParams) => void
 
     member?: ApiModels.Member
+    onSave?: (member: ApiModels.Member) => void
 }
 
 interface IAddState {
@@ -44,6 +45,7 @@ interface IAddState {
 class Add extends React.Component<IAddProps, IAddState>
 {
     static defaultProps: IAddProps = {
+        onSave: () => { }
     }
 
     constructor(props: IAddProps ) {
@@ -112,9 +114,18 @@ class Add extends React.Component<IAddProps, IAddState>
         });
     }
 
+
     render() {
         let __this = this;
-        let _label = <span><i className="fa fa-user-plus" /> Nouvel Adhérent</span>;
+        let _label = (
+            <span>
+                <i className="fa fa-user-plus" /> {
+                    (this.state.member.first_name || this.state.member.last_name) ?
+                    <span>{this.state.member.first_name} {this.state.member.last_name}</span> :
+                    <span>Nouvel Adhérent</span>
+                }
+            </span>
+        );
         if (this.props.params.id) {
             _label = (this.props.member && String(this.state.member.id) == String(this.props.params.id)) ?
                 <span><i className="fa fa-user" /> {this.state.member.first_name} {this.state.member.last_name}</span>
@@ -123,7 +134,12 @@ class Add extends React.Component<IAddProps, IAddState>
         }
         return (
             <div>
-                <PageTitle label={_label} />
+                <PageTitle label={_label} backButton
+                    actions={
+                        <div style={{ textAlign: "right" }}>
+                            <FlatButton label="Enregistrer" primary onClick={() => { __this.props.onSave(__this.state.member); }} />
+                        </div>
+                    } />
 
                 {(() => { /* Informations personnelles */ })()}
                 <Card>
@@ -254,6 +270,7 @@ import { IApp_Reducer } from "applications/main/reducer";
 import * as ApiActions from "modules/api/actions";
 import * as Constants from "./../../constants";
 import * as Notifications from "modules/notifications/actions";
+import { push, replace } from "react-router-redux"
 
 interface IState extends IMembers_Reducer, IApp_Reducer { }
 
@@ -271,6 +288,27 @@ const mapDispatchToProps = (dispatch): IAddProps => {
                     request_id: Constants.view_member,
                     Request: { id: params.id }
                 }))
+            }
+        },
+        onSave: (member) => {
+            if (member.id == 0) {
+                dispatch(ApiActions.members.AddMember({
+                    request_id: Constants.edit_member,
+                    Request: {
+                        member: member
+                    }
+                })).then((member: ApiModels.Member) => {
+                    dispatch(replace("/members/" + member.id));
+                });
+            } else {
+                dispatch(ApiActions.members.UpdateMember({
+                    request_id: Constants.edit_member,
+                    Request: {
+                        member: member
+                    }
+                })).then((member: ApiModels.Member) => {
+                    dispatch(replace("/members/" + member.id));
+                });
             }
         }
     };
