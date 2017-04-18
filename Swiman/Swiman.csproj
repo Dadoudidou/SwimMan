@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C023203D-CEAF-4991-9766-06CB87AA2DDC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Swiman</RootNamespace>
+    <AssemblyName>Swiman</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\API\APIAreaRegistration.cs" />
+    <Compile Include="Areas\API\Controllers\ActivitiesController.cs" />
+    <Compile Include="Areas\API\Controllers\AppController.cs" />
+    <Compile Include="Areas\API\Controllers\MembersController.cs" />
+    <Compile Include="Areas\API\Controllers\SeasonsController.cs" />
+    <Compile Include="Areas\API\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ActionResult\Http403Result.cs" />
+    <Compile Include="Helpers\ActionResult\JsonNetResult.cs" />
+    <Compile Include="Helpers\Attributes\Authorize\SessionAuthorize.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewsModels\users\LoginViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Users\" />
+    <Folder Include="__scripts__\applications\main\routes\activities\actions\" />
+    <Folder Include="__scripts__\applications\main\routes\activities\models\" />
+    <Folder Include="__scripts__\applications\main\routes\members\actions\" />
+    <Folder Include="__scripts__\applications\main\routes\members\models\" />
+    <Folder Include="__scripts__\applications\main\routes\seasons\actions\" />
+    <Folder Include="__scripts__\applications\main\routes\seasons\models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="package.json" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Layouts\_Base.cshtml" />
+    <Content Include="webpack.config.js" />
+    <Content Include="webpack.server.js" />
+    <Content Include="__scripts__\modules\api\models\ApiModels.tst" />
+    <Content Include="__scripts__\modules\notifications\styles\notification.scss" />
+    <Content Include="__scripts__\tsconfig.json" />
+    <Content Include="__scripts__\applications\main\Application.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="__scripts__\applications\main\actions\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\Application.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\PageTitle.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\constants\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\index.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\partials\CurrentSeason.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\layouts\SidebarLeft.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\partials\HeaderBarRight.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\partials\SidebarMenu.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\reducer\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\ListItem.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Sections.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\login\constants.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\login\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\login\Login.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\login\reducer.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Infos.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\Members.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\constants\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\reducer\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Activities.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Categories.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\Dashboard.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\constants\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\reducer\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\Activities.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\add\Add.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\add\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\list\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\list\List.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Edit_Infos.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Show_Infos.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\View.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\components\Seasons.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\constants\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\reducer\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\Season.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\_tests\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\_tests\Test.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\activities.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\members.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\seasons.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\users.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Activity.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Activity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Category.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Category.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Log.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\Log.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Member.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\members\Member.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\MemberMeta.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\members\MemberMeta.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Place.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Place.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Season.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\Season.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Section.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Section.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Session.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Session.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\User.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\users\User.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\UserGroup.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\users\UserGroup.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\UserPermission.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\users\UserPermission.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\utils\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\auth\index.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Picture\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Picture\Picture.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\ClearRenderer.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\DefaultArrowRenderer.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\defaultFilterOptions.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\DefaultMenuRenderer.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\Option.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\Select.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\stripDiacritics.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Select\Value.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\actions\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\components\Notification.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\components\Notifications.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\containers\Notifications.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\models\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\models\Notification.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\notifications\reducer\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\actions.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\immutable.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\middlewares\crashReporter.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\middlewares\multiActions.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\middlewares\timeoutScheduler.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\reducer.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\store.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\utils\nested-prop\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\utils\router\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\utils\router\NavLink.tsx" />
+    <TypeScriptCompile Include="__scripts__\typings\global.d.ts" />
+    <TypeScriptCompile Include="__scripts__\typings\intl-locales-supported\index.d.ts" />
+    <TypeScriptCompile Include="__scripts__\typings\react-grid-system\index.d.ts" />
+    <TypeScriptCompile Include="__scripts__\typings\webpack.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Layer_datas\Layer_datas.csproj">
+      <Project>{de08ccc5-56b5-4ab7-abfe-a3833b6fe080}</Project>
+      <Name>Layer_datas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56579</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/Swiman</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

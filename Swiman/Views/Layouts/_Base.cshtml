@@ -1,0 +1,24 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swiman | @ViewBag.title</title>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    <script>
+            @{
+                var request = Url.RequestContext.HttpContext.Request;
+                var baseUrl = request.Url.Scheme + "://" + request.Url.Authority + request.ApplicationPath.TrimEnd('/') + "/";
+            }
+            var baseUrl = "@baseUrl";
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

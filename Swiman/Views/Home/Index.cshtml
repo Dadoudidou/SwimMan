@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Layouts/_Base.cshtml";
+}
+@section scripts {
+@if (HttpContext.Current.IsDebuggingEnabled)
+    {
+    <script src="http://localhost:3000/static/js/main.js"></script>
+}
+else
+{
+    <script src="~/wwwRoot/js/main.js"></script>
+}
+}
+@section styles {
+
+}
+
+<div id="root"></div>

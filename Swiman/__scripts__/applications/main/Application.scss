@@ -1,0 +1,24 @@
+﻿html, body {
+    margin: 0; padding: 0;
+    background: #eee;
+    color:#555;
+}
+
+.tabs-center {
+    > div {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.tabs-left {
+    > div {
+    }
+}
+
+.tabs-right {
+    > div {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
