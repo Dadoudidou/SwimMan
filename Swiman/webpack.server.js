@@ -11,10 +11,10 @@ new WebpackDevServer(webpack(config), {
     historyApiFallback: false,
     headers: { 'Access-Control-Allow-Origin': '*' },
     stats: { colors: true }
-}).listen(3000, 'localhost', function (err, result) {
+}).listen(3001, 'localhost', function (err, result) {
     if (err) {
         console.log(err);
     }
 
-    console.log('Listening at localhost:3000');
+    console.log('Listening at localhost:3001');
 });

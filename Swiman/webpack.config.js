@@ -78,7 +78,7 @@ var applications = LoadApplications(apps_dir, ["index.ts", "index.tsx"], functio
     let obj = {};
     obj[name] = [];
     if (!production) {
-        obj[name].push('webpack-dev-server/client?http://localhost:3000');
+        obj[name].push('webpack-dev-server/client?http://localhost:3001');
         obj[name].push('webpack/hot/only-dev-server');
     }
     obj[name].push(file);
@@ -112,7 +112,7 @@ webpackConfig.entry = applications;
 webpackConfig.output = {
     path: outFolder,
     filename: "js/[name].js",
-    publicPath: (!production) ? 'http://localhost:3000/static/' : undefined
+    publicPath: (!production) ? 'http://localhost:3001/static/' : undefined
 };
 
 // **********************
@@ -131,7 +131,7 @@ webpackConfig.resolve = {
 // **********************
 webpackConfig.devServer = {
     headers: { "Access-Control-Allow-Origin": "*" },
-    port : 3000
+    port : 3001
 };
 
 // **********************
