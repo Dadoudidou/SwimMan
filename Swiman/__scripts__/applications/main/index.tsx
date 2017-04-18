@@ -34,7 +34,7 @@ AppLoadReducer(store);
 import { loadRoutes } from "./routes";
 let routes = loadRoutes(store);
 
-let history = syncHistoryWithStore(hashHistory, store);
+let history = syncHistoryWithStore(hashHistory as any, store);
 
 // *************
 // notifications
@@ -55,7 +55,7 @@ class Root extends React.Component<any, any>{
             <Provider store={store}>
                 <MuiThemeProvider>
                     <div>
-                        <Router history={history} routes={routes} />
+                        <Router history={history as any} routes={routes} />
                         <Notifs />
                     </div>
                 </MuiThemeProvider>

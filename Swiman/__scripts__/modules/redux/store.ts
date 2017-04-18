@@ -23,7 +23,7 @@ let finalCreateStore = (initialState = {}) => {
     //middleware configuration
     let middlewares = [];
     middlewares.push(thunkMiddleware);
-    middlewares.push(routerMiddleware(hashHistory));
+    middlewares.push(routerMiddleware(hashHistory as any));
     middlewares.push(timeoutSchedulerMiddleware);
     middlewares.push(loggerMiddleware);
     middlewares.push(crashReporterMiddleware);
