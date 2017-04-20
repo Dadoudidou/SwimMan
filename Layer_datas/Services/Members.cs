@@ -61,18 +61,47 @@ namespace Layer_datas.Services
 
         public class SearchCriteriaMember
         {
-            public string name { get; set; }
+            public string last_name { get; set; }
+            public string first_name { get; set; }
+            public string licence { get; set; }
+            public string city { get; set; }
         }
 
-        public List<Objects.members.Member> Search(SearchCriteriaMember criteria, int limit = 10)
+        private IQueryable<Entities.members.Member> SearchRequest(SearchCriteriaMember criteria)
         {
             var query = _ctx.members.Where(x => true);
-            if(criteria.name != null)
+            if (criteria.last_name != null)
             {
-                query = query.Where(x => x.last_name.ToUpper().Contains(criteria.name) || x.first_name.ToUpper().Contains(criteria.name));
+                query = query.Where(x => x.last_name.ToUpper().Contains(criteria.last_name.ToUpper()));
             }
+            if (criteria.first_name != null)
+            {
+                query = query.Where(x => x.first_name.ToUpper().Contains(criteria.first_name.ToUpper()));
+            }
+            if (criteria.licence != null)
+            {
+                query = query.Where(x => (x.metas.FirstOrDefault(y => y.col_key == "licence") != null) ? 
+                x.metas.FirstOrDefault(y => y.col_key == "licence").col_value.Contains(criteria.licence) : 
+                false);
+            }
+            if (criteria.city != null)
+            {
+                query = query.Where(x => x.city.ToUpper().Contains(criteria.city.ToUpper()));
+            }
+            return query;
+        }
+
+        public int SearchCount(SearchCriteriaMember criteria)
+        {
+            var query = SearchRequest(criteria);
+            return query.Count();
+        }
+        public List<Objects.members.Member> Search(SearchCriteriaMember criteria, int limit = 10, int page = 1)
+        {
+            var query = SearchRequest(criteria);
 
             query = query.OrderBy(x => x.last_name).ThenBy(x => x.first_name);
+            query = query.Skip( ((page < 0 ? 0 : page) - 1) * limit);
             query = query.Take(limit);
 
             return Mapper.Map<List<Objects.members.Member>>(query.ToList());

@@ -6,11 +6,15 @@ import * as Constants from "./../constants";
 
 interface IMembersState {
     members?: ApiModels.Member[]
+    searchCount?: number
+    searchPage?: number
+    searchLimit?: number
     memberSelected?: ApiModels.Member
 }
 
 const initial: IMembersState = {
-    members:[]
+    members: [],
+    searchLimit: 10
 };
 
 const reducer = (state: IMembersState = initial, action: modRedux.IAction<any>): IMembersState => {
@@ -19,7 +23,9 @@ const reducer = (state: IMembersState = initial, action: modRedux.IAction<any>):
         action.payload.request.request_id == Constants.search_members) {
         return {
             ...state,
-            members: action.payload.response
+            members: action.payload.response.members,
+            searchCount: action.payload.response.count,
+            searchPage: action.payload.response.page
         };
     }
 

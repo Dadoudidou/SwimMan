@@ -39,15 +39,24 @@ export const UpdateMember = fetchActionAsyncCreator<IUpdateMember, Models.Member
 
 interface ISearch {
     criteria: {
-        name?: string
+        last_name?: string
+        first_name?: string
+        city?: string
+        licence?: string
     }
     limit?: number
+    page?: number
+}
+interface ISearchResult {
+    members: Models.Member[]
+    count: number
+    page: number
 }
 let _apiSearch = _apiGlobalName + "Search/";
 export const SearchRequest = actionCreator<IFetchRequest<ISearch>>(_apiSearch);
-export const SearchSuccess = actionCreator<IFetchResponse<ISearch, Models.Member[]>>(_apiSearch + "success");
+export const SearchSuccess = actionCreator<IFetchResponse<ISearch, ISearchResult>>(_apiSearch + "success");
 export const SearchFailed = actionCreator<IFetchResponse<ISearch, any>>(_apiSearch + "error");
-export const Search = fetchActionAsyncCreator<ISearch, Models.Member[]>({
+export const Search = fetchActionAsyncCreator<ISearch, ISearchResult>({
     name: _apiSearch,
     uri: window.baseUrl + _apiSearch,
     request: SearchRequest,
