@@ -19,6 +19,7 @@ interface IPictureProps extends __MaterialUI.Styles.MuiThemeProviderProps {
     onMouseUp?: (event: React.MouseEvent<HTMLDivElement>) => void
     onMouseEnter?: (event: React.MouseEvent<HTMLDivElement>) => void
     onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
 interface IPictureState {
@@ -62,7 +63,8 @@ class Picture extends React.Component<IPictureProps, IPictureState>
                 onMouseDown={this.props.onMouseDown}
                 onMouseUp={this.props.onMouseUp}
                 onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}>
+                onMouseLeave={this.props.onMouseLeave}
+                onClick={this.props.onClick}>
                 {this.props.content}
             </div>
         );

@@ -8,6 +8,7 @@ import {
     BottomNavigation, BottomNavigationItem,
     TextField, SelectField, MenuItem, DatePicker
 } from "material-ui";
+import { PictureField } from "modules/components";
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Col, Row, Container } from "react-grid-system";
 
@@ -145,46 +146,57 @@ class Add extends React.Component<IAddProps, IAddState>
                 <Card>
                     <CardHeader title="Informations Personnelles" />
                     <CardText>
-                    <Row>
-                        <Col md={2}>
-                            {(() => { /* GENRE */ })()}
-                            <SelectField fullWidth floatingLabelText="Genre"
-                                value={(__this.state.member.male == undefined) ? true : __this.state.member.male}
-                                onChange={(event, index, value) => { __this.handle_onUpdate({ ...__this.state.member, male: value }); }}>
-                                <MenuItem value={true} primaryText="Mr" />
-                                <MenuItem value={false} primaryText="Mme" />
-                            </SelectField>
-                        </Col>
-                        <Col md={5}>
-                            {(() => { /* NOM */ })()}
-                            <TextField floatingLabelText="Nom" fullWidth
-                                value={__this.state.member.last_name}
-                                onChange={(value) => { __this.handle_onUpdate({ ...__this.state.member, last_name: (value.target as HTMLInputElement).value }); }} />
-                        </Col>
-                        <Col md={5}>
-                            {(() => { /* PRENOM */ })()}
-                            <TextField floatingLabelText="Prénom" fullWidth
-                                value={__this.state.member.first_name}
-                                onChange={(value) => { __this.handle_onUpdate({ ...__this.state.member, first_name: (value.target as HTMLInputElement).value }); }} />
-                        </Col>
-                        <Col md={12}>
-                            {(() => { /* DATE DE NAISSANCE */ })()}
-                            <DatePicker floatingLabelText="Date de naissance" fullWidth maxDate={new Date()}
-                                locale="fr"
-                                formatDate={new DateTimeFormat('fr', {
-                                    day: 'numeric',
-                                    month: 'long',
-                                    year: 'numeric'
-                                }).format}
-                                DateTimeFormat={DateTimeFormat}
-                                value={moment(__this.state.member.birthday).toDate()}
-                                onChange={(event, date) => { __this.handle_onUpdate({ ...__this.state.member, birthday: date }) }} />
-                            {(() => { /* LICENCE */ })()}
-                            <TextField floatingLabelText={<span><i className="fa fa-id-badge" /> Licence</span>} fullWidth
-                                    value={__this.getMeta(__this.state.member, "licence")}
-                                    onChange={(value) => { __this.handle_onUpdate(__this.setMeta(__this.state.member, "licence", (value.target as HTMLInputElement).value)); }} />
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col md={2}>
+                                {(() => { /* PHOTO */ })()}
+                                <PictureField width="100%"  style={{ marginTop: 14 }} />
+                            </Col>
+                            <Col md={10}>
+                                <Row>
+                                    <Col md={2}>
+                                        {(() => { /* GENRE */ })()}
+                                        <SelectField fullWidth floatingLabelText="Genre"
+                                            value={(__this.state.member.male == undefined) ? true : __this.state.member.male}
+                                            onChange={(event, index, value) => { __this.handle_onUpdate({ ...__this.state.member, male: value }); }}>
+                                            <MenuItem value={true} primaryText="Mr" />
+                                            <MenuItem value={false} primaryText="Mme" />
+                                        </SelectField>
+                                    </Col>
+                                    <Col md={5}>
+                                        {(() => { /* NOM */ })()}
+                                        <TextField floatingLabelText="Nom" fullWidth
+                                            value={__this.state.member.last_name}
+                                            onChange={(value) => { __this.handle_onUpdate({ ...__this.state.member, last_name: (value.target as HTMLInputElement).value }); }} />
+                                    </Col>
+                                    <Col md={5}>
+                                        {(() => { /* PRENOM */ })()}
+                                        <TextField floatingLabelText="Prénom" fullWidth
+                                            value={__this.state.member.first_name}
+                                            onChange={(value) => { __this.handle_onUpdate({ ...__this.state.member, first_name: (value.target as HTMLInputElement).value }); }} />
+                                    </Col>
+                                    <Col md={12}>
+                                        {(() => { /* DATE DE NAISSANCE */ })()}
+                                        <DatePicker floatingLabelText="Date de naissance" fullWidth maxDate={new Date()}
+                                            locale="fr"
+                                            formatDate={new DateTimeFormat('fr', {
+                                                day: 'numeric',
+                                                month: 'long',
+                                                year: 'numeric'
+                                            }).format}
+                                            DateTimeFormat={DateTimeFormat}
+                                            value={moment(__this.state.member.birthday).toDate()}
+                                            onChange={(event, date) => { __this.handle_onUpdate({ ...__this.state.member, birthday: date }) }} />
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col md={12}>
+                                {(() => { /* LICENCE */ })()}
+                                <TextField floatingLabelText={<span><i className="fa fa-id-badge" /> Licence</span>} fullWidth
+                                        value={__this.getMeta(__this.state.member, "licence")}
+                                        onChange={(value) => { __this.handle_onUpdate(__this.setMeta(__this.state.member, "licence", (value.target as HTMLInputElement).value)); }} />
+                            
+                            </Col>
+                        </Row>
                     </CardText>
                 </Card>
                 <br />

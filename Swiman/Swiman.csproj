@@ -174,6 +174,7 @@
     <Content Include="__scripts__\modules\notifications\styles\notification.scss" />
     <Content Include="__scripts__\tsconfig.json" />
     <Content Include="__scripts__\applications\main\Application.scss" />
+    <Content Include="__scripts__\modules\components\Crop\Crop.scss" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="__scripts__\applications\main\actions\index.ts" />
@@ -279,7 +280,11 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\utils\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\auth\index.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Crop\Crop.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Crop\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\PictureField\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\PictureField\PictureField.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Picture\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\Picture\Picture.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Select\ClearRenderer.tsx" />
