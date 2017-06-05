@@ -12,7 +12,7 @@ interface IAuthorizationProps {
 
 export const Authorization = (allowedRoles: any[], notAuthorizedPath: string) => {
     return (Component) => {
-        return class Authorization extends React.Component<IAuthorizationProps, IAuthorizationState>{
+        return class Authorization extends React.PureComponent<IAuthorizationProps, IAuthorizationState>{
 
             constructor(props) {
                 super(props);

@@ -25,7 +25,7 @@ interface IInfosState {
     edit_member?: ApiModels.Member
 }
 
-class Infos extends React.Component<IInfosProps, IInfosState>
+class Infos extends React.PureComponent<IInfosProps, IInfosState>
 {
     static defaultProps: IInfosProps = {
         onCancel: () => { },

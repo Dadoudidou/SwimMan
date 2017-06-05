@@ -11,7 +11,7 @@ interface IHeaderBarRightState {
 
 }
 
-class HeaderBarRight extends React.Component<IHeaderBarRightProps, IHeaderBarRightState>
+class HeaderBarRight extends React.PureComponent<IHeaderBarRightProps, IHeaderBarRightState>
 {
     constructor(props: IHeaderBarRightProps ) {
         super(props);

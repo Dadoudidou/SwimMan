@@ -13,7 +13,7 @@ interface ISidebarLeftState {
 
 }
 
-class SidebarLeft extends React.Component<ISidebarLeftProps, ISidebarLeftState>
+class SidebarLeft extends React.PureComponent<ISidebarLeftProps, ISidebarLeftState>
 {
     constructor(props: ISidebarLeftProps ) {
         super(props);

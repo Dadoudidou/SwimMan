@@ -15,7 +15,7 @@ interface ISidebarMenuState {
 
 }
 
-class SidebarMenu extends React.Component<ISidebarMenuProps, ISidebarMenuState>
+class SidebarMenu extends React.PureComponent<ISidebarMenuProps, ISidebarMenuState>
 {
     constructor(props: ISidebarMenuProps ) {
         super(props);
@@ -34,6 +34,7 @@ class SidebarMenu extends React.Component<ISidebarMenuProps, ISidebarMenuState>
                     <Subheader>Configuration</Subheader>
                     <ListItem containerElement={<NavLink to="seasons" />}>Saisons</ListItem>
                     <ListItem containerElement={<NavLink to="activities" />}>Activités</ListItem>
+                    <ListItem containerElement={<NavLink to="places" />}>Lieux</ListItem>
                 </List>
 
             </div>

@@ -14,7 +14,7 @@ interface ISectionsState {
 
 }
 
-class Sections extends React.Component<ISectionsProps, ISectionsState>
+class Sections extends React.PureComponent<ISectionsProps, ISectionsState>
 {
     static defaultProps: ISectionsProps = {
         Sections: [],

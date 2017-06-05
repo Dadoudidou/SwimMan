@@ -16,7 +16,7 @@ interface IPageTitleState {
 
 }
 
-class _PageTitle extends React.Component<IPageTitleProps, IPageTitleState>
+class _PageTitle extends React.PureComponent<IPageTitleProps, IPageTitleState>
 {
     constructor(props: IPageTitleProps ) {
         super(props);

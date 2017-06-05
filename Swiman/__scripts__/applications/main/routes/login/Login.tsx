@@ -13,7 +13,7 @@ interface ILoginState {
     password?: string
 }
 
-class Login extends React.Component<ILoginProps, ILoginState>
+class Login extends React.PureComponent<ILoginProps, ILoginState>
 {
     static defaultProps: ILoginProps = {
         onLogin: () => { }

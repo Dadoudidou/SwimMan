@@ -15,7 +15,7 @@ interface ICurrentSeasonState {
 
 }
 
-class CurrentSeason extends React.Component<ICurrentSeasonProps, ICurrentSeasonState>
+class CurrentSeason extends React.PureComponent<ICurrentSeasonProps, ICurrentSeasonState>
 {
     static defaultProps: ICurrentSeasonProps = {
         seasons: [],

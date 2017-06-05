@@ -35,7 +35,7 @@ interface IViewState {
 
 }
 
-class View extends React.Component<IViewProps, IViewState>
+class View extends React.PureComponent<IViewProps, IViewState>
 {
     static defaultProps: IViewProps = {
         onChangeParams: () => { },
@@ -109,7 +109,7 @@ class View extends React.Component<IViewProps, IViewState>
                         <div style={{ textAlign: "center", marginBottom: "2em" }}>
                             <Picture circle content={<i className="fa fa-user-secret" style={{
                                 position: "absolute", top: "50%", left: "50%",
-                                marginLeft: "-0.5em", marginTop: "-0.5em",
+                                marginLeft: "-0.4em", marginTop: "-0.5em",
                                 fontSize: "4em", opacity: 0.5
                             }} />} />
                         </div>

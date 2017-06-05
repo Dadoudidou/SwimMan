@@ -26,7 +26,7 @@ interface IPictureState {
 
 }
 
-class Picture extends React.Component<IPictureProps, IPictureState>
+class Picture extends React.PureComponent<IPictureProps, IPictureState>
 {
     static defaultProps: IPictureProps = {
         width: 200,

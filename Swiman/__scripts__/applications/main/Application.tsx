@@ -13,7 +13,7 @@ interface IApplicationState {
 
 }
 
-class Application extends React.Component<IApplicationProps, IApplicationState>
+class Application extends React.PureComponent<IApplicationProps, IApplicationState>
 {
     static defaultProps: IApplicationProps = {
         onInit: () => { }

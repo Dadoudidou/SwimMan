@@ -25,7 +25,7 @@ interface IOptionState {
 
 }
 
-class Option extends React.Component<IOptionProps, IOptionState>
+class Option extends React.PureComponent<IOptionProps, IOptionState>
 {
     constructor(props: IOptionProps ) {
         super(props);

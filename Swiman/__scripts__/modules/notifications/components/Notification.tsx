@@ -14,7 +14,7 @@ export interface INotificationProps {
     onClose?: () => void
 }
 
-class Notification extends React.Component<INotificationProps, any>{
+class Notification extends React.PureComponent<INotificationProps, any>{
 
     static defaultProps: INotificationProps = {
     }

@@ -43,7 +43,7 @@ interface IAddState {
     member?: ApiModels.Member
 }
 
-class Add extends React.Component<IAddProps, IAddState>
+class Add extends React.PureComponent<IAddProps, IAddState>
 {
     static defaultProps: IAddProps = {
         onSave: () => { }

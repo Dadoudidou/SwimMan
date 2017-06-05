@@ -16,7 +16,7 @@ interface IMembersState {
 
 }
 
-class Members extends React.Component<IMembersProps, IMembersState>
+class Members extends React.PureComponent<IMembersProps, IMembersState>
 {
 
     static defaultProps: IMembersProps = {

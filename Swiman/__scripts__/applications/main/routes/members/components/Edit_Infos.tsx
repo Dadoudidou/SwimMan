@@ -30,7 +30,7 @@ interface IEdit_InfosState {
 
 }
 
-class Edit_Infos extends React.Component<IEdit_InfosProps, IEdit_InfosState>
+class Edit_Infos extends React.PureComponent<IEdit_InfosProps, IEdit_InfosState>
 {
     static defaultProps: Partial<IEdit_InfosProps> = {
         onUpdate: (member) => { }

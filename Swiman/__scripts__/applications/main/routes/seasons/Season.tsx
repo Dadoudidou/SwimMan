@@ -14,7 +14,7 @@ interface ISeasonState {
 
 }
 
-class Season extends React.Component<ISeasonProps, ISeasonState>
+class Season extends React.PureComponent<ISeasonProps, ISeasonState>
 {
     constructor(props: ISeasonProps ) {
         super(props);

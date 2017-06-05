@@ -21,7 +21,7 @@ interface IPictureFieldState {
     dialogStepIndex?: number
 }
 
-class PictureField extends React.Component<IPictureFieldProps, IPictureFieldState>
+class PictureField extends React.PureComponent<IPictureFieldProps, IPictureFieldState>
 {
     // set the default props for the class
     static defaultProps: IPictureFieldProps = { }

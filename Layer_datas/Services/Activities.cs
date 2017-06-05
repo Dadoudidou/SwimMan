@@ -243,6 +243,11 @@ namespace Layer_datas.Services
             return Mapper.Map<List<Objects.activities.Place>>(query.ToList());
         }
 
+        public Objects.activities.Place GetPlaceById(int id)
+        {
+            return Mapper.Map<Objects.activities.Place>(_ctx.activities_places.FirstOrDefault(x => x.id == id));
+        }
+
         #endregion
 
 

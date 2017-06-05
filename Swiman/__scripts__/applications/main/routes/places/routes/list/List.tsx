@@ -12,10 +12,11 @@ import * as moment from "moment"
 import { PageTitle } from "applications/main/components";
 
 
+
 class HeaderColumn {
     code: string
     label: string
-    getMemberValue: (member?: ApiModels.Member) => string
+    getMemberValue: (item?: ApiModels.Place) => string
     order?: number
     width?: number | string
     getFilterMode?: (col: HeaderColumn, value: any, onChange: (value: any) => void) => React.ReactNode
@@ -30,21 +31,14 @@ class HeaderColumn {
 }
 
 interface IListProps {
-    members?: ApiModels.Member[]
-    countMembers?: number
-    pageMembers?: number
-    membersPerPage?: number
+    places?: ApiModels.Place[]
     onInit?: () => void
-    onSelectMember?: (member: ApiModels.Member) => void
-    onChangePage?: (page: number) => void
-    onFilter?: (filters: { [key: string]: any }) => void
+    onSelect?: (place: ApiModels.Place) => void
 }
 
 interface IListState {
-    colonnes: HeaderColumn[]
-    allColonnes: HeaderColumn[]
-    filter?: boolean
-    filterCriteria?: { [key: string]: any }
+    colonnes?: HeaderColumn[],
+    allColonnes?: HeaderColumn[],
 }
 
 
@@ -52,11 +46,9 @@ interface IListState {
 class List extends React.PureComponent<IListProps, IListState>
 {
     static defaultProps: IListProps = {
-        members: [],
+        places: [],
         onInit: () => { },
-        onSelectMember: () => { },
-        onChangePage: () => { },
-        onFilter: () => { }
+        onSelect: () => { }
     }
 
     constructor(props: IListProps ) {
@@ -64,38 +56,31 @@ class List extends React.PureComponent<IListProps, IListState>
         let __this = this;
         let _colonnes = [
             new HeaderColumn({
-                order: 1, code: "licence", label: "Licence", width: 100,
-                getMemberValue: (x) => __this.getMeta(x, "licence"),
+                order: 1, code: "name", label: "Nom",
+                getMemberValue: (x) => x.name,
                 getFilterMode: (col, value, onchange) => {
                     return <TextField hintText={col.label} fullWidth
                         value={value ? value : ""} onChange={(ev) => { onchange((ev.target as any).value); }} />
                 }
             }),
             new HeaderColumn({
-                order: 2, code: "last_name", label: "Nom",
-                getMemberValue: (x) => x.last_name,
+                order: 2, code: "adress", label: "Adresse",
+                getMemberValue: (x) => x.adress,
                 getFilterMode: (col, value, onchange) => {
                     return <TextField hintText={col.label} fullWidth
                         value={value ? value : ""} onChange={(ev) => { onchange((ev.target as any).value); }} />
                 }
             }),
             new HeaderColumn({
-                order: 3, code: "first_name", label: "Prénom",
-                getMemberValue: (x) => x.first_name,
+                order: 3, code: "postalcode", label: "code postal", width: 100,
+                getMemberValue: (x) => x.postalcode,
                 getFilterMode: (col, value, onchange) => {
                     return <TextField hintText={col.label} fullWidth
                         value={value ? value : ""} onChange={(ev) => { onchange((ev.target as any).value); }} />
                 }
             }),
             new HeaderColumn({
-                order: 4, code: "age", label: "Age", width: 100,
-                getMemberValue: (x) => moment(x.birthday).fromNow(true),
-                getFilterMode: (col, value, onchange) => {
-                    return col.label;
-                }
-            }),
-            new HeaderColumn({
-                order: 5, code: "city", label: "Ville",
+                order: 4, code: "city", label: "Ville", width: 255,
                 getMemberValue: (x) => x.city,
                 getFilterMode: (col, value, onchange) => {
                     return <TextField hintText={col.label} fullWidth
@@ -105,45 +90,31 @@ class List extends React.PureComponent<IListProps, IListState>
         ];
         this.state = {
             colonnes: [_colonnes[0], _colonnes[1], _colonnes[2], _colonnes[3]],
-            allColonnes: _colonnes,
-            filter: false,
-            filterCriteria: {}
+            allColonnes: _colonnes
         };
         this.handle_onChangeColumns = this.handle_onChangeColumns.bind(this);
-        this.handle_onFiltering = this.handle_onFiltering.bind(this);
     }
 
     componentWillMount() {
         this.props.onInit();
     }
 
-    handle_onRowClick(member?: ApiModels.Member) {
-        this.props.onSelectMember(member);
-    }
-
-    getMeta(member: ApiModels.Member, col_key: string): string {
-        if (!member || !member.metas) return undefined;
-        let _index = member.metas.map(x => x.col_key.toLowerCase()).indexOf(col_key.toLowerCase());
-        if (_index > -1 && member.metas[_index].col_value && member.metas[_index].col_value.trim() != "") {
-            return member.metas[_index].col_value;
-        } else {
-            return undefined;
-        }
+    handle_onRowClick(item?: ApiModels.Place) {
+        this.props.onSelect(item);
     }
 
     render() {
         return (
             <div>
                 <PageTitle
-                    label={<span><i className="fa fa-users" /> Adhérents</span>}
+                    label={<span><i className="fa fa-map-marker" /> Lieux</span>}
                     actions={
                         <div style={{ textAlign: "right" }}>
-                            <FlatButton label="Nouvel adhérent" href="#/members/add" />
+                            <FlatButton label="Nouveau lieu" href="#/places/add" />
                         </div>
                     } />
                 <Row>
                     <Col md={4}>
-                        {this.renderFilter()}
                     </Col>
                     <Col md={8}>
                         {this.renderNavigation()}
@@ -156,19 +127,7 @@ class List extends React.PureComponent<IListProps, IListState>
         );
     }
 
-    renderFilter() {
-        let __this = this;
-        return (
-            <div>
-                <Toggle toggled={this.state.filter} label="Filtrer" labelPosition="right"
-                    onToggle={() => {
-                        __this.setState({ ...__this.state, filter: !__this.state.filter, filterCriteria: {} });
-                        if (__this.state.filter)
-                            __this.props.onFilter({});
-                    }} />
-            </div>
-        );
-    }
+
 
 
     //#region RENDER NAVIGATION
@@ -206,48 +165,12 @@ class List extends React.PureComponent<IListProps, IListState>
                         )
                     })}
                 </SelectField>
-                {
-                    (this.props.pageMembers && this.props.countMembers) ?
-                        <div style={{ verticalAlign: "top", display: "inline-block", height: "48px" }}>
-                            <span>
-                                &nbsp;&nbsp;
-                                {(this.props.pageMembers - 1) * this.props.membersPerPage + 1}
-                                <span> - </span>
-                                {(this.props.countMembers < this.props.pageMembers * this.props.membersPerPage) ? this.props.countMembers : this.props.pageMembers * this.props.membersPerPage}
-                                <span> de </span>
-                                {this.props.countMembers}
-                            </span>
-                            <IconButton
-                                iconClassName="fa fa-chevron-left"
-                                disabled={this.props.pageMembers == 1}
-                                onClick={() => { __this.props.onChangePage(__this.props.pageMembers - 1); }} />
-                            <IconButton
-                                iconClassName="fa fa-chevron-right"
-                                disabled={(this.props.pageMembers) >= (this.props.countMembers / this.props.membersPerPage)}
-                                onClick={() => { __this.props.onChangePage(__this.props.pageMembers + 1); }} />
-                        </div>
-                        : undefined
-                }
-                
             </div>
         );
     }
 
     //#endregion
 
-    handle_onFiltering(col: HeaderColumn, value: any) {
-        let _filter = {};
-        _filter[col.code] = value;
-        let filters = {
-            ...this.state.filterCriteria,
-            ..._filter
-        }
-        this.props.onFilter(filters);
-        this.setState({
-            ...this.state,
-            filterCriteria: filters
-        });
-    }
 
     renderTable() {
         let __this = this;
@@ -256,7 +179,7 @@ class List extends React.PureComponent<IListProps, IListState>
         return (
             <Table
                 selectable={true}
-                onCellClick={(row, column) => { __this.handle_onRowClick(__this.props.members[row]); } }>
+                onCellClick={(row, column) => { __this.handle_onRowClick(__this.props.places[row]); }}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
                         {_cols.map(col => {
@@ -266,13 +189,7 @@ class List extends React.PureComponent<IListProps, IListState>
                                     style={{
                                         width: col.width
                                     }}>
-                                    {
-                                        (__this.state.filter) ?
-                                            col.getFilterMode(col,
-                                                __this.state.filterCriteria[col.code],
-                                                (value) => { __this.handle_onFiltering(col, value); })
-                                            : col.label
-                                    }
+                                    {col.label}
                                 </TableHeaderColumn>
                             );
                         })}
@@ -280,7 +197,7 @@ class List extends React.PureComponent<IListProps, IListState>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false} showRowHover>
-                    {this.props.members.map((member) => {
+                    {this.props.places.map((member) => {
                         return (
                             <TableRow key={member.id} style={{ cursor: "pointer" }}>
                                 {_cols.map(col => {
@@ -308,61 +225,29 @@ class List extends React.PureComponent<IListProps, IListState>
 
 import { connect } from "react-redux";
 import { getStore } from "modules/redux";
-import { IMembers_Reducer } from "./../../reducer";
+import { IPlaces_Reducer } from "./../../reducer";
 import { IApp_Reducer } from "applications/main/reducer";
 import * as ApiActions from "modules/api/actions";
 import * as Constants from "./../../constants";
 
-interface IState extends IMembers_Reducer, IApp_Reducer { }
+interface IState extends IPlaces_Reducer, IApp_Reducer { }
 
 const mapStateToProps = (state: IState): IListProps => {
     return {
-        members: state.route_Members.members,
-        countMembers: state.route_Members.searchCount,
-        pageMembers: state.route_Members.searchPage,
-        membersPerPage: state.route_Members.searchLimit
+        places: state.route_Places.places
     };
 }
 
 const mapDispatchToProps = (dispatch): IListProps => {
     return {
         onInit: () => {
-            dispatch(ApiActions.members.Search({
-                request_id: Constants.search_members,
-                Request: {
-                    criteria: {},
-                    limit: (getStore().getState() as IState).route_Members.searchLimit,
-                    page: 1
-                }
+            dispatch(ApiActions.activities.GetPlaces({
+                request_id: Constants.search_places,
+                Request: {  }
             }))
         },
-        onSelectMember: (member: ApiModels.Member) => {
-            dispatch(push("/members/" + member.id));
-        },
-        onChangePage: (page) => {
-            dispatch(ApiActions.members.Search({
-                request_id: Constants.search_members,
-                Request: {
-                    criteria: {},
-                    limit: (getStore().getState() as IState).route_Members.searchLimit,
-                    page: page
-                }
-            }))
-        },
-        onFilter: (filtres) => {
-            dispatch(ApiActions.members.Search({
-                request_id: Constants.search_members,
-                Request: {
-                    limit: (getStore().getState() as IState).route_Members.searchLimit,
-                    page: (getStore().getState() as IState).route_Members.searchPage,
-                    criteria: {
-                        last_name: filtres["last_name"],
-                        first_name: filtres["first_name"],
-                        city: filtres["city"],
-                        licence: filtres["licence"]
-                    }
-                }
-            }))
+        onSelect: (place) => {
+            dispatch(push("/places/" + place.id));
         }
     };
 }

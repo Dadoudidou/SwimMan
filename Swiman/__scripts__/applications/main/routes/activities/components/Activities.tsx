@@ -14,7 +14,7 @@ interface IActivitiesState {
 
 }
 
-class Activities extends React.Component<IActivitiesProps, IActivitiesState>
+class Activities extends React.PureComponent<IActivitiesProps, IActivitiesState>
 {
     static defaultProps: IActivitiesProps = {
         activities: [],

@@ -42,5 +42,56 @@ namespace Swiman.Areas.API.Controllers
                 return Json(items);
             }
         }
+
+
+        #region PLACES
+
+        [HttpPost]
+        public JsonResult AddPlace(Place place)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                return Json(ctx.activities.AddPlace(place));
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdatePlace(Place place)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                return Json(ctx.activities.UpdatePlace(place));
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeletePlace(Place place)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                ctx.activities.DeletePlace(place);
+                return Json(true);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPlaceById(int id)
+        {
+            using (var ctx= new UnitOfWork())
+            {
+                return Json(ctx.activities.GetPlaceById(id));
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetPlaces()
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                return Json(ctx.activities.GetsPlaces());
+            }
+        }
+
+        #endregion
     }
 }

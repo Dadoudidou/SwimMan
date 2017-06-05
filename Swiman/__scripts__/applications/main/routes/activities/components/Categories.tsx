@@ -16,7 +16,7 @@ interface ICategoriesState {
 
 }
 
-class Categories extends React.Component<ICategoriesProps, ICategoriesState>
+class Categories extends React.PureComponent<ICategoriesProps, ICategoriesState>
 {
     static defaultProps: ICategoriesProps = {
         categories: [],

@@ -21,7 +21,7 @@ interface IValueState {
 
 }
 
-class Value extends React.Component<IValueProps, IValueState>
+class Value extends React.PureComponent<IValueProps, IValueState>
 {
     static defaultProps: IValueProps = {
         onClick: () => { },

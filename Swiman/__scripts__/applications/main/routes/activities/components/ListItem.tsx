@@ -9,7 +9,7 @@ interface IListItemState {
 
 }
 
-class ListItem extends React.Component<IListItemProps, IListItemState>
+class ListItem extends React.PureComponent<IListItemProps, IListItemState>
 {
     constructor(props: IListItemProps ) {
         super(props);

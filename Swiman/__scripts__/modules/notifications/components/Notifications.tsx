@@ -21,7 +21,7 @@ export interface INotificationsProps {
     onDismiss?: (item: Models.Notification) => void
 }
 
-class Notifications extends React.Component<INotificationsProps, any>{
+class Notifications extends React.PureComponent<INotificationsProps, any>{
 
     static defaultProps: INotificationsProps = {
         notifications: [],

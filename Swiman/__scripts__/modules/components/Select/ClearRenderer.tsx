@@ -9,7 +9,7 @@ interface IClearRendererState {
 
 }
 
-class ClearRenderer extends React.Component<IClearRendererProps, IClearRendererState>
+class ClearRenderer extends React.PureComponent<IClearRendererProps, IClearRendererState>
 {
     constructor(props: IClearRendererProps ) {
         super(props);

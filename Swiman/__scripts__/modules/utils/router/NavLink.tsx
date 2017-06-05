@@ -5,7 +5,7 @@ interface INavLinkProps extends LinkProps {
 
 }
 
-export class NavLink extends React.Component<INavLinkProps, any>{
+export class NavLink extends React.PureComponent<INavLinkProps, any>{
     render() {
         return (
             <Link {...this.props} activeClassName="active" />

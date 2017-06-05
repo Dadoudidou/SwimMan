@@ -9,7 +9,7 @@ interface IDefaultArrowRendererState {
 
 }
 
-class DefaultArrowRenderer extends React.Component<IDefaultArrowRendererProps, IDefaultArrowRendererState>
+class DefaultArrowRenderer extends React.PureComponent<IDefaultArrowRendererProps, IDefaultArrowRendererState>
 {
     constructor(props: IDefaultArrowRendererProps ) {
         super(props);

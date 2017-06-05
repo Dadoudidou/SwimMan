@@ -16,7 +16,7 @@ interface IShow_InfosState {
     
 }
 
-class Show_Infos extends React.Component<IShow_InfosProps, IShow_InfosState>
+class Show_Infos extends React.PureComponent<IShow_InfosProps, IShow_InfosState>
 {
     constructor(props: IShow_InfosProps ) {
         super(props);

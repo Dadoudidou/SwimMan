@@ -9,7 +9,7 @@ interface ISelectState {
 
 }
 
-class Select extends React.Component<ISelectProps, ISelectState>
+class Select extends React.PureComponent<ISelectProps, ISelectState>
 {
     constructor(props: ISelectProps ) {
         super(props);

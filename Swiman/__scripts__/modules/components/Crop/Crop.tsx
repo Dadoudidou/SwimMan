@@ -122,7 +122,7 @@ interface ICropState {
     newCropIsBeingDrawn: boolean
 }
 
-class Crop extends React.Component<ICropProps, ICropState>{
+class Crop extends React.PureComponent<ICropProps, ICropState>{
 
     static defaultProps: Partial<ICropProps> = {
         crop: undefined,

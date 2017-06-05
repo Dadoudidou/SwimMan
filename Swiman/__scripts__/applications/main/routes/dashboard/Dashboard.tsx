@@ -13,7 +13,7 @@ interface IDashboardState {
 
 }
 
-class Dashboard extends React.Component<IDashboardProps, IDashboardState>
+class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState>
 {
     constructor(props: IDashboardProps ) {
         super(props);

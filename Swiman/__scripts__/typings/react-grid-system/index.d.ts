@@ -14,14 +14,14 @@ declare namespace __ReactGridSystem {
         fluid?: boolean
         style?: number | string
     }
-    export class Container extends React.Component<IContainerProps, any> {
+    export class Container extends React.PureComponent<IContainerProps, any> {
     }
 
 
     interface IRowProps {
         style?: number | string
     }
-    export class Row extends React.Component<IRowProps, any>{ }
+    export class Row extends React.PureComponent<IRowProps, any>{ }
 
     interface IColProps {
         xs?: number,
@@ -36,7 +36,7 @@ declare namespace __ReactGridSystem {
         }
         style?: number | string
     }
-    export class Col extends React.Component<IColProps, any>{ }
+    export class Col extends React.PureComponent<IColProps, any>{ }
 
     interface IVisibleProps {
         xs?: boolean,
@@ -45,7 +45,7 @@ declare namespace __ReactGridSystem {
         lg?: boolean,
         xl?: boolean
     }
-    export class Visible extends React.Component<IVisibleProps, any>{ }
+    export class Visible extends React.PureComponent<IVisibleProps, any>{ }
 
     interface IHiddenProps {
         xs?: boolean,
@@ -54,7 +54,7 @@ declare namespace __ReactGridSystem {
         lg?: boolean,
         xl?: boolean
     }
-    export class Hidden extends React.Component<IHiddenProps, any>{ }
+    export class Hidden extends React.PureComponent<IHiddenProps, any>{ }
 
     interface IClearfixProps {
         xs?: boolean,
@@ -63,11 +63,11 @@ declare namespace __ReactGridSystem {
         lg?: boolean,
         xl?: boolean
     }
-    export class ClearFix extends React.Component<IClearfixProps, any>{ }
+    export class ClearFix extends React.PureComponent<IClearfixProps, any>{ }
 
     interface IScreenClassRenderProps {
         style?: (screenClass?: 'xl' | 'lg' | 'md' | 'sm' | 'xs') => React.CSSProperties
         render?: Function
     }
-    export class ScreenClassRender extends React.Component<IScreenClassRenderProps, any> { }
+    export class ScreenClassRender extends React.PureComponent<IScreenClassRenderProps, any> { }
 }

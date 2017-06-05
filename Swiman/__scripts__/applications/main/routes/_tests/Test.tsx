@@ -10,7 +10,7 @@ interface ITestState {
 
 }
 
-class Test extends React.Component<ITestProps, ITestState>
+class Test extends React.PureComponent<ITestProps, ITestState>
 {
     constructor(props: ITestProps ) {
         super(props);

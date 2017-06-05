@@ -28,7 +28,7 @@ interface ISeasonsState {
     editSeason?: ApiModels.Season
 }
 
-class Seasons extends React.Component<ISeasonsProps, ISeasonsState>
+class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
 {
     static defaultProps: ISeasonsProps = {
         seasons: [],
