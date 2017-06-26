@@ -35,6 +35,7 @@ class SidebarMenu extends React.PureComponent<ISidebarMenuProps, ISidebarMenuSta
                     <ListItem containerElement={<NavLink to="seasons" />}>Saisons</ListItem>
                     <ListItem containerElement={<NavLink to="activities" />}>Activités</ListItem>
                     <ListItem containerElement={<NavLink to="places" />}>Lieux</ListItem>
+                    <ListItem containerElement={<NavLink to="orders" />}>Cotisations</ListItem>
                 </List>
 
             </div>

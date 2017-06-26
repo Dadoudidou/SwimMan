@@ -19,3 +19,5 @@ export const update_activity = _base + "update_activity";
 
 export const remove_activity = _base + "remove_activity";
 
+export const update_section = _base + "update_section";
+

@@ -13,6 +13,8 @@ namespace Layer_datas.Entities
         public DateTime start { get; set; }
         public DateTime end { get; set; }
 
+        public string name { get; set; }
+
         public virtual List<activities.Category> activities { get; set; }
     }
 }

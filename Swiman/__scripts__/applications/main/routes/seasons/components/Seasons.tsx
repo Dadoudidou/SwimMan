@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as ApiModels from "modules/api/models";
 import * as moment from "moment";
-import { Table, TableBody, TableFooter, TableHeader, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton, Dialog, FlatButton, DatePicker } from "material-ui";
+import { Table, TableBody, TableFooter, TableHeader, TableRow, TableHeaderColumn, TableRowColumn, RaisedButton, Dialog, FlatButton, DatePicker, TextField, IconButton } from "material-ui";
 
 import { PageTitle } from "applications/main/components";
 
@@ -55,7 +55,8 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
         let _end = moment().hour(0).minute(0).second(0).month(6).year(moment().year() + ((moment().month() >= 5) ? 1 : 0)).date(31).toDate();
         let _season = new ApiModels.Season({
             start: _start,
-            end: _end
+            end: _end,
+            name: "Saison " + moment(_start).format("YYYY") + " - " + moment(_end).format("YYYY")
         });
         this.setState({
             ...this.state,
@@ -78,28 +79,30 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
     }
 
     handle_onSave() {
-        this.props.onAdd(this.state.editSeason);
+        if (this.state.editSeason.id != 0) {
+            this.props.onEdit(this.state.editSeason);
+        } else {
+            this.props.onAdd(this.state.editSeason);
+        }
         this.handle_onClose();
     }
 
-    handle_onChange(debut: boolean, date: Date) {
+    handle_onChange(season: ApiModels.Season) {
         this.setState({
             ...this.state,
-            editSeason: {
-                ...this.state.editSeason,
-                start: (debut) ? moment(date).toDate() : this.state.editSeason.start,
-                end: (debut) ? this.state.editSeason.end : moment(date).toDate()
-            }
-        })
+            editSeason: season
+        });
     }
 
     render() {
         return (
             <div>
-                <PageTitle label="Saisons" />
-                <div style={{ textAlign: "right" }}>
-                    <RaisedButton label="Créer une saison" onTouchTap={this.handle_onAdd} />
-                </div>
+                <PageTitle label="Saisons"
+                    actions={
+                        <div style={{ textAlign: "right" }}>
+                            <FlatButton label="Créer une saison" onClick={this.handle_onAdd} />
+                        </div>
+                    } />
                 {this.renderTable()}
                 {this.renderDialog()}
             </div>
@@ -108,6 +111,7 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
 
     renderTable() {
         let _widthDateRow = 150;
+        let __this = this;
         return (
             <Table fixedHeader={true}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -115,6 +119,7 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
                         <TableHeaderColumn>Nom</TableHeaderColumn>
                         <TableHeaderColumn style={{ width: _widthDateRow }}>Début</TableHeaderColumn>
                         <TableHeaderColumn style={{ width: _widthDateRow }}>Fin</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: 50 }}></TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false} >
@@ -122,9 +127,12 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
                         this.props.seasons.map(season => {
                             return (
                                 <TableRow key={season.id}>
-                                    <TableRowColumn>Saison {moment(season.start).year()} - {moment(season.end).year()}</TableRowColumn>
+                                    <TableRowColumn>{season.name}</TableRowColumn>
                                     <TableRowColumn style={{ width: _widthDateRow }}>{moment(season.start).format("LL")}</TableRowColumn>
                                     <TableRowColumn style={{ width: _widthDateRow }}>{moment(season.end).format("LL")}</TableRowColumn>
+                                    <TableRowColumn style={{ width: 50 }}>
+                                        <IconButton iconClassName="fa fa-pencil" iconStyle={{ fontSize: 18 }} onClick={() => { __this.handle_onEdit(season); }} />
+                                    </TableRowColumn>
                                 </TableRow>
                             );
                         })
@@ -150,6 +158,10 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
                 modal={false}
                 title={(this.state.editSeason.id == 0) ? "Ajouter une saison" : "Editer une saison"}>
 
+                <TextField floatingLabelText="Nom"
+                    fullWidth
+                    value={this.state.editSeason.name}
+                    onChange={(event) => { __this.handle_onChange({ ...__this.state.editSeason, name: (event.target as any).value }) }} />
                 <DatePicker floatingLabelText="Début"
                     fullWidth
                     locale="fr"
@@ -159,8 +171,8 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
                         year: 'numeric'
                     }).format}
                     DateTimeFormat={DateTimeFormat}
-                    onChange={(e, date) => { __this.handle_onChange(true, date); } }
-                    value={this.state.editSeason.start} />
+                    onChange={(e, date) => { __this.handle_onChange({ ...__this.state.editSeason, start: moment(date).toDate() }); }}
+                    value={moment(this.state.editSeason.start).toDate()} />
                 <DatePicker floatingLabelText="Fin"
                     fullWidth
                     locale="fr"
@@ -170,8 +182,8 @@ class Seasons extends React.PureComponent<ISeasonsProps, ISeasonsState>
                         year: 'numeric'
                     }).format}
                     DateTimeFormat={DateTimeFormat}
-                    onChange={(e, date) => { __this.handle_onChange(false, date); } }
-                    value={this.state.editSeason.end} />
+                    onChange={(e, date) => { __this.handle_onChange({ ...__this.state.editSeason, end: moment(date).toDate() }); }}
+                    value={moment(this.state.editSeason.end).toDate()} />
 
             </Dialog>
         );
@@ -183,6 +195,8 @@ import { connect } from "react-redux";
 import { ISeason_Reducer } from "./../reducer";
 import * as ApiActions from "modules/api/actions";
 import * as Constants from "./../constants";
+
+import * as ConstantsApplication from "./../../../constants";
 
 const mapStateToProps = (state: ISeason_Reducer): ISeasonsProps => {
     return {
@@ -198,7 +212,12 @@ const mapDispatchToProps = (dispatch): ISeasonsProps => {
                 Request: {
                     season: season
                 }
-            }));
+            })).then(() => {
+                dispatch(ApiActions.seasons.Gets({
+                    request_id: ConstantsApplication.init,
+                    Request: {}
+                }))
+            });
         },
         onEdit: (season: ApiModels.Season) => {
             dispatch(ApiActions.seasons.Update({
@@ -206,7 +225,12 @@ const mapDispatchToProps = (dispatch): ISeasonsProps => {
                 Request: {
                     season: season
                 }
-            }));
+            })).then(() => {
+                dispatch(ApiActions.seasons.Gets({
+                    request_id: ConstantsApplication.init,
+                    Request: {}
+                }))
+            });
         },
         onInit: () => {
             dispatch(ApiActions.seasons.Gets({

@@ -20,7 +20,7 @@
         // NAME
         public name: string = undefined;
         // ACTIVITY
-        public activity: Activity = new Activity();
+        public activity: Activity = undefined;
 
         constructor(init?: Partial<Section>){
             assign(this, init);

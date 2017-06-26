@@ -24,6 +24,9 @@ namespace Layer_datas.Services
             cfg.CreateMap<Entities.activities.Place, Objects.activities.Place>();
             cfg.CreateMap<Entities.activities.Section, Objects.activities.Section>();
             cfg.CreateMap<Entities.activities.Session, Objects.activities.Session>();
+            cfg.CreateMap<Entities.activities.Activity, Objects.activities.ActivityTree>();
+            cfg.CreateMap<Entities.activities.Category, Objects.activities.CategoryTree>();
+            cfg.CreateMap<Entities.activities.Section, Objects.activities.SectionTree>();
 
             cfg.CreateMap<Objects.activities.Activity, Entities.activities.Activity>();
             cfg.CreateMap<Objects.activities.Category, Entities.activities.Category>();
@@ -54,7 +57,14 @@ namespace Layer_datas.Services
             var _entity = _ctx.activities_categories.FirstOrDefault(x => x.id == item.id);
             if (_entity == null) throw new ArgumentException("Category not exist");
 
+            //parent exist ?
+            if (item.season == null) throw new ArgumentException("Season is null");
+            var _parent = _ctx.seasons.FirstOrDefault(x => x.id == item.season.id);
+            if (_parent == null) throw new ArgumentException("Season not exist");
+
             var __entity = Mapper.Map(item, _entity);
+            __entity.season = _parent;
+            __entity.season_id = _parent.id;
             _ctx.Entry(__entity).State = System.Data.Entity.EntityState.Modified;
             _ctx.SaveChanges();
             return Mapper.Map<Objects.activities.Category>(__entity);
@@ -68,11 +78,20 @@ namespace Layer_datas.Services
             _ctx.SaveChanges();
         }
 
-        public List<Objects.activities.Category> GetsCategories()
+        public List<Objects.activities.Category> GetsCategories(Objects.Season season)
         {
             var query = _ctx.activities_categories.Where(x => true);
+            query = query.Where(x => x.season_id == season.id);
             query = query.OrderBy(x => x.name);
             return Mapper.Map<List<Objects.activities.Category>>(query.ToList());
+        }
+
+        public List<Objects.activities.CategoryTree> GetsCategoriesTree(Objects.Season season)
+        {
+            var query = _ctx.activities_categories.Where(x => true);
+            query = query.Where(x => x.season_id == season.id);
+            query = query.OrderBy(x => x.name);
+            return Mapper.Map<List<Objects.activities.CategoryTree>>(query.ToList());
         }
 
         #endregion
@@ -110,10 +129,14 @@ namespace Layer_datas.Services
             var _parent = _ctx.activities_categories.FirstOrDefault(x => x.id == item.category.id);
             if (_parent == null) throw new ArgumentException("Category not exist");
 
-            _entity.category = _parent;
-            _entity.category_id = _parent.id;
+            //_entity.category = _parent;
+            //_entity.category_id = _parent.id;
 
             var __entity = Mapper.Map(item, _entity);
+
+            __entity.category = _parent;
+            __entity.category_id = _parent.id;
+
             _ctx.Entry(__entity).State = System.Data.Entity.EntityState.Modified;
             _ctx.SaveChanges();
 
@@ -174,10 +197,13 @@ namespace Layer_datas.Services
             var _parent = _ctx.activities.FirstOrDefault(x => x.id == item.activity.id);
             if (_parent == null) throw new ArgumentException("Activity not exist");
 
-            _entity.activity = _parent;
-            _entity.activity_id = _parent.id;
+            
 
             var __entity = Mapper.Map(item, _entity);
+
+            __entity.activity = _parent;
+            __entity.activity_id = _parent.id;
+
             _ctx.Entry(__entity).State = System.Data.Entity.EntityState.Modified;
             _ctx.SaveChanges();
 

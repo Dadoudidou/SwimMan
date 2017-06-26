@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Layer_datas.Services.Objects.activities
 {
-    public class Category
+    public class CategoryTree
     {
         public int id { get; set; }
         public string name { get; set; }
-        public Season season { get; set; }
+        public List<ActivityTree> activities { get; set; }
+
     }
 }

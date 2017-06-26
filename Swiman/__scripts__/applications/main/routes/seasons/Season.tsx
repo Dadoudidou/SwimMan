@@ -23,7 +23,7 @@ class Season extends React.PureComponent<ISeasonProps, ISeasonState>
 
     render() {
         return (
-            <Layout sidebarContent={<SideBar />} headerBar_right={<HeaderBarRight />}>
+            <Layout sidebarContent={<SideBar />} >
                 <CompSeasons />
             </Layout>
         );

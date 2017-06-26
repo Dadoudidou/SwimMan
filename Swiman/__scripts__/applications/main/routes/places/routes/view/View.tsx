@@ -126,7 +126,7 @@ class View extends React.PureComponent<IViewProps, IViewState>
                         <ListItem leftIcon={<i className="fa fa-map-marker" />}>
                             {
                                 (_place.adress) ?
-                                    <span>
+                                    <span style={{ lineHeight: "1.5em" }}>
                                         <span dangerouslySetInnerHTML={{ __html: _place.adress.replace(/\n/g, "<br />") }} />
                                         <br />
                                         {_place.postalcode} - {_place.city}

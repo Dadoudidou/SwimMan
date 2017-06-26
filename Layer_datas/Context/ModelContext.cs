@@ -32,6 +32,8 @@ namespace Layer_datas.Context
 
         public IDbSet<Entities.Log> logs { get; set; }
 
+        public IDbSet<Entities.orders.Order> orders { get; set; }
+
 
         public ModelContext()
             : base(ConfigurationManager.ConnectionStrings["swiman_database"].ConnectionString)

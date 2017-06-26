@@ -15,6 +15,7 @@ namespace Layer_datas
         public Services.Activities activities { get; private set; }
         public Services.Members members { get; private set; }
         public Services.Users users { get; private set; }
+        public Services.Orders orders { get; private set; }
 
         public UnitOfWork()
         {
@@ -23,12 +24,14 @@ namespace Layer_datas
             activities = new Services.Activities(_context);
             members = new Services.Members(_context);
             users = new Services.Users(_context);
+            orders = new Services.Orders(_context);
 
             AutoMapper.Mapper.Initialize(cfg => {
                 seasons.SetMaps(cfg);
                 activities.SetMaps(cfg);
                 members.SetMaps(cfg);
                 users.SetMaps(cfg);
+                orders.SetMaps(cfg);
             });
         }
 

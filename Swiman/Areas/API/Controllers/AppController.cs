@@ -20,7 +20,7 @@ namespace Swiman.Areas.API.Controllers
                 jsonSettings = new Newtonsoft.Json.JsonSerializerSettings
                 {
                     Converters = new List<Newtonsoft.Json.JsonConverter>(){
-                        new Newtonsoft.Json.Converters.StringEnumConverter(),
+                        //new Newtonsoft.Json.Converters.StringEnumConverter(),
                         new Newtonsoft.Json.Converters.IsoDateTimeConverter()
                     },
                     NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,

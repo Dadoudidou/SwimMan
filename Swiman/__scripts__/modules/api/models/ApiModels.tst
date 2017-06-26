@@ -29,7 +29,8 @@
         if(property.Type.IsGeneric || property.Type.IsDate || property.Type.IsEnum || property.Type.IsEnumerable || property.Type.IsPrimitive)
             return (property.Type.Default() != "null") ? property.Type.Default() : "undefined";
         
-        return "new " + TransInterfaceToObject(property)+ "()";
+        return (property.Type.Default() == "null") ? "undefined" : property.Type.Default();
+        //return "new " + TransInterfaceToObject(property)+ "()";
         //return (property.Type.Default() == "null") ? "{}" : property.Type.Default();
     }
 

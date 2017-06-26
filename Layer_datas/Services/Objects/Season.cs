@@ -12,5 +12,7 @@ namespace Layer_datas.Services.Objects
         public int id { get; set; }
         public DateTime start { get; set; }
         public DateTime end { get; set; }
+
+        public string name { get; set; }
     }
 }

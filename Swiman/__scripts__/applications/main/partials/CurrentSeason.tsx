@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as ApiModels from "modules/api/models";
 import { DropDownMenu, MenuItem, IconMenu, FlatButton } from "material-ui";
+import { PopoverAnimationVertical } from "material-ui/Popover"
 import * as moment from "moment";
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -42,22 +43,25 @@ class CurrentSeason extends React.PureComponent<ICurrentSeasonProps, ICurrentSea
             <IconMenu
                 iconButtonElement={
                     <FlatButton
-                        label={"Saison " + moment(this.props.seasonSelected.start).year() + " - " + moment(this.props.seasonSelected.end).year()}
+                        label={this.props.seasonSelected.name}
                         style={{
                             color: this.props.muiTheme.appBar.textColor,
                             height: this.props.muiTheme.appBar.height,
                             marginTop: -8
                         }} />
                 }
-                value={this.props.seasonSelected.id} onChange={this.handle_change}>
+                value={this.props.seasonSelected.id}
+                onChange={this.handle_change}
+                anchorOrigin={{ horizontal: "right", vertical: "top" }}
+                targetOrigin={{ horizontal:"right", vertical:"top" }}>
                 {
                     this.props.seasons.map((season) => {
                         return (
                             <MenuItem
                                 key={season.id}
                                 value={season.id}
-                                label={"Saison " + moment(season.start).year() + " - " + moment(season.end).year()}
-                                primaryText={"Saison " + moment(season.start).year() + " - " + moment(season.end).year()} />
+                                label={season.name}
+                                primaryText={season.name} />
                         );
                     })
                 }

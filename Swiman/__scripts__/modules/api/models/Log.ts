@@ -26,7 +26,7 @@
         // DETAIL
         public detail: string = undefined;
         // USER
-        public user: User = new User();
+        public user: User = undefined;
 
         constructor(init?: Partial<Log>){
             assign(this, init);

@@ -1,4 +1,5 @@
 ﻿using Layer_datas;
+using Layer_datas.Services.Objects;
 using Layer_datas.Services.Objects.activities;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,15 @@ namespace Swiman.Areas.API.Controllers
 {
     public class ActivitiesController : AppController
     {
+        #region ACTIVITIES
+
         [HttpPost]
-        public JsonResult GetCategories()
+        public JsonResult GetCategories(Season season)
         {
 
             using (var ctx = new UnitOfWork())
             {
-                List<Category> items = ctx.activities.GetsCategories();
+                List<Category> items = ctx.activities.GetsCategories(season);
                 return Json(items);
             }
         }
@@ -43,6 +46,60 @@ namespace Swiman.Areas.API.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UpdateCategory(Category category)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Category retour = null;
+                if (category.id == 0)
+                    retour = ctx.activities.AddCategory(category, category.season);
+                else
+                    retour = ctx.activities.UpdateCategory(category);
+                return Json(retour);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateActivity(Activity activity)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Activity retour = null;
+                if (activity.id == 0)
+                    retour = ctx.activities.AddActivity(activity);
+                else
+                    retour = ctx.activities.UpdateActivity(activity);
+                return Json(retour);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateSection(Section section)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Section retour = null;
+                if (section.id == 0)
+                    retour = ctx.activities.AddSection(section);
+                else
+                    retour = ctx.activities.UpdateSection(section);
+                return Json(retour);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult GetTree(Season season)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                List<CategoryTree> items = ctx.activities.GetsCategoriesTree(season);
+                return Json(items);
+            }
+        }
+
+        #endregion
 
         #region PLACES
 

@@ -1,6 +1,8 @@
 
 
     
+        import { ActivityTree } from "./ActivityTree";
+    
 
     import * as assign from "object-assign";
 
@@ -9,27 +11,25 @@
     
 
 
-    class Season {
+    class CategoryTree {
         
 
         
         // ID
         public id: number = 0;
-        // START
-        public start: Date = undefined;
-        // END
-        public end: Date = undefined;
         // NAME
         public name: string = undefined;
+        // ACTIVITIES
+        public activities: ActivityTree[] = [];
 
-        constructor(init?: Partial<Season>){
+        constructor(init?: Partial<CategoryTree>){
             assign(this, init);
         }
         
     }
 
 
-export {  Season }
+export {  CategoryTree }
 
 
 

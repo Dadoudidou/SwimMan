@@ -9,3 +9,6 @@ export const members = _Members;
 
 import * as _Users from "./users";
 export const users = _Users;
+
+import * as _Orders from "./orders";
+export const orders = _Orders;

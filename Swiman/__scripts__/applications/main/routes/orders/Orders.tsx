@@ -7,35 +7,39 @@ import { Paper } from "material-ui"
 
 import List from "./routes/list/List";
 
-interface IPlacesProps {
+
+interface IOrdersProps {
+    onInit?: () => void
 }
 
-interface IPlacesState {
+interface IOrdersState {
 
 }
 
-class Places extends React.PureComponent<IPlacesProps, IPlacesState>
+class Orders extends React.PureComponent<IOrdersProps, IOrdersState>
 {
 
-    static defaultProps: IPlacesProps = {
+    static defaultProps: IOrdersProps = {
         onInit: () => { }
     }
 
-    constructor(props: IPlacesProps) {
+    constructor(props: IOrdersProps) {
         super(props);
         this.state = {};
     }
 
+    componentWillMount() {
+        this.props.onInit();
+    }
+
     render() {
         return (
-            <Layout sidebarContent={<SideBar />} >
-                {
-                    (this.props.children) ? this.props.children : <List />
-                }
+            <Layout sidebarContent={<SideBar />} headerBar_right={<HeaderBarRight />}>
+                {this.props.children}
             </Layout>
         );
     }
 }
 
-export default Places;
 
+export default Orders;

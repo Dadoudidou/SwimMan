@@ -126,6 +126,7 @@
     <Compile Include="Areas\API\Controllers\ActivitiesController.cs" />
     <Compile Include="Areas\API\Controllers\AppController.cs" />
     <Compile Include="Areas\API\Controllers\MembersController.cs" />
+    <Compile Include="Areas\API\Controllers\OrdersController.cs" />
     <Compile Include="Areas\API\Controllers\SeasonsController.cs" />
     <Compile Include="Areas\API\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AppController.cs" />
@@ -179,7 +180,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="__scripts__\applications\main\actions\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\Application.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\FilteredColumnsDropdown.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\FilteredTable.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\components\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\NavigationTable.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\components\PageTitle.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\constants\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\index.tsx" />
@@ -189,7 +193,6 @@
     <TypeScriptCompile Include="__scripts__\applications\main\partials\SidebarMenu.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\ListItem.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Sections.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\constants.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\Login.tsx" />
@@ -199,8 +202,6 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\constants\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\reducer\index.ts" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Activities.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\Categories.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\Dashboard.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\index.ts" />
@@ -216,6 +217,13 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Show_Infos.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\View.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\Orders.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\constants.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\Form.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\List.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\reducer.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\places\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\places\Places.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\places\routes\add\Add.tsx" />
@@ -236,12 +244,21 @@
     <TypeScriptCompile Include="__scripts__\modules\api\actions\activities.ts" />
     <TypeScriptCompile Include="__scripts__\modules\api\actions\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\api\actions\members.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\actions\orders.ts" />
     <TypeScriptCompile Include="__scripts__\modules\api\actions\seasons.ts" />
     <TypeScriptCompile Include="__scripts__\modules\api\actions\users.ts" />
     <TypeScriptCompile Include="__scripts__\modules\api\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\api\models\ActivityTree.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\ActivityTree.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\Activity.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Activity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\CategoryTree.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\CategoryTree.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\Category.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
@@ -260,6 +277,10 @@
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\members\MemberMeta.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Order.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\orders\Order.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\Place.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Place.cs</CustomToolNamespace>
@@ -267,6 +288,10 @@
     <TypeScriptCompile Include="__scripts__\modules\api\models\Season.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\Season.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\SectionTree.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\SectionTree.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\Section.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
@@ -292,6 +317,7 @@
     <TypeScriptCompile Include="__scripts__\modules\auth\index.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Crop\Crop.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Crop\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Draggable\Draggable.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\PictureField\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\PictureField\PictureField.tsx" />

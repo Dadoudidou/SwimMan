@@ -8,7 +8,7 @@ using Layer_datas;
 
 namespace Swiman.Areas.API.Controllers
 {
-    public class SeasonsController : Controller
+    public class SeasonsController : AppController
     {
         [HttpPost]
         public JsonResult Add(Season season)

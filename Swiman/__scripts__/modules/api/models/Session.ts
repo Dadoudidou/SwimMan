@@ -28,9 +28,9 @@
         // NBSLOTS
         public nbSlots: number = 0;
         // PLACE
-        public place: Place = new Place();
+        public place: Place = undefined;
         // SECTION
-        public section: Section = new Section();
+        public section: Section = undefined;
 
         constructor(init?: Partial<Session>){
             assign(this, init);

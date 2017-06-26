@@ -20,7 +20,7 @@
         // NAME
         public name: string = undefined;
         // CATEGORY
-        public category: Category = new Category();
+        public category: Category = undefined;
 
         constructor(init?: Partial<Activity>){
             assign(this, init);

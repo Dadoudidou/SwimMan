@@ -6,6 +6,7 @@ let _apiGlobalName = "api/activities/";
 
 
 interface IGetCategories {
+    season: Models.Season
 
 }
 let _apiGetCategories = _apiGlobalName + "GetCategories/";
@@ -48,6 +49,66 @@ export const GetSections = fetchActionAsyncCreator<IGetSections, Models.Section[
     request: GetSectionsRequest,
     response: GetSectionsSuccess,
     error: GetSectionsFailed
+});
+
+interface IGetTree {
+    season: Models.Season
+}
+let _apiGetTree = _apiGlobalName + "GetTree/";
+export const GetTreeRequest = actionCreator<IFetchRequest<IGetTree>>(_apiGetTree);
+export const GetTreeSuccess = actionCreator<IFetchResponse<IGetTree, Models.CategoryTree[]>>(_apiGetTree + "success");
+export const GetTreeFailed = actionCreator<IFetchResponse<IGetTree, any>>(_apiGetTree + "error");
+export const GetTree = fetchActionAsyncCreator<IGetTree, Models.CategoryTree[]>({
+    name: _apiGetTree,
+    uri: window.baseUrl + _apiGetTree,
+    request: GetTreeRequest,
+    response: GetTreeSuccess,
+    error: GetTreeFailed
+});
+
+interface IUpdateCategory {
+    category: Models.Category
+}
+let _apiUpdateCategory = _apiGlobalName + "UpdateCategory/";
+export const UpdateCategoryRequest = actionCreator<IFetchRequest<IUpdateCategory>>(_apiUpdateCategory);
+export const UpdateCategorySuccess = actionCreator<IFetchResponse<IUpdateCategory, Models.Category>>(_apiUpdateCategory + "success");
+export const UpdateCategoryFailed = actionCreator<IFetchResponse<IUpdateCategory, any>>(_apiUpdateCategory + "error");
+export const UpdateCategory = fetchActionAsyncCreator<IUpdateCategory, Models.Category>({
+    name: _apiUpdateCategory,
+    uri: window.baseUrl + _apiUpdateCategory,
+    request: UpdateCategoryRequest,
+    response: UpdateCategorySuccess,
+    error: UpdateCategoryFailed
+});
+
+interface IUpdateActivity {
+    activity: Models.Activity
+}
+let _apiUpdateActivity = _apiGlobalName + "UpdateActivity/";
+export const UpdateActivityRequest = actionCreator<IFetchRequest<IUpdateActivity>>(_apiUpdateActivity);
+export const UpdateActivitySuccess = actionCreator<IFetchResponse<IUpdateActivity, Models.Activity>>(_apiUpdateActivity + "success");
+export const UpdateActivityFailed = actionCreator<IFetchResponse<IUpdateActivity, any>>(_apiUpdateActivity + "error");
+export const UpdateActivity = fetchActionAsyncCreator<IUpdateActivity, Models.Activity>({
+    name: _apiUpdateActivity,
+    uri: window.baseUrl + _apiUpdateActivity,
+    request: UpdateActivityRequest,
+    response: UpdateActivitySuccess,
+    error: UpdateActivityFailed
+});
+
+interface IUpdateSection {
+    section: Models.Section
+}
+let _apiUpdateSection = _apiGlobalName + "UpdateSection/";
+export const UpdateSectionRequest = actionCreator<IFetchRequest<IUpdateSection>>(_apiUpdateSection);
+export const UpdateSectionSuccess = actionCreator<IFetchResponse<IUpdateSection, Models.Section>>(_apiUpdateSection + "success");
+export const UpdateSectionFailed = actionCreator<IFetchResponse<IUpdateSection, any>>(_apiUpdateSection + "error");
+export const UpdateSection = fetchActionAsyncCreator<IUpdateSection, Models.Section>({
+    name: _apiUpdateSection,
+    uri: window.baseUrl + _apiUpdateSection,
+    request: UpdateSectionRequest,
+    response: UpdateSectionSuccess,
+    error: UpdateSectionFailed
 });
 
 //#region PLACE

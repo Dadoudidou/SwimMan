@@ -1,6 +1,8 @@
 
 
     
+        import { Season } from "./Season";
+    
 
     import * as assign from "object-assign";
 
@@ -17,6 +19,8 @@
         public id: number = 0;
         // NAME
         public name: string = undefined;
+        // SEASON
+        public season: Season = undefined;
 
         constructor(init?: Partial<Category>){
             assign(this, init);
