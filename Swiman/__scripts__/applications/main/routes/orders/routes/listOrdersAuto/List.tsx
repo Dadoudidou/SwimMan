@@ -15,17 +15,18 @@ import { default as FilteredTable, HeaderColumn } from "applications/main/compon
 import FilteredColumns from "applications/main/components/FilteredColumnsDropdown";
 import NavigationTable from "applications/main/components/NavigationTable";
 import Form from "./Form";
+import { orderToStringAction } from "./utils";
 
 interface IListProps {
 
     season?: ApiModels.Season
-    orders?: ApiModels.Order[]
+    orders?: ApiModels.OrderAuto[]
     
     countPage?: number
     currentPage?: number
     elementsPerPage?: number
 
-    onUpdateOrder?: (order: ApiModels.Order) => void
+    onUpdateOrder?: (order: ApiModels.OrderAuto) => void
 
     onInit?: () => void
     onSelect?: (member: ApiModels.Member) => void
@@ -34,12 +35,13 @@ interface IListProps {
 }
 
 interface IListState {
-    colonnes: HeaderColumn<ApiModels.Order>[]
+    colonnes: HeaderColumn<ApiModels.OrderAuto>[]
     filter?: boolean
     filterCriteria?: { [key: string]: any }
 
-    editedOrder?: ApiModels.Order
+    editedOrder?: ApiModels.OrderAuto
 }
+
 
 
 
@@ -59,22 +61,17 @@ class List extends React.PureComponent<IListProps, IListState>
         let _colonnes = [];
         this.state = {
             colonnes: [
-                new HeaderColumn<ApiModels.Order>({
-                    order: 1, key: "section", headerLabel: "Section", width: 200,
+                new HeaderColumn<ApiModels.OrderAuto>({
+                    order: 1, key: "description", headerLabel: "Description",
                     bodyContent: (item) => {
                         return (
                             <span>
-                                {(!item.section) ? undefined :
-                                    <span>
-                                        {item.section.name}<br />
-                                        <small>{item.section.activity.category.name}/{item.section.activity.name}</small>
-                                    </span>
-                                }
+                                {item.description}
                             </span>
                         );
                     }
                 }),
-                new HeaderColumn<ApiModels.Order>({
+                new HeaderColumn<ApiModels.OrderAuto>({
                     order: 2, key: "date_from", headerLabel: "Période",
                     bodyContent: (item) => {
                         return (
@@ -84,32 +81,14 @@ class List extends React.PureComponent<IListProps, IListState>
                         );
                     }
                 }),
-                new HeaderColumn<ApiModels.Order>({
-                    order: 3, key: "session", headerLabel: "Sessions",
+                new HeaderColumn<ApiModels.OrderAuto>({
+                    order: 9, key: "action", headerLabel: "Action", textAlign: "left",
+                    bodyStyle: { whiteSpace: "normal" },
                     bodyContent: (item) => {
                         return (
-                            <span>
-                                {
-                                    (item.is_card) ?
-                                        <span>Carte de {item.card_nb_session} session{(item.card_nb_session > 1) ? "s" : ""}</span>
-                                        :
-                                        (item.restriction_session_min == undefined || item.restriction_session_max == undefined) ?
-                                            <span>Toutes sessions</span>
-                                            :
-                                            (item.restriction_session_max == item.restriction_session_min) ?
-                                                <span>{item.restriction_session_min} session{(item.restriction_session_min > 1) ? "s" : ""}</span>
-                                                :
-                                                <span>{item.restriction_session_min} à {item.restriction_session_max} sessions</span>
-                                }
-                            </span>
+                            <span>{orderToStringAction(item)}</span>
                         );
                     }
-                }),
-                new HeaderColumn<ApiModels.Order>({
-                    order: 9, key: "price", headerLabel: "Tarif", textAlign: "right", width: 100,
-                    bodyContent: (item) => (
-                        <span>{(item.amount) ? item.amount : 0} €</span>
-                    )
                 })
             ],
             filter: false,
@@ -150,7 +129,7 @@ class List extends React.PureComponent<IListProps, IListState>
     handle_onAdd() {
         this.setState({
             ...this.state,
-            editedOrder: new ApiModels.Order({ season: this.props.season, season_id: this.props.season.id })
+            editedOrder: new ApiModels.OrderAuto({ season: this.props.season })
         });
     }
 
@@ -161,7 +140,7 @@ class List extends React.PureComponent<IListProps, IListState>
         });
     }
 
-    handle_onSave(order: ApiModels.Order) {
+    handle_onSave(order: ApiModels.OrderAuto) {
         let __this = this;
         this.setState({
             ...this.state,
@@ -172,7 +151,7 @@ class List extends React.PureComponent<IListProps, IListState>
     }
 
     render() {
-        let _label = "Tarifs ";
+        let _label = "Tarifs Autos / Réductions ";
         if (!this.props.season) {
             return (
                 <div>
@@ -216,8 +195,7 @@ class List extends React.PureComponent<IListProps, IListState>
                 <Form
                     open={this.state.editedOrder != undefined}
                     order={this.state.editedOrder}
-                    onCancel={this.handle_onCancel}
-                    onSave={this.handle_onSave} />
+                    onCancel={this.handle_onCancel} />
             </div>
         );
     }
@@ -236,9 +214,9 @@ interface IState extends IApp_Reducer, IOrdersList_Reducer { }
 const mapStateToProps = (state: IState): IListProps => {
     return {
         season: state.application.seasonSelected,
-        orders: state.route_Orders_List.orders,
-        countPage: state.route_Orders_List.searchCount,
-        currentPage: state.route_Orders_List.searchPage,
+        orders: state.route_Orders_Auto_List.orders,
+        countPage: state.route_Orders_Auto_List.searchCount,
+        currentPage: state.route_Orders_Auto_List.searchPage,
         elementsPerPage: 20
     };
 }
@@ -246,7 +224,7 @@ const mapStateToProps = (state: IState): IListProps => {
 let _loadOrders = (dispatch) => {
     let state: IState = getStore().getState();
     if (state.application.seasonSelected) {
-        dispatch(ApiActions.orders.Search({
+        dispatch(ApiActions.orders.SearchOrdersAuto({
             request_id: Constants.search,
             Request: {
                 criteria: {
@@ -275,7 +253,7 @@ const mapDispatchToProps = (dispatch): IListProps => {
         },
         onChangePage: (page) => {
             let state: IState = getStore().getState();
-            dispatch(ApiActions.orders.Search({
+            dispatch(ApiActions.orders.SearchOrdersAuto({
                 request_id: Constants.search,
                 Request: {
                     criteria: {
@@ -285,16 +263,6 @@ const mapDispatchToProps = (dispatch): IListProps => {
                     page: page
                 }
             }))
-        },
-        onUpdateOrder: (order) => {
-            dispatch(ApiActions.orders.UpdateOrder({
-                request_id: Constants.save,
-                Request: {
-                    order: order
-                }
-            })).then(() => {
-                _loadOrders(dispatch);
-            })
         }
     };
 }

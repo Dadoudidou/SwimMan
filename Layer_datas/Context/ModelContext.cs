@@ -33,6 +33,7 @@ namespace Layer_datas.Context
         public IDbSet<Entities.Log> logs { get; set; }
 
         public IDbSet<Entities.orders.Order> orders { get; set; }
+        public IDbSet<Entities.orders.OrderAuto> orders_auto { get; set; }
 
 
         public ModelContext()

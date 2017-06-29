@@ -20,7 +20,8 @@
             require.ensure([], function (require) {
 
                 let routes = [
-                    require("./routes/list").loadRoutes(store)
+                    require("./routes/list").loadRoutes(store),
+                    require("./routes/listOrdersAuto").loadRoutes(store)
                 ];
                 callback(null, routes);
             });

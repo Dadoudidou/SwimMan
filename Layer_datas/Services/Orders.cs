@@ -19,11 +19,13 @@ namespace Layer_datas.Services
         public void SetMaps(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<Entities.orders.Order, Objects.orders.Order>();
+            cfg.CreateMap<Entities.orders.OrderAuto, Objects.orders.OrderAuto>();
 
             cfg.CreateMap<Objects.orders.Order, Entities.orders.Order>();
+            cfg.CreateMap<Objects.orders.OrderAuto, Entities.orders.OrderAuto>();
         }
 
-        #region SEARCH
+        #region SEARCH ORDER
 
         public class SearchCriteriaOrder
         {
@@ -55,6 +57,8 @@ namespace Layer_datas.Services
 
             return Mapper.Map<List<Objects.orders.Order>>(query.ToList());
         }
+
+        #endregion
 
         public Objects.orders.Order AddOrder(Objects.orders.Order item)
         {
@@ -147,6 +151,61 @@ namespace Layer_datas.Services
             _ctx.Entry(__entity).State = System.Data.Entity.EntityState.Modified;
             _ctx.SaveChanges();
             return Mapper.Map<Objects.orders.Order>(__entity);
+        }
+
+
+        #region SEARCH ORDER AUTO
+
+        public class SearchCriteriaOrderAuto
+        {
+            public int season_id { get; set; }
+            public string description { get; set; }
+            public int? section_id { get; set; }
+            public int? activity_id { get; set; }
+            public int? category_id { get; set; }
+        }
+
+        private IQueryable<Entities.orders.OrderAuto> SearchRequestOrdersAuto(SearchCriteriaOrderAuto criteria)
+        {
+            var query = _ctx.orders_auto.Where(x => true);
+
+            query = query.Where(x => x.season_id == criteria.season_id);
+
+            if(criteria.description != null)
+            {
+                query = query.Where(x => (x.description != null) ? x.description.ToLower().Contains(criteria.description) : false);
+            }
+            if(criteria.section_id != null)
+            {
+                query = query.Where(x => x.restriction_section_id == criteria.section_id);
+            }
+            if(criteria.activity_id != null)
+            {
+                query = query.Where(x => x.restriction_activity_id == criteria.activity_id);
+            }
+            if (criteria.category_id != null)
+            {
+                query = query.Where(x => x.restriction_category_id == criteria.category_id);
+            }
+
+            return query;
+        }
+
+        public int SearchCountOrdersAuto(SearchCriteriaOrderAuto criteria)
+        {
+            var query = SearchRequestOrdersAuto(criteria);
+            return query.Count();
+        }
+
+        public List<Objects.orders.OrderAuto> SearchOrdersAuto(SearchCriteriaOrderAuto criteria, int limit = 10, int page = 1)
+        {
+            var query = SearchRequestOrdersAuto(criteria);
+
+            query = query.OrderBy(x => x.date_from).ThenBy(x => x.date_to);
+            query = query.Skip(((page < 0 ? 0 : page) - 1) * limit);
+            query = query.Take(limit);
+
+            return Mapper.Map<List<Objects.orders.OrderAuto>>(query.ToList());
         }
 
         #endregion

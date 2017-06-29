@@ -43,3 +43,32 @@ export const UpdateOrder = fetchActionAsyncCreator<IUpdateOrder, Models.Order>({
     response: UpdateOrderSuccess,
     error: UpdateOrderFailed
 });
+
+
+interface ISearchOrdersAuto {
+    criteria: {
+        season_id: number,
+        description?: string,
+        section_id?: number,
+        activity_id?: number,
+        category_id?: number
+    }
+    limit?: number
+    page?: number
+}
+interface ISearchOrdersAutoResult {
+    ordersAuto: Models.OrderAuto[]
+    count: number
+    page: number
+}
+let _apiSearchOrdersAuto = _apiGlobalName + "SearchOrdersAuto/";
+export const SearchOrdersAutoRequest = actionCreator<IFetchRequest<ISearchOrdersAuto>>(_apiSearchOrdersAuto);
+export const SearchOrdersAutoSuccess = actionCreator<IFetchResponse<ISearchOrdersAuto, ISearchOrdersAutoResult>>(_apiSearchOrdersAuto + "success");
+export const SearchOrdersAutoFailed = actionCreator<IFetchResponse<ISearchOrdersAuto, any>>(_apiSearchOrdersAuto + "error");
+export const SearchOrdersAuto = fetchActionAsyncCreator<ISearchOrdersAuto, ISearchOrdersAutoResult>({
+    name: _apiSearchOrdersAuto,
+    uri: window.baseUrl + _apiSearchOrdersAuto,
+    request: SearchOrdersAutoRequest,
+    response: SearchOrdersAutoSuccess,
+    error: SearchOrdersAutoFailed
+});

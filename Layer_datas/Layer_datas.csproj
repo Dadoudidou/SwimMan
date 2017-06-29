@@ -90,6 +90,7 @@
     <Compile Include="Entities\members\Member.cs" />
     <Compile Include="Entities\members\Meta.cs" />
     <Compile Include="Entities\orders\Order.cs" />
+    <Compile Include="Entities\orders\OrderAuto.cs" />
     <Compile Include="Entities\Season.cs" />
     <Compile Include="Entities\users\User.cs" />
     <Compile Include="Entities\users\UserGroup.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Services\Objects\members\Member.cs" />
     <Compile Include="Services\Objects\members\MemberMeta.cs" />
     <Compile Include="Services\Objects\orders\Order.cs" />
+    <Compile Include="Services\Objects\orders\OrderAuto.cs" />
     <Compile Include="Services\Objects\Season.cs" />
     <Compile Include="Services\Objects\users\User.cs" />
     <Compile Include="Services\Objects\users\UserGroup.cs" />

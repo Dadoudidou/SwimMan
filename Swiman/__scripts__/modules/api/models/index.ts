@@ -13,5 +13,6 @@ export * from "./Member";
 export * from "./MemberMeta";
 
 export * from "./Order";
+export * from "./OrderAuto";
 
 export * from "./User";

@@ -219,6 +219,12 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\View.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\Orders.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\constants.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\Form.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\List.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\reducer.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\listOrdersAuto\utils.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\constants.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\Form.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\routes\list\index.ts" />
@@ -280,6 +286,10 @@
     <TypeScriptCompile Include="__scripts__\modules\api\models\Order.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\orders\Order.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\OrderAuto.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\orders\OrderAuto.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\Place.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
