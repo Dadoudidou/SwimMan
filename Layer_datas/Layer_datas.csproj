@@ -87,6 +87,7 @@
     <Compile Include="Entities\activities\Session.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Log.cs" />
+    <Compile Include="Entities\members\Adhesion.cs" />
     <Compile Include="Entities\members\Member.cs" />
     <Compile Include="Entities\members\Meta.cs" />
     <Compile Include="Entities\orders\Order.cs" />
