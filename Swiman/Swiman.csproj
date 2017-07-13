@@ -333,6 +333,9 @@
     <TypeScriptCompile Include="__scripts__\modules\components\PictureField\PictureField.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Picture\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\Picture\Picture.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Planning\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Planning\models\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Planning\TimeLine.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Select\ClearRenderer.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Select\DefaultArrowRenderer.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Select\defaultFilterOptions.ts" />
