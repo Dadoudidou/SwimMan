@@ -1,13 +1,13 @@
 ﻿export const loadRoutes = (store) => {
     return {
-        path: 'orders',
-        indexRoute: { onEnter: (nextState, replace) => replace('/orders/list') },
+        path: 'ordersAuto',
+        indexRoute: { onEnter: (nextState, replace) => replace('/orders/ordersAuto/list') },
         getComponent: (partialNextState, callback) => {
             //chargement asynchrone
             require.ensure([], function (require) {
 
                 //const reducer = require("./reducer");
-                const component = require("./Orders").default;
+                const component = require("./OrdersAuto").default;
 
                 //load reducer
                 //reducer.loadReducer(store);
@@ -21,7 +21,7 @@
 
                 let routes = [
                     require("./routes/list").loadRoutes(store),
-                    require("./routes/ordersAuto").loadRoutes(store)
+                    require("./routes/edit").loadRoutes(store),
                 ];
                 callback(null, routes);
             });

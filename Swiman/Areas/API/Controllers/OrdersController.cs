@@ -89,5 +89,19 @@ namespace Swiman.Areas.API.Controllers
                 });
             }
         }
+
+        [HttpPost]
+        public JsonResult UpdateOrderAuto(OrderAuto order)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                OrderAuto retour = null;
+                if (order.id == 0)
+                    retour = ctx.orders.AddOrderAuto(order);
+                else
+                    retour = ctx.orders.UpdateOrderAuto(order);
+                return Json(retour);
+            }
+        }
     }
 }
