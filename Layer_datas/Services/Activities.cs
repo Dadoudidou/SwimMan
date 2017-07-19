@@ -322,12 +322,15 @@ namespace Layer_datas.Services
             var _section = _ctx.activities_sections.FirstOrDefault(x => x.id == item.section.id);
             if (_section == null) throw new ArgumentException("Section not exist");
 
-            _entity.place = _place;
-            _entity.place_id = _place.id;
-            _entity.section = _section;
-            _entity.section_id = _section.id;
+            
 
             var __entity = Mapper.Map(item, _entity);
+
+            __entity.place = _place;
+            __entity.place_id = _place.id;
+            __entity.section = _section;
+            __entity.section_id = _section.id;
+
             _ctx.Entry(__entity).State = System.Data.Entity.EntityState.Modified;
             _ctx.SaveChanges();
 
@@ -342,7 +345,7 @@ namespace Layer_datas.Services
             _ctx.SaveChanges();
         }
 
-        public List<Objects.activities.Session> GetsSessions(Objects.activities.Section section = null, Objects.activities.Place place = null)
+        public List<Objects.activities.Session> GetsSessions(Objects.activities.Section section = null, Objects.activities.Place place = null, Objects.Season season = null)
         {
             var query = _ctx.activities_sessions.Where(x => true);
             if (section != null)
@@ -352,6 +355,10 @@ namespace Layer_datas.Services
             if(place != null)
             {
                 query = query.Where(x => x.place_id == place.id);
+            }
+            if (season != null)
+            {
+                query = query.Where(x => x.section.activity.category.season_id == season.id);
             }
             query = query.OrderBy(x => x.day);
             return Mapper.Map<List<Objects.activities.Session>>(query.ToList());

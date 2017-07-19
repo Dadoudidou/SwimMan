@@ -176,6 +176,7 @@
     <Content Include="__scripts__\tsconfig.json" />
     <Content Include="__scripts__\applications\main\Application.scss" />
     <Content Include="__scripts__\modules\components\Crop\Crop.scss" />
+    <Content Include="__scripts__\applications\main\routes\sessions\routes\calendar\calendar.scss" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="__scripts__\applications\main\actions\index.ts" />
@@ -184,8 +185,13 @@
     <TypeScriptCompile Include="__scripts__\applications\main\components\FilteredTable.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\components\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\components\NavigationTable.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\NumberField.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\components\PageTitle.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\SelectPlace.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\components\SelectSection.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\constants\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\helpers\activities.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\helpers\numbers.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\index.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\partials\CurrentSeason.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\layouts\SidebarLeft.tsx" />
@@ -265,6 +271,15 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\seasons\Season.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\Calendar.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\EventModel.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\Form.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\SelectPlace.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\SelectSection.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\routes\calendar\sync.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\sessions\Sessions.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\_tests\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\_tests\Test.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\api\actions\activities.ts" />
@@ -345,9 +360,20 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\utils\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\auth\index.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Calendar.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Components\GridColumn.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Components\HeaderRow.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Components\TimeColumn.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Components\TimeGrid.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Types.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\index.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\utils\dates.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Views\Agenda\AgendaCell.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\Calendar\Views\Week\WeekView.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Crop\Crop.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\Crop\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\Draggable\Draggable.tsx" />
+    <TypeScriptCompile Include="__scripts__\modules\components\FullCalendar\Calendar.tsx" />
     <TypeScriptCompile Include="__scripts__\modules\components\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\PictureField\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\components\PictureField\PictureField.tsx" />

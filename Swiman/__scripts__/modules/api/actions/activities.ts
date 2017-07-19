@@ -188,3 +188,41 @@ export const GetPlaces = fetchActionAsyncCreator<IGetPlaces, Models.Place[]>({
 });
 
 //#endregion
+
+//#region SESSION
+interface IGetSessions {
+    props: {
+        section?: Models.Section
+        place?: Models.Place
+        season: Models.Season
+    }
+}
+let _apiGetSessions = _apiGlobalName + "GetSessions/";
+export const GetSessionsRequest = actionCreator<IFetchRequest<IGetSessions>>(_apiGetSessions);
+export const GetSessionsSuccess = actionCreator<IFetchResponse<IGetSessions, Models.Session[]>>(_apiGetSessions + "success");
+export const GetSessionsFailed = actionCreator<IFetchResponse<IGetSessions, any>>(_apiGetSessions + "error");
+export const GetSessions = fetchActionAsyncCreator<IGetSessions, Models.Session[]>({
+    name: _apiGetSessions,
+    uri: window.baseUrl + _apiGetSessions,
+    request: GetSessionsRequest,
+    response: GetSessionsSuccess,
+    error: GetSessionsFailed
+});
+
+
+interface IUpdateSession {
+    session: Models.Session
+}
+let _apiUpdateSession = _apiGlobalName + "UpdateSession/";
+export const UpdateSessionRequest = actionCreator<IFetchRequest<IUpdateSession>>(_apiUpdateSession);
+export const UpdateSessionSuccess = actionCreator<IFetchResponse<IUpdateSession, Models.Session>>(_apiUpdateSession + "success");
+export const UpdateSessionFailed = actionCreator<IFetchResponse<IUpdateSession, any>>(_apiUpdateSession + "error");
+export const UpdateSession = fetchActionAsyncCreator<IUpdateSession, Models.Session>({
+    name: _apiUpdateSession,
+    uri: window.baseUrl + _apiUpdateSession,
+    request: UpdateSessionRequest,
+    response: UpdateSessionSuccess,
+    error: UpdateSessionFailed
+});
+
+//#endregion

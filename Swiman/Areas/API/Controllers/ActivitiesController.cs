@@ -150,5 +150,38 @@ namespace Swiman.Areas.API.Controllers
         }
 
         #endregion
+
+        #region SESSIONS
+
+        public class GetSessionsProps
+        {
+            public Season season { get; set; }
+            public Section section { get; set; }
+            public Place place { get; set; }
+        }
+        [HttpPost]
+        public JsonResult GetSessions(GetSessionsProps props)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                var sessions = ctx.activities.GetsSessions(props.section, props.place, props.season);
+                return Json(sessions);
+            }
+        }
+        [HttpPost]
+        public JsonResult UpdateSession(Session session)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Session retour = null;
+                if(session.id == 0)
+                    retour = ctx.activities.AddSession(session);
+                else
+                    retour = ctx.activities.UpdateSession(session);
+                return Json(retour);
+            }
+        }
+
+        #endregion
     }
 }
