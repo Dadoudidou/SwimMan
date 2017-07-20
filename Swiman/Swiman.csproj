@@ -158,8 +158,6 @@
     <Folder Include="Views\Users\" />
     <Folder Include="__scripts__\applications\main\routes\activities\actions\" />
     <Folder Include="__scripts__\applications\main\routes\activities\models\" />
-    <Folder Include="__scripts__\applications\main\routes\members\actions\" />
-    <Folder Include="__scripts__\applications\main\routes\members\models\" />
     <Folder Include="__scripts__\applications\main\routes\seasons\actions\" />
     <Folder Include="__scripts__\applications\main\routes\seasons\models\" />
   </ItemGroup>
@@ -203,11 +201,6 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\Login.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\reducer.ts" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Infos.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\Members.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\constants\index.ts" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\Dashboard.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\dashboard\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\index.ts" />
@@ -215,13 +208,17 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\Activities.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\add\Add.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\add\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\Infos.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\Members.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\edit\Edit.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\edit\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\edit\sync.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\list\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\list\List.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Edit_Infos.tsx" />
-    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Show_Infos.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\list\sync.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\sync.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\View.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\orders\Orders.tsx" />

@@ -1,8 +1,19 @@
-﻿import Comp from "./View";
-
-export const loadRoutes = (store) => {
+﻿export const loadRoutes = (store) => {
     return {
         path: ':id',
-        component: Comp
+        getComponent: (partialNextState, callback) => {
+            //chargement asynchrone
+            require.ensure([], function (require) {
+
+                const reducer = require("./sync");
+                const component = require("./View").default;
+
+                //load reducer
+                reducer.loadReducer(store);
+
+                //retourne le composant
+                callback(null, component);
+            });
+        }
     }
 }

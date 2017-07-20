@@ -1,5 +1,6 @@
 ﻿import * as React from "react";
 import * as ApiModels from "modules/api/models";
+
 import {
     Tab, Tabs, Paper,
     Card, CardActions, CardHeader, CardMedia, CardText, CardTitle,
@@ -13,7 +14,6 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import { Col, Row, Container } from "react-grid-system";
 
 import { PageTitle } from "applications/main/components"
-import EditInfos from "./../../components/Edit_Infos";
 
 import * as areIntlLocalesSupported from 'intl-locales-supported';
 let DateTimeFormat;
@@ -27,49 +27,78 @@ if (areIntlLocalesSupported(['fr', 'fa-IR'])) {
 }
 import * as moment from "moment";
 
-interface IAddParams {
+interface IEditParams {
     id?: number
 }
 
-interface IAddProps extends __MaterialUI.Styles.MuiThemeProviderProps {
-    params?: IAddParams
-    onChangeParams?: (params: IAddParams) => void
+interface IEditProps {
+    params?: IEditParams
+    onChangeParams?: (params: IEditParams) => void
 
     member?: ApiModels.Member
     onSave?: (member: ApiModels.Member) => void
 }
 
-interface IAddState {
+interface IEditState {
     member?: ApiModels.Member
 }
 
-class Add extends React.PureComponent<IAddProps, IAddState>
+class Edit extends React.PureComponent<IEditProps, IEditState>
 {
-    static defaultProps: IAddProps = {
-        onSave: () => { }
-    }
+    // set the default props for the class
+    static defaultProps: IEditProps = { }
 
-    constructor(props: IAddProps ) {
+    constructor(props: IEditProps) {
         super(props);
         this.state = {
-            member: (props.params.id && props.member) ? { ...props.member } : new ApiModels.Member()
+            member: (props.params.id && props.member) ? JSON.parse(JSON.stringify(props.member)) : new ApiModels.Member()
         };
         this.handle_onUpdate = this.handle_onUpdate.bind(this);
     }
 
+    //#region LIFECYCLE
+
+    // invoked immediately before mounting occurs
     componentWillMount() {
         this.props.onChangeParams(this.props.params);
     }
 
-    componentWillReceiveProps(props: IAddProps) {
-        if (String(this.props.params.id) != String(props.params.id)) {
-            props.onChangeParams(props.params);
-            this.setState({
-                ...this.state,
-                member: (String(props.params.id) != (props.member ? String(props.member.id) : "0")) ? new ApiModels.Member() : { ...props.member }
-            });
+    // invoked immediately after a component is mounted
+    componentDidMount() { }
+
+    // invoked before a mounted component receives new props
+    componentWillReceiveProps(nextProps: IEditProps) {
+        let _state = this.state;
+
+        if (String(this.props.params.id) != String(nextProps.params.id)) {
+            nextProps.onChangeParams(nextProps.params);
+            _state = {
+                ..._state,
+                member: new ApiModels.Member()
+            }
         }
+
+        if (this.props.member != nextProps.member) {
+            _state = {
+                ..._state,
+                member: (nextProps.member) ? JSON.parse(JSON.stringify(nextProps.member)) : new ApiModels.Member()
+            }
+        }
+
+        if (_state != this.state) this.setState(_state);
     }
+
+    // invoked immediately before rendering when new props or state are being received
+    componentWillUpdate(nextProps: IEditProps, nextState: IEditState) { }
+
+    // invoked immediately after updating occurs
+    componentDidUpdate(prevProps: IEditProps, prevState: IEditState) { }
+
+    // invoked immediately before a component is unmounted and destroyed
+    componentWillUnmount() { }
+
+    //#endregion
+
 
     getMeta(member: ApiModels.Member, col_key: string): string {
         let _index = member.metas.map(x => x.col_key.toLowerCase()).indexOf(col_key.toLowerCase());
@@ -115,24 +144,27 @@ class Add extends React.PureComponent<IAddProps, IAddState>
         });
     }
 
-
     render() {
+
         let __this = this;
         let _label = (
             <span>
                 <i className="fa fa-user-plus" /> {
                     (this.state.member.first_name || this.state.member.last_name) ?
-                    <span>{this.state.member.first_name} {this.state.member.last_name}</span> :
-                    <span>Nouvel Adhérent</span>
+                        <span>{this.state.member.first_name} {this.state.member.last_name}</span> :
+                        <span>Nouvel Adhérent</span>
                 }
             </span>
         );
+
         if (this.props.params.id) {
             _label = (this.props.member && String(this.state.member.id) == String(this.props.params.id)) ?
                 <span><i className="fa fa-user" /> {this.state.member.first_name} {this.state.member.last_name}</span>
                 :
                 <span><i className="fa fa-spin fa-refresh" /> Chargement...</span>
         }
+
+
         return (
             <div>
                 <PageTitle label={_label} backButton
@@ -149,7 +181,7 @@ class Add extends React.PureComponent<IAddProps, IAddState>
                         <Row>
                             <Col md={2}>
                                 {(() => { /* PHOTO */ })()}
-                                <PictureField width="100%"  style={{ marginTop: 14 }} />
+                                <PictureField width="100%" style={{ marginTop: 14 }} />
                             </Col>
                             <Col md={10}>
                                 <Row>
@@ -192,9 +224,9 @@ class Add extends React.PureComponent<IAddProps, IAddState>
                             <Col md={12}>
                                 {(() => { /* LICENCE */ })()}
                                 <TextField floatingLabelText={<span><i className="fa fa-id-badge" /> Licence</span>} fullWidth
-                                        value={__this.getMeta(__this.state.member, "licence")}
-                                        onChange={(value) => { __this.handle_onUpdate(__this.setMeta(__this.state.member, "licence", (value.target as HTMLInputElement).value)); }} />
-                            
+                                    value={__this.getMeta(__this.state.member, "licence")}
+                                    onChange={(value) => { __this.handle_onUpdate(__this.setMeta(__this.state.member, "licence", (value.target as HTMLInputElement).value)); }} />
+
                             </Col>
                         </Row>
                     </CardText>
@@ -271,30 +303,23 @@ class Add extends React.PureComponent<IAddProps, IAddState>
             </div>
         );
     }
-
-
-
 }
 
+
 import { connect } from "react-redux";
-import { IMembers_Reducer } from "./../../reducer";
-import { IApp_Reducer } from "applications/main/reducer";
-import * as ApiActions from "modules/api/actions";
-import * as Constants from "./../../constants";
-import * as Notifications from "modules/notifications/actions";
+import { IMembersEditReducer, Constants, Actions } from "./sync";
 import { push, replace } from "react-router-redux"
+import * as ApiActions from "modules/api/actions";
 
-interface IState extends IMembers_Reducer, IApp_Reducer { }
-
-const mapStateToProps = (state: IState): IAddProps => {
+const mapStateToProps = (state: IMembersEditReducer): IEditProps => {
     return {
-        member: state.route_Members.memberSelected
+        member: state.MembersEdit.member
     };
 }
 
-const mapDispatchToProps = (dispatch): IAddProps => {
+const mapDispatchToProps = (dispatch): IEditProps => {
     return {
-        onChangeParams: (params: IAddParams) => {
+        onChangeParams: (params: IEditParams) => {
             if (params.id) {
                 dispatch(ApiActions.members.GetMemberById({
                     request_id: Constants.view_member,
@@ -326,4 +351,4 @@ const mapDispatchToProps = (dispatch): IAddProps => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(muiThemeable()(Add));
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);
