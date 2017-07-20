@@ -78,3 +78,63 @@ export const GetMemberById = fetchActionAsyncCreator<IGetMemberById, Models.Memb
     response: GetMemberByIdSuccess,
     error: GetMemberByIdFailed
 });
+
+
+interface IAddAdhesion {
+    adhesion: Models.Adhesion
+}
+let _apiAddAdhesion = _apiGlobalName + "AddAdhesion/";
+export const AddAdhesionRequest = actionCreator<IFetchRequest<IAddAdhesion>>(_apiAddAdhesion);
+export const AddAdhesionSuccess = actionCreator<IFetchResponse<IAddAdhesion, Models.Adhesion>>(_apiAddAdhesion + "success");
+export const AddAdhesionFailed = actionCreator<IFetchResponse<IAddAdhesion, any>>(_apiAddAdhesion + "error");
+export const AddAdhesion = fetchActionAsyncCreator<IAddAdhesion, Models.Adhesion>({
+    name: _apiAddAdhesion,
+    uri: window.baseUrl + _apiAddAdhesion,
+    request: AddAdhesionRequest,
+    response: AddAdhesionSuccess,
+    error: AddAdhesionFailed
+});
+
+interface IUpdateAdhesion {
+    adhesion: Models.Adhesion
+}
+let _apiUpdateAdhesion = _apiGlobalName + "UpdateAdhesion/";
+export const UpdateAdhesionRequest = actionCreator<IFetchRequest<IUpdateAdhesion>>(_apiUpdateAdhesion);
+export const UpdateAdhesionSuccess = actionCreator<IFetchResponse<IUpdateAdhesion, Models.Adhesion>>(_apiUpdateAdhesion + "success");
+export const UpdateAdhesionFailed = actionCreator<IFetchResponse<IUpdateAdhesion, any>>(_apiUpdateAdhesion + "error");
+export const UpdateAdhesion = fetchActionAsyncCreator<IUpdateAdhesion, Models.Adhesion>({
+    name: _apiUpdateAdhesion,
+    uri: window.baseUrl + _apiUpdateAdhesion,
+    request: UpdateAdhesionRequest,
+    response: UpdateAdhesionSuccess,
+    error: UpdateAdhesionFailed
+});
+
+interface ISearchAdhesions {
+    criteria: {
+        member?: Models.Member
+        season?: Models.Season
+        category?: Models.Category
+        activity?: Models.Activity
+        section?: Models.Section
+        place?: Models.Place
+    }
+    limit?: number
+    page?: number
+}
+interface ISearchResultAdhesions {
+    adhesions: Models.Adhesion[]
+    count: number
+    page: number
+}
+let _apiSearchAdhesions = _apiGlobalName + "SearchAdhesions/";
+export const SearchAdhesionsRequest = actionCreator<IFetchRequest<ISearchAdhesions>>(_apiSearchAdhesions);
+export const SearchAdhesionsSuccess = actionCreator<IFetchResponse<ISearchAdhesions, ISearchResultAdhesions>>(_apiSearchAdhesions + "success");
+export const SearchAdhesionsFailed = actionCreator<IFetchResponse<ISearchAdhesions, any>>(_apiSearchAdhesions + "error");
+export const SearchAdhesions = fetchActionAsyncCreator<ISearchAdhesions, ISearchResultAdhesions>({
+    name: _apiSearchAdhesions,
+    uri: window.baseUrl + _apiSearchAdhesions,
+    request: SearchAdhesionsRequest,
+    response: SearchAdhesionsSuccess,
+    error: SearchAdhesionsFailed
+});

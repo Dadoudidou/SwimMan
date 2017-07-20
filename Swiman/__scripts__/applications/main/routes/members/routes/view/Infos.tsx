@@ -2,8 +2,11 @@
 import * as ApiModels from "modules/api/models";
 import * as moment from "moment";
 
-import { Paper, List, ListItem, Subheader } from "material-ui";
+import { Paper, List, ListItem, Subheader, RaisedButton } from "material-ui";
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import { Col, Row, Container } from "react-grid-system";
+
+import { getMeta } from "applications/main/helpers/members"
 
 interface IInfosProps extends __MaterialUI.Styles.MuiThemeProviderProps {
     member: ApiModels.Member
@@ -52,53 +55,62 @@ class Infos extends React.PureComponent<IInfosProps, IInfosState>
         );
     }
 
-    getMeta(member: ApiModels.Member, col_key: string, defaut?: React.ReactNode): React.ReactNode {
-        if (!member || !member.metas) return undefined;
-        let _index = member.metas.map(x => x.col_key.toLowerCase()).indexOf(col_key.toLowerCase());
-        if (_index > -1 && member.metas[_index].col_value && member.metas[_index].col_value.trim() != "") {
-            return member.metas[_index].col_value;
-        } else {
-            return defaut;
-        }
-    }
 
     render() {
         if (!this.props.member) return <div></div>
         let _member = this.props.member;
         return (
             <div>
-                <Paper zDepth={1}>
+                <Row>
+                    <Col md={6}>
+                        <Paper zDepth={1}>
+                            <List>
 
-                    <List>
-                        <ListItem leftIcon={<i className="fa fa-birthday-cake" />}>{moment(this.props.member.birthday).format("LL")} - <small><i>{moment(this.props.member.birthday).fromNow(true)}</i></small></ListItem>
+                                <ListItem leftIcon={<i className="fa fa-birthday-cake" />}>
+                                    {moment(this.props.member.birthday).format("LL")} - <small><i>{moment(this.props.member.birthday).fromNow(true)}</i></small>
+                                </ListItem>
 
-                        <Subheader>Adresse</Subheader>
-                        <ListItem leftIcon={<i className="fa fa-map-marker" />}>
-                            {
-                                (_member.adress) ?
-                                    <span>
-                                        <span dangerouslySetInnerHTML={{ __html: _member.adress.replace(/\n/g, "<br />") }} />
-                                        <br />
-                                        {_member.postalcode} - {_member.city}
-                                    </span>
-                                    : this.getNotInformed()
-                            }
-                        </ListItem>
+                                <Subheader>Adresse</Subheader>
+                                <ListItem leftIcon={<i className="fa fa-map-marker" />}>
+                                    {
+                                        (_member.adress) ?
+                                            <span style={{ lineHeight: "1.5em" }}>
+                                                <span dangerouslySetInnerHTML={{ __html: _member.adress.replace(/\n/g, "<br />") }} />
+                                                <br />
+                                                {_member.postalcode} - {_member.city}
+                                            </span>
+                                            : this.getNotInformed()
+                                    }
+                                </ListItem>
 
-                        <Subheader>Contact</Subheader>
-                        <ListItem leftIcon={<i className="fa fa-phone" />}>{this.getMeta(_member, "phone_first", this.getNotInformed())}</ListItem>
-                        <ListItem leftIcon={<i className="fa fa-mobile" />}>{this.getMeta(_member, "phone_second", this.getNotInformed())}</ListItem>
-                        <ListItem leftIcon={<i className="fa fa-envelope" />}>{this.getMeta(_member, "email", this.getNotInformed())}</ListItem>
+                                <Subheader>Contact</Subheader>
+                                <ListItem leftIcon={<i className="fa fa-phone" />}>{getMeta(_member, "phone_first", this.getNotInformed())}</ListItem>
+                                <ListItem leftIcon={<i className="fa fa-mobile" />}>{getMeta(_member, "phone_second", this.getNotInformed())}</ListItem>
+                                <ListItem leftIcon={<i className="fa fa-envelope" />}>{getMeta(_member, "email", this.getNotInformed())}</ListItem>
 
-                        <Subheader>Emploi</Subheader>
-                        <ListItem leftIcon={<i className="fa fa-briefcase" />}>{this.getMeta(_member, "job", this.getNotInformed())}</ListItem>
-                        <ListItem leftIcon={<i className="fa fa-building" />}>{this.getMeta(_member, "job_company", this.getNotInformed())}</ListItem>
-                        <Subheader>Commentaires</Subheader>
-                        <ListItem leftIcon={<i className="fa fa-comments" />}>{this.getMeta(_member, "comments", this.getNotInformed())}</ListItem>
+                            </List>
+                        </Paper>
+                    </Col>
 
-                    </List>
-
-                </Paper>
+                    <Col md={6}>
+                        <Paper zDepth={1}>
+                            <List>
+                                <Subheader>Emploi</Subheader>
+                                <ListItem leftIcon={<i className="fa fa-briefcase" />}>{getMeta(_member, "job", this.getNotInformed())}</ListItem>
+                                <ListItem leftIcon={<i className="fa fa-building" />}>{getMeta(_member, "job_company", this.getNotInformed())}</ListItem>
+                                <Subheader>Commentaires</Subheader>
+                                <ListItem leftIcon={<i className="fa fa-comments" />}>{getMeta(_member, "comments", this.getNotInformed())}</ListItem>
+                            </List>
+                        </Paper>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={12}>
+                        <div style={{ textAlign: "right", marginTop: "1em" }}>
+                            <RaisedButton label="Modifier les informations" href={"#/members/edit/" + this.props.member.id} />
+                        </div>
+                    </Col>
+                </Row>
             </div>
         );
     }

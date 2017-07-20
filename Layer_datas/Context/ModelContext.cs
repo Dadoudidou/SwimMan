@@ -25,6 +25,7 @@ namespace Layer_datas.Context
 
         public IDbSet<Entities.members.Member> members { get; set; }
         public IDbSet<Entities.members.Meta> members_metas { get; set; }
+        public IDbSet<Entities.members.Adhesion> members_adhesions { get; set; }
 
         public IDbSet<Entities.users.User> users { get; set; }
         public IDbSet<Entities.users.UserGroup> users_groups { get; set; }
@@ -69,6 +70,17 @@ namespace Layer_datas.Context
                     x.MapLeftKey("group_id");
                     x.MapRightKey("permission_id");
                     x.ToTable("users_groups_permissions_relationships");
+                });
+
+            //many to many : sessions - adhesions
+            modelBuilder.Entity<Entities.activities.Session>()
+                .HasMany<Entities.members.Adhesion>(x => x.Adhesions)
+                .WithMany(x => x.sessions)
+                .Map(x =>
+                {
+                    x.MapLeftKey("session_id");
+                    x.MapRightKey("adhesion_id");
+                    x.ToTable("members_adhesions_sessions");
                 });
         }
 

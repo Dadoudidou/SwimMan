@@ -71,5 +71,58 @@ namespace Swiman.Areas.API.Controllers
             }
         }
 
+
+        private class SearchResultAdhesions
+        {
+            public List<Adhesion> adhesions { get; set; }
+            public int count { get; set; }
+            public int page { get; set; }
+        }
+        [HttpPost]
+        public JsonResult SearchAdhesions(Layer_datas.Services.Members.SearchCriteriaAdhesion criteria, int limit = 10, int page = 1)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                //nombre de résultats
+                int _count = ctx.members.SearchCountAdhesions(criteria);
+                limit = limit < 1 ? 1 : limit;
+                page = page < 1 ? 1 : page;
+                //si la page demandée est supérieure aux nombres de résultats, on prend la dernière page qui retournera des résultats
+                if ((page - 1) * limit > (_count - 1))
+                {
+                    page = _count / limit + 1;
+                }
+                //récupération des résultats
+                List<Adhesion> _adhesions = ctx.members.SearchAdhesions(criteria, limit, page);
+
+                return Json(new SearchResultAdhesions()
+                {
+                    adhesions = _adhesions,
+                    count = _count,
+                    page = page
+                });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddAdhesion(Adhesion adhesion)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Adhesion _adhesion = ctx.members.AddAdhesion(adhesion);
+                return Json(_adhesion);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateAdhesion(Adhesion adhesion)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Adhesion _adhesion = ctx.members.UpdateAdhesion(adhesion);
+                return Json(_adhesion);
+            }
+        }
+
     }
 }

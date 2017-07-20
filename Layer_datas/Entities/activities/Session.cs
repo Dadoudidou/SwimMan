@@ -22,5 +22,7 @@ namespace Layer_datas.Entities.activities
         [ForeignKey("section_id")]
         public virtual Section section { get; set; }
 
+        public virtual List<members.Adhesion> Adhesions { get; set; }
+
     }
 }

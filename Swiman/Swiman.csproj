@@ -189,6 +189,7 @@
     <TypeScriptCompile Include="__scripts__\applications\main\components\SelectSection.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\constants\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\helpers\activities.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\helpers\members.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\helpers\numbers.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\index.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\partials\CurrentSeason.tsx" />
@@ -208,6 +209,7 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\Activities.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\Adhesions.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\Infos.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\Members.tsx" />
@@ -293,6 +295,10 @@
     <TypeScriptCompile Include="__scripts__\modules\api\models\Activity.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>
       <CustomToolNamespace>..\Layer_datas\Services\Objects\activities\Activity.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="__scripts__\modules\api\models\Adhesion.ts">
+      <DependentUpon>ApiModels.tst</DependentUpon>
+      <CustomToolNamespace>..\Layer_datas\Services\Objects\members\Adhesion.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="__scripts__\modules\api\models\CategoryTree.ts">
       <DependentUpon>ApiModels.tst</DependentUpon>

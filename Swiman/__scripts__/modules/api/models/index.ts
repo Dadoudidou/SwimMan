@@ -11,6 +11,7 @@ export * from "./Season";
 
 export * from "./Member";
 export * from "./MemberMeta";
+export * from "./Adhesion";
 
 export * from "./Order";
 export * from "./OrderAuto";

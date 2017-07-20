@@ -1,14 +1,16 @@
 ﻿import * as React from "react";
 import * as ApiModels from "modules/api/models";
 
-import { Paper } from "material-ui";
+import { Paper, Tabs, Tab } from "material-ui";
 import { Col, Row, Container } from "react-grid-system";
 import * as moment from "moment";
 
 import { Picture } from "modules/components";
 import { PageTitle } from "applications/main/components"
 
+import { getMeta } from "applications/main/helpers/members"
 import Infos from "./Infos";
+import Adhesions from "./Adhesions";
 
 interface IViewParams {
     id?: number
@@ -22,6 +24,7 @@ interface IViewProps {
 }
 
 interface IViewState {
+    tab?: string
 }
 
 class View extends React.PureComponent<IViewProps, IViewState>
@@ -33,7 +36,16 @@ class View extends React.PureComponent<IViewProps, IViewState>
 
     constructor(props: IViewProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            tab: "dashboard"
+        };
+    }
+
+    tabs= {
+        "dashboard": undefined,
+        "infos": Infos,
+        "adhesions": Adhesions,
+        "factures": undefined
     }
 
     //#region LIFECYCLE
@@ -66,16 +78,60 @@ class View extends React.PureComponent<IViewProps, IViewState>
         let __this = this;
         if (!this.props.member) return <div>Chargement ...</div>
 
+        let _tabStyle: React.CSSProperties = {
+            color: "#555"
+        }
+        let _licence = getMeta(this.props.member, "licence");
         return (
-            <Row>
-                <Col md={3}>
-                </Col>
-                <Col md={9}>
-                    <Paper zDepth={1}>
-                        <Infos member={this.props.member} />
-                    </Paper>
-                </Col>
-            </Row>
+            <div>
+                <Paper zDepth={1}>
+                    <div style={{ padding: "1em 0 1em 3em" }}>
+                        <Row>
+                            <Col md={12}>
+                                <div style={{ display: "inline-block", verticalAlign: "middle" }}>
+                                    <Picture circle width={100} height={100} />
+                                </div>
+                                <div style={{ display: "inline-block", verticalAlign: "middle", padding: "1em 0 1em 3em" }}>
+                                    <div style={{ fontSize: "1.2em" }}>
+                                        {this.props.member.first_name} {this.props.member.last_name}
+                                    </div>
+                                    {
+                                        _licence ?
+                                        <div>
+                                            <i className="fa fa-id-badge" /> Licence N° {_licence}
+                                        </div>
+                                        : undefined
+                                    }
+                                    <div>
+                                        <small>
+                                            {moment(this.props.member.birthday).fromNow(true)}
+                                        </small>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                    <br />
+                    <Tabs
+                        value={this.state.tab}
+                        onChange={(value) => { __this.setState({ ...__this.state, tab: value }) }}
+                        tabItemContainerStyle={{
+                            background: "transparent"
+                        }}>
+                        <Tab style={_tabStyle} value="dashboard" label="Tableau de bord" />
+                        <Tab style={_tabStyle} value="infos"  label="Informations personnelles" />
+                        <Tab style={_tabStyle} value="adhesions"  label="Adhésions" />
+                        <Tab style={_tabStyle} value="factures"  label="Factures" />
+                    </Tabs>
+                </Paper>
+                <div style={{ padding: "1em 0 1em 0" }}>
+                    {
+                        this.tabs[this.state.tab] ?
+                            React.createElement(this.tabs[this.state.tab], { member: this.props.member })
+                            : undefined
+                    }
+                </div>
+            </div>
         );
     }
 }

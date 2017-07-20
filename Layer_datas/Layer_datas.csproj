@@ -110,6 +110,7 @@
     <Compile Include="Services\Objects\activities\Section.cs" />
     <Compile Include="Services\Objects\activities\Session.cs" />
     <Compile Include="Services\Objects\Log.cs" />
+    <Compile Include="Services\Objects\members\Adhesion.cs" />
     <Compile Include="Services\Objects\members\Member.cs" />
     <Compile Include="Services\Objects\members\MemberMeta.cs" />
     <Compile Include="Services\Objects\orders\Order.cs" />
