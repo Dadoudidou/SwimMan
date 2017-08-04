@@ -53,9 +53,13 @@ let finalCreateStore = (initialState = {}) => {
     return store;
 }
 
-export const createStore = finalCreateStore;
-export const getStore = () => store;
-export const injectAsyncReducer = (store: IStore<any>, name, asyncReducer) => {
-    store.asyncReducers[name] = asyncReducer;
-    store.replaceReducer(makeRootReducer(store.asyncReducers));
-};
+import { getStoreManager, injectAsyncReducer as _injectAsyncReducer } from "./storeManager";
+
+
+export const createStore = (store: string = "default") => {
+    return getStoreManager()
+        .createStore(store, { loggerMiddleware: true, routingReducer: true, thunkMiddleware: true })
+        .getStore(store);
+}
+export const getStore = (store: string = "default") => getStoreManager().getStore(store);
+export const injectAsyncReducer = _injectAsyncReducer

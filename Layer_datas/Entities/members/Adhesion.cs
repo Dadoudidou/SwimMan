@@ -13,9 +13,7 @@ namespace Layer_datas.Entities.members
     {
         [Key, Column(Order = 0)]
         public int id { get; set; }
-        [Key, Column(Order = 1)]
         public int order_id { get; set; }
-        [Key, Column(Order = 2)]
         public int member_id { get; set; }
         public int? section_id { get; set; }
         public bool validate { get; set; }
@@ -25,7 +23,7 @@ namespace Layer_datas.Entities.members
         public virtual orders.Order order { get; set; }
         [ForeignKey("member_id")]
         public virtual Member member { get; set; }
-        [ForeignKey("member_id")]
+        [ForeignKey("section_id")]
         public virtual activities.Section section { get; set; }
 
         public virtual List<activities.Session> sessions { get; set; }

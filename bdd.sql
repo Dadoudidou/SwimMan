@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: myassoc
+-- Host: 127.0.0.1    Database: myassoc
 -- ------------------------------------------------------
--- Server version	5.7.11-log
+-- Server version	5.5.39-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `activities` (
   `name` varchar(45) NOT NULL,
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `activities` (
 
 LOCK TABLES `activities` WRITE;
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
-INSERT INTO `activities` VALUES (6,'Natation Sportive',11),(7,'Water-Polo',11),(8,'Natation',12),(9,'Aquagym',12),(10,'Entraîneurs',13);
+INSERT INTO `activities` VALUES (6,'Natation Sportive',11),(7,'Water-Polo',11),(8,'Natation Loisir',12),(9,'Aquagym',12),(10,'Entraîneurs',13),(11,'Natation',15),(12,'Water-Polo',15);
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +52,7 @@ CREATE TABLE `activities_categories` (
   `name` varchar(45) NOT NULL,
   `season_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `activities_categories` (
 
 LOCK TABLES `activities_categories` WRITE;
 /*!40000 ALTER TABLE `activities_categories` DISABLE KEYS */;
-INSERT INTO `activities_categories` VALUES (11,'Compétition',1),(12,'Loisir',1),(13,'Bénévoles',1);
+INSERT INTO `activities_categories` VALUES (11,'Compétition',1),(12,'Loisir',1),(13,'Bénévoles',1),(15,'Compétition',3);
 /*!40000 ALTER TABLE `activities_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `activities_places` (
   `postalcode` varchar(5) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `activities_places` (
 
 LOCK TABLES `activities_places` WRITE;
 /*!40000 ALTER TABLE `activities_places` DISABLE KEYS */;
-INSERT INTO `activities_places` VALUES (1,'Centre Nautique Raymond Boisdé','8 avenue du 11 Novembre 1918','18000','Bourges'),(3,'Piscine des gibjoncs','rue de Turly','18000','Bourges');
+INSERT INTO `activities_places` VALUES (1,'Centre Nautique Raymond Boisdé','8 avenue du 11 Novembre 1918','18000','Bourges'),(3,'Piscine des gibjoncs','rue de Turly','18000','Bourges'),(4,'Piscine Mehun sur Yèvre','Avenue du Champ de Foire','18500','Mehun-sur-Yèvre');
 /*!40000 ALTER TABLE `activities_places` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `activities_sections` (
   `name` varchar(45) NOT NULL,
   `activity_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,7 @@ CREATE TABLE `activities_sections` (
 
 LOCK TABLES `activities_sections` WRITE;
 /*!40000 ALTER TABLE `activities_sections` DISABLE KEYS */;
-INSERT INTO `activities_sections` VALUES (12,'Benjamins',6),(13,'Minimes',6),(14,'Cadets',6),(15,'Masters',6),(16,'Passport de l\'eau',6),(17,'Water-Polo',7),(18,'Adultes',8),(19,'Ados',8),(20,'Parents Nageurs',8),(21,'Aquaforme',9),(22,'Aquapalming',9),(23,'Entraîneurs',10);
+INSERT INTO `activities_sections` VALUES (12,'Benjamins',6),(13,'Minimes',6),(14,'Cadets',6),(15,'Masters',6),(16,'Passport de l\'eau',6),(17,'Water-Polo',7),(18,'Adultes',8),(19,'Ados',8),(20,'Parents Nageurs',8),(21,'Aquaforme',9),(22,'Aquapalming',9),(23,'Entraîneurs',10),(24,'Equipe régionale',12);
 /*!40000 ALTER TABLE `activities_sections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +135,7 @@ CREATE TABLE `activities_sessions` (
   `periodeStart` date NOT NULL,
   `periodeEnd` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `activities_sessions` (
 
 LOCK TABLES `activities_sessions` WRITE;
 /*!40000 ALTER TABLE `activities_sessions` DISABLE KEYS */;
-INSERT INTO `activities_sessions` VALUES (12,2,'19:00:00','20:00:00',3,16,20,'2015-09-01','2016-06-20'),(13,4,'19:00:00','20:00:00',1,16,20,'2015-09-01','2016-06-20'),(14,2,'20:00:00','21:30:00',1,17,50,'2015-09-01','2016-06-20'),(15,4,'20:00:00','22:00:00',1,17,50,'2015-09-01','2016-06-20'),(16,1,'20:15:00','21:00:00',3,21,20,'2015-09-01','2016-06-20'),(17,2,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(18,3,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(19,4,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(20,5,'21:00:00','21:45:00',3,21,20,'2015-09-01','2016-06-20'),(21,2,'19:00:00','22:00:00',1,16,20,'2016-09-01','2017-06-20');
+INSERT INTO `activities_sessions` VALUES (12,2,'19:00:00','20:30:00',3,16,20,'2015-09-01','2016-06-20'),(13,4,'19:00:00','20:15:00',1,16,20,'2015-09-01','2016-06-20'),(14,2,'20:15:00','21:30:00',1,17,50,'2015-09-01','2016-06-20'),(15,4,'20:00:00','22:00:00',1,17,50,'2015-09-01','2016-06-20'),(16,1,'20:15:00','21:00:00',3,21,20,'2015-09-01','2016-06-20'),(17,2,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(18,3,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(19,4,'20:30:00','21:15:00',3,21,20,'2015-09-01','2016-06-20'),(20,5,'21:00:00','21:45:00',3,21,20,'2015-09-01','2016-06-20'),(21,2,'19:00:00','20:00:00',1,16,20,'2016-09-01','2017-06-20'),(22,5,'18:45:00','19:45:00',1,17,15,'0000-00-00','0000-00-00'),(23,2,'20:00:00','21:30:00',1,24,50,'0000-00-00','0000-00-00'),(24,4,'20:00:00','21:30:00',1,24,50,'0000-00-00','0000-00-00');
 /*!40000 ALTER TABLE `activities_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +275,7 @@ CREATE TABLE `members` (
   `postalcode` varchar(5) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'Violet','David','1984-11-29',1,'105 avenue Marcel Haegelen\nRes Moult Joie - Esc B','18000','Bourges'),(2,'Bonnot','Claire','1985-03-26',0,NULL,NULL,NULL),(3,'Bidule','Truc','2010-02-28',1,NULL,NULL,NULL);
+INSERT INTO `members` VALUES (1,'Violet','David','1984-11-29',1,'105 avenue Marcel Haegelen\nRes Moult Joie - Esc B','18000','Bourges'),(2,'Bonnot','Claire','1985-03-26',0,NULL,NULL,NULL),(3,'Bidule','Truc','2010-02-28',1,'Ici','18000','Bourges'),(4,'Violet','Claudie','1993-08-05',0,'81 Bis Avenue de St Amand','18000','Bourges'),(5,'L\'Hiver','Gabriel','1963-11-07',1,'14, Quai des Belges','13016','MARSEILLE'),(6,'Bourassa','Astolpho','1975-04-19',1,'71, rue Charles Corbeau','45400','FLEURY-LES-AUBRAIS'),(7,'Corbeil','Delit','1986-04-13',0,'92, Place du Jeu de Paume','18100','VIERZON'),(8,'Mailloux','Curtis','1933-03-28',1,'45, quai Saint-Nicolas','37100','TOURS'),(9,'Lafontaine','Florismart','1933-06-08',1,'2, rue Cazade','28100','DREUX'),(10,'Boulé','Christian','1939-07-09',1,'47, rue Cazade','28100','DREUX'),(11,'Narcisse','Éléonore','1992-10-24',0,'38, route de Lyon','37300','JOUÉ-LÈS-TOURS'),(12,'Villeneuve','Jeanne','1957-04-11',0,'51, route de Lyon','37300','JOUÉ-LÈS-TOURS'),(13,'Fongemie','Joy','1948-03-04',0,'98, boulevard Amiral Courbet','45100','ORLÉANS'),(14,'Neufville','Sidney','1987-10-16',1,'88, route de Lyon','37300','JOUÉ-LÈS-TOURS'),(15,'Thibault','Saville','1977-05-23',1,'66, Rue Roussy','45160','OLIVET'),(16,'Durand','Yves','1993-08-26',1,'43, avenue de Provence','26000','VALENCE');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,11 +297,11 @@ DROP TABLE IF EXISTS `members_adhesions`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `members_adhesions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
-  `member_id` int(11) DEFAULT NULL,
+  `order_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
   `section_id` int(11) DEFAULT NULL,
-  `temporary` tinyint(1) NOT NULL DEFAULT '1',
   `validate` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -312,7 +312,7 @@ CREATE TABLE `members_adhesions` (
 
 LOCK TABLES `members_adhesions` WRITE;
 /*!40000 ALTER TABLE `members_adhesions` DISABLE KEYS */;
-INSERT INTO `members_adhesions` VALUES (4,9,2,21,0,0),(5,1,3,16,0,0),(6,1,1,16,0,0),(7,11,3,21,0,0);
+INSERT INTO `members_adhesions` VALUES (4,9,2,21,0,'2016-01-01 15:00:00'),(5,1,3,16,0,'2016-01-01 15:00:00'),(6,1,1,16,0,'2016-01-01 15:00:00'),(7,11,3,21,0,'2016-01-01 15:00:00');
 /*!40000 ALTER TABLE `members_adhesions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -324,11 +324,10 @@ DROP TABLE IF EXISTS `members_adhesions_sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `members_adhesions_sessions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `adhesion_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`adhesion_id`,`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -337,7 +336,7 @@ CREATE TABLE `members_adhesions_sessions` (
 
 LOCK TABLES `members_adhesions_sessions` WRITE;
 /*!40000 ALTER TABLE `members_adhesions_sessions` DISABLE KEYS */;
-INSERT INTO `members_adhesions_sessions` VALUES (1,1,14),(2,1,15),(3,2,16),(4,3,18),(5,4,16),(6,5,12),(7,5,13),(8,6,12),(9,6,13);
+INSERT INTO `members_adhesions_sessions` VALUES (1,14),(1,15),(2,16),(3,18),(4,16),(5,12),(5,13),(6,12),(6,13);
 /*!40000 ALTER TABLE `members_adhesions_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,7 +389,7 @@ CREATE TABLE `members_metas` (
 
 LOCK TABLES `members_metas` WRITE;
 /*!40000 ALTER TABLE `members_metas` DISABLE KEYS */;
-INSERT INTO `members_metas` VALUES (1,'comments','Voici un petit commentaire \n\ntout simple'),(1,'email','david.violet@groupe-lacour.fr'),(1,'job','Analyste Programmeur'),(1,'job_company','Lacour Concept'),(1,'licence','212185'),(1,'phone_first',NULL),(1,'phone_second','06.02.09.64.52'),(2,'email','clairebonnot18@gmail.com'),(2,'licence','000001'),(2,'phone_first','0102030405');
+INSERT INTO `members_metas` VALUES (1,'comments','Voici un petit commentaire \n\ntout simple'),(1,'email','david.violet@groupe-lacour.fr'),(1,'job','Analyste Programmeur'),(1,'job_company','Lacour Concept'),(1,'licence','212185'),(1,'phone_first',NULL),(1,'phone_second','06.02.09.64.52'),(2,'email','clairebonnot18@gmail.com'),(2,'licence','000001'),(2,'phone_first','0102030405'),(5,'phone_first','04.93.35.26.40');
 /*!40000 ALTER TABLE `members_metas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -432,6 +431,7 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(45) DEFAULT NULL,
   `date_from` date NOT NULL,
   `date_to` date NOT NULL,
   `restriction_session_min` int(11) DEFAULT NULL,
@@ -442,8 +442,9 @@ CREATE TABLE `orders` (
   `is_card` tinyint(1) DEFAULT '0',
   `card_nb_session` int(11) DEFAULT NULL,
   `amount` double NOT NULL,
+  `season_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Liste des tarifs.';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Liste des tarifs.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,21 +453,22 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2015-09-01','2016-07-31',NULL,NULL,16,NULL,NULL,0,0,200),(2,'2015-09-01','2016-07-31',NULL,NULL,17,NULL,NULL,0,0,200),(3,'2015-09-01','2016-07-31',1,1,21,NULL,NULL,0,0,175),(4,'2015-09-01','2016-07-31',2,2,21,NULL,NULL,0,0,330),(5,'2015-09-01','2015-12-31',1,1,21,NULL,NULL,0,0,85),(6,'2015-09-01','2015-12-31',2,2,21,NULL,NULL,0,0,160),(7,'2016-01-01','2016-03-31',1,1,21,NULL,NULL,0,0,65),(8,'2016-01-01','2016-03-31',2,2,21,NULL,NULL,0,0,120),(9,'2016-04-01','2016-06-30',1,1,21,NULL,NULL,0,0,65),(10,'2016-04-01','2016-06-30',2,2,21,NULL,NULL,0,0,120),(11,'2015-09-01','2016-06-30',NULL,NULL,21,NULL,NULL,1,10,70),(12,'2016-09-01','2017-06-30',2,2,21,NULL,NULL,0,0,250);
+INSERT INTO `orders` VALUES (1,NULL,'2016-09-01','2017-07-31',NULL,NULL,16,NULL,NULL,0,0,200,1),(2,NULL,'2016-09-01','2017-07-31',NULL,NULL,17,NULL,NULL,0,0,200,1),(3,NULL,'2016-09-01','2017-07-31',1,1,21,NULL,NULL,0,0,175,1),(4,NULL,'2016-09-01','2017-07-31',2,2,21,NULL,NULL,0,0,330,1),(5,NULL,'2016-09-01','2016-12-31',1,1,21,NULL,NULL,0,0,85,1),(6,NULL,'2016-09-01','2016-12-31',2,2,21,NULL,NULL,0,0,160,1),(7,NULL,'2017-01-01','2017-03-31',1,1,21,NULL,NULL,0,0,65,1),(8,NULL,'2017-01-01','2017-03-31',2,2,21,NULL,NULL,0,0,120,1),(9,NULL,'2017-04-01','2017-06-30',1,1,21,NULL,NULL,0,0,65,1),(10,NULL,'2017-04-01','2017-06-30',2,2,21,NULL,NULL,0,0,120,1),(11,NULL,'2016-09-01','2017-06-30',NULL,NULL,21,NULL,NULL,1,10,70,1),(12,NULL,'2016-09-01','2017-07-31',NULL,NULL,23,NULL,NULL,0,0,0,1),(14,NULL,'2017-09-01','2018-07-31',NULL,NULL,24,NULL,NULL,0,0,330,3);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `orders_rules`
+-- Table structure for table `orders_auto`
 --
 
-DROP TABLE IF EXISTS `orders_rules`;
+DROP TABLE IF EXISTS `orders_auto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `orders_rules` (
+CREATE TABLE `orders_auto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date_from` date DEFAULT NULL,
-  `date_to` date DEFAULT NULL,
+  `season_id` int(11) NOT NULL,
+  `date_from` date NOT NULL,
+  `date_to` date NOT NULL,
   `description` varchar(255) NOT NULL,
   `restriction_category_id` int(11) DEFAULT NULL,
   `restriction_activity_id` int(11) DEFAULT NULL,
@@ -486,17 +488,17 @@ CREATE TABLE `orders_rules` (
   `apply_on_adhesion` tinyint(1) NOT NULL DEFAULT '0',
   `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Règles appliquées pour des réductions, et autres ...';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='Règles appliquées pour des réductions, et autres ...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders_rules`
+-- Dumping data for table `orders_auto`
 --
 
-LOCK TABLES `orders_rules` WRITE;
-/*!40000 ALTER TABLE `orders_rules` DISABLE KEYS */;
-INSERT INTO `orders_rules` VALUES (1,'2015-09-01','2016-07-31','Licence fédérale 10 ans et moins',NULL,NULL,NULL,10,'<=',NULL,NULL,NULL,NULL,NULL,NULL,21,NULL,0,1,0,9),(2,'2015-09-01','2016-07-31','Licence fédérale plus de 10 ans',NULL,NULL,NULL,10,'>',NULL,NULL,NULL,NULL,NULL,NULL,34,NULL,0,1,0,9),(3,'2015-09-01','2016-07-31','T-Shirt pour compétiteurs',11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,0,1,0,0),(4,'2015-09-01','2016-07-31','Réduction 2ème adhésion',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'==',NULL,NULL,-50,0,0,1,0),(5,'2015-09-01','2016-07-31','2ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,2,'==',NULL,NULL,NULL,-10,NULL,0,1,0,0),(6,'2015-09-01','2016-07-31','3ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,3,'==',NULL,NULL,NULL,-25,NULL,0,1,0,0),(7,'2015-09-01','2016-07-31','4ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,4,'==',NULL,NULL,NULL,-40,NULL,0,1,0,0),(8,'2015-09-01','2016-07-31','5ème adhérent et plus',NULL,NULL,NULL,NULL,NULL,NULL,5,'>=',NULL,NULL,NULL,NULL,-50,0,1,0,0);
-/*!40000 ALTER TABLE `orders_rules` ENABLE KEYS */;
+LOCK TABLES `orders_auto` WRITE;
+/*!40000 ALTER TABLE `orders_auto` DISABLE KEYS */;
+INSERT INTO `orders_auto` VALUES (1,1,'2016-09-01','2017-07-31','Licence fédérale 10 ans et moins',NULL,NULL,NULL,10,'<=',NULL,NULL,NULL,NULL,NULL,NULL,21,NULL,0,1,0,9),(2,1,'2016-09-01','2017-07-31','Licence fédérale plus de 10 ans',NULL,NULL,NULL,10,'>',NULL,NULL,NULL,NULL,NULL,NULL,34,NULL,0,1,0,9),(3,1,'2016-09-01','2017-07-31','T-Shirt pour compétiteurs',11,NULL,NULL,25,'>=',NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,0,1,0,0),(4,1,'2016-09-01','2017-07-31','Réduction 2ème adhésion',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'==',NULL,NULL,-50,0,0,1,0),(5,1,'2016-09-01','2017-07-31','2ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,2,'==',NULL,NULL,NULL,-10,NULL,0,1,0,0),(6,1,'2016-09-01','2017-07-31','3ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,3,'==',NULL,NULL,NULL,-25,NULL,0,1,0,0),(7,1,'2016-09-01','2017-07-31','4ème adhérent',NULL,NULL,NULL,NULL,NULL,NULL,4,'==',NULL,NULL,NULL,-40,NULL,0,1,0,0),(8,1,'2016-09-01','2017-07-31','5ème adhérent et plus',NULL,NULL,NULL,NULL,NULL,NULL,5,'>=',NULL,NULL,NULL,NULL,-50,0,1,0,0),(9,1,'2016-09-01','2017-07-31','Test',NULL,NULL,23,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0,0,1,0),(10,3,'2017-09-01','2018-07-31','Licence fédérale',NULL,NULL,NULL,10,'>',NULL,NULL,NULL,NULL,NULL,NULL,34.56,NULL,0,1,0,9);
+/*!40000 ALTER TABLE `orders_auto` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -510,8 +512,9 @@ CREATE TABLE `seasons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
+  `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,7 +523,7 @@ CREATE TABLE `seasons` (
 
 LOCK TABLES `seasons` WRITE;
 /*!40000 ALTER TABLE `seasons` DISABLE KEYS */;
-INSERT INTO `seasons` VALUES (1,'2016-09-01 00:00:01','2017-07-31 00:00:01');
+INSERT INTO `seasons` VALUES (1,'2016-09-01 00:00:00','2017-07-31 00:00:00','Saison 2016 - 2017'),(3,'2017-09-01 00:00:00','2018-07-31 00:00:00','Saison 2017 - 2018');
 /*!40000 ALTER TABLE `seasons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +549,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'dadou','dadou','2017-04-16 09:47:26');
+INSERT INTO `users` VALUES (1,'dadou','dadou','2017-06-26 15:38:22');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -656,4 +659,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-18 12:47:36
+-- Dump completed on 2017-08-04 15:59:53

@@ -138,3 +138,18 @@ export const SearchAdhesions = fetchActionAsyncCreator<ISearchAdhesions, ISearch
     response: SearchAdhesionsSuccess,
     error: SearchAdhesionsFailed
 });
+
+interface IGetAdhesionById {
+    id: number
+}
+let _apiGetAdhesionById = _apiGlobalName + "GetAdhesionById/";
+export const GetAdhesionByIdRequest = actionCreator<IFetchRequest<IGetAdhesionById>>(_apiGetAdhesionById);
+export const GetAdhesionByIdSuccess = actionCreator<IFetchResponse<IGetAdhesionById, Models.Adhesion>>(_apiGetAdhesionById + "success");
+export const GetAdhesionByIdFailed = actionCreator<IFetchResponse<IGetAdhesionById, any>>(_apiGetAdhesionById + "error");
+export const GetAdhesionById = fetchActionAsyncCreator<IGetAdhesionById, Models.Adhesion>({
+    name: _apiGetAdhesionById,
+    uri: window.baseUrl + _apiGetAdhesionById,
+    request: GetAdhesionByIdRequest,
+    response: GetAdhesionByIdSuccess,
+    error: GetAdhesionByIdFailed
+});

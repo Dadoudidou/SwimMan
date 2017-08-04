@@ -124,5 +124,15 @@ namespace Swiman.Areas.API.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetAdhesionById(int id)
+        {
+            using (var ctx = new UnitOfWork())
+            {
+                Adhesion _item = ctx.members.GetAdhesionById(id);
+                return Json(_item);
+            }
+        }
+
     }
 }

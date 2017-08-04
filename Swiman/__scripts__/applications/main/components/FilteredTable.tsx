@@ -10,7 +10,7 @@ export class HeaderColumn<T> {
     headerStyle?: React.CSSProperties
 
     bodyContent?: (obj: T) => React.ReactNode
-    bodyStyle?: React.CSSProperties
+    bodyStyle?: React.CSSProperties | ((obj: T) => React.CSSProperties)
         
     width?: number | string
     textAlign?: "left" | "center" | "right"
@@ -102,18 +102,18 @@ class FilteredTable extends React.PureComponent<IFilteredTableProps, IFilteredTa
                         })}
                     </TableRow>
                 </TableHeader>
-                <TableBody displayRowCheckbox={false} showRowHover>
+                <TableBody displayRowCheckbox={false} showRowHover={true}>
                     {this.props.elements.map(element => {
                         return (
                             <TableRow key={element.id} style={{ cursor: "pointer" }}>
                                 {_cols.map(col => {
                                     return (
-                                        <TableRowColumn
+                                        <TableRowColumn 
                                             key={col.key}
                                             style={{
                                                 width: col.width,
                                                 textAlign: col.textAlign || "left",
-                                                ...col.bodyStyle
+                                                ...(typeof (col.bodyStyle) == "function") ? col.bodyStyle(element) : col.bodyStyle
                                             }}>
                                             {col.bodyContent(element)}
                                         </TableRowColumn>

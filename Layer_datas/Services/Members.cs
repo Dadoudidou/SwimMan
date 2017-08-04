@@ -233,6 +233,11 @@ namespace Layer_datas.Services
             return Mapper.Map<Objects.members.Adhesion>(__entity);
         }
 
+        public Objects.members.Adhesion GetAdhesionById(int id)
+        {
+            return Mapper.Map<Objects.members.Adhesion>(_ctx.members_adhesions.FirstOrDefault(x => x.id == id));
+        }
+
         #endregion
     }
 }

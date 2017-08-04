@@ -10,3 +10,31 @@ export const getMeta = (member: ApiModels.Member, col_key: string, defaut?: Reac
         return defaut;
     }
 }
+
+export const setMeta = (member: ApiModels.Member, col_key: string, col_value: string): ApiModels.Member => {
+    let _index = member.metas.map(x => x.col_key.toLowerCase()).indexOf(col_key.toLowerCase());
+    let _member = { ...member };
+    if (!_member.metas) _member.metas = [];
+    if (_index > -1) {
+        return {
+            ...member,
+            metas: member.metas.map((meta, index) => {
+                if (index == _index) {
+                    return {
+                        ...meta,
+                        col_value: col_value
+                    }
+                }
+                return meta;
+            })
+        };
+    } else {
+        return {
+            ...member,
+            metas: [
+                ...member.metas,
+                { col_key: col_key, col_value: col_value }
+            ]
+        };
+    }
+}

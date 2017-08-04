@@ -158,6 +158,7 @@
     <Folder Include="Views\Users\" />
     <Folder Include="__scripts__\applications\main\routes\activities\actions\" />
     <Folder Include="__scripts__\applications\main\routes\activities\models\" />
+    <Folder Include="__scripts__\applications\main\routes\inscriptionExpress\Steps\Step_Payments\" />
     <Folder Include="__scripts__\applications\main\routes\seasons\actions\" />
     <Folder Include="__scripts__\applications\main\routes\seasons\models\" />
   </ItemGroup>
@@ -191,6 +192,7 @@
     <TypeScriptCompile Include="__scripts__\applications\main\helpers\activities.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\helpers\members.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\helpers\numbers.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\helpers\orders.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\index.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\partials\CurrentSeason.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\layouts\SidebarLeft.tsx" />
@@ -198,6 +200,24 @@
     <TypeScriptCompile Include="__scripts__\applications\main\partials\SidebarMenu.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\components\ListItem.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\Adhesions.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\components\FormOrder.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\components\List.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\add\Add.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\add\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\add\sync.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\list\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\list\List.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\list\sync.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\view\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\view\sync.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\adhesions\routes\view\View.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\inscriptionExpress\index.ts" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\inscriptionExpress\InscriptionExpress.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\inscriptionExpress\Steps\Step_Adhesions\StepAdhesions.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\inscriptionExpress\Steps\Step_Members\StepMembers.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\inscriptionExpress\sync.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\constants.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\login\Login.tsx" />
@@ -209,6 +229,8 @@
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\reducer\index.ts" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\activities\Activities.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\AutoComplete.tsx" />
+    <TypeScriptCompile Include="__scripts__\applications\main\routes\members\components\Form.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\Adhesions.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\routes\view\Infos.tsx" />
     <TypeScriptCompile Include="__scripts__\applications\main\routes\members\index.ts" />
@@ -410,6 +432,7 @@
     <TypeScriptCompile Include="__scripts__\modules\redux\middlewares\timeoutScheduler.ts" />
     <TypeScriptCompile Include="__scripts__\modules\redux\reducer.ts" />
     <TypeScriptCompile Include="__scripts__\modules\redux\store.ts" />
+    <TypeScriptCompile Include="__scripts__\modules\redux\storeManager.ts" />
     <TypeScriptCompile Include="__scripts__\modules\utils\nested-prop\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\utils\router\index.ts" />
     <TypeScriptCompile Include="__scripts__\modules\utils\router\NavLink.tsx" />

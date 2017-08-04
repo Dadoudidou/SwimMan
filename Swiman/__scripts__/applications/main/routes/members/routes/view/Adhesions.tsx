@@ -1,8 +1,15 @@
 ﻿import * as React from "react";
 import * as ApiModels from "modules/api/models";
+import AdhesionsList from "applications/main/routes/adhesions/components/List";
+
+import { RaisedButton } from "material-ui"
 
 interface IAdhesionsProps {
     member: ApiModels.Member
+    adhesions?: ApiModels.Adhesion[]
+
+    onMount?: () => void
+    onSelect?: (adhesion: ApiModels.Adhesion) => void
 }
 
 interface IAdhesionsState {
@@ -12,7 +19,8 @@ class Adhesions extends React.PureComponent<IAdhesionsProps, IAdhesionsState>
 {
     // set the default props for the class
     static defaultProps: IAdhesionsProps = {
-        member: undefined
+        member: undefined,
+        onMount: () => { }
     }
 
     constructor(props: IAdhesionsProps) {
@@ -23,7 +31,9 @@ class Adhesions extends React.PureComponent<IAdhesionsProps, IAdhesionsState>
     //#region LIFECYCLE
 
     // invoked immediately before mounting occurs
-    componentWillMount() { }
+    componentWillMount() {
+        this.props.onMount();
+    }
 
     // invoked immediately after a component is mounted
     componentDidMount() { }
@@ -45,9 +55,47 @@ class Adhesions extends React.PureComponent<IAdhesionsProps, IAdhesionsState>
     render() {
         if (!this.props.member) return <div></div>
         return (
-            <div>Adhesions</div>
+            <div>
+                <AdhesionsList
+                    adhesions={this.props.adhesions}
+                    countPage={1}
+                    currentPage={1}
+                    elementsPerPage={9999999}
+                    hideNavigation hideChooseColumn hideFilter
+                    hideColumns={["member"]}
+                    onSelect={this.props.onSelect} />
+            </div>
         );
     }
 }
 
-export default Adhesions;
+
+import { connect } from "react-redux";
+import { Constants, Actions, IMembersViewReducer } from "./sync";
+import * as ApiActions from "modules/api/actions";
+import { getStore } from "modules/redux";
+import { push } from "react-router-redux"
+
+const mapStateToProps = (state: IMembersViewReducer, props: IAdhesionsProps): Partial<IAdhesionsProps> => {
+    return {
+        adhesions: state.MembersView.adhesions
+    };
+}
+
+const mapDispatchToProps = (dispatch, props: IAdhesionsProps): Partial<IAdhesionsProps> => {
+    return {
+        onMount: () => {
+            let _state: IMembersViewReducer = getStore().getState();
+            dispatch(Actions.initAdhesions());
+            dispatch(ApiActions.members.SearchAdhesions({
+                request_id: Constants.search_adhesions,
+                Request: { criteria: { member: props.member }, limit: 999999, page: 1 }
+            }))
+        },
+        onSelect: (adhesion) => {
+            dispatch(push("/adhesions/" + adhesion.id));
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Adhesions);

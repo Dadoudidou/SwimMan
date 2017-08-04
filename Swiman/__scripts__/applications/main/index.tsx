@@ -49,11 +49,16 @@ modNotifs.reducer.loadReducer(store);
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+let _fontSize = 12;
+let _theme = getMuiTheme({
+   
+})
 class Root extends React.PureComponent<any, any>{
     render() {
         return (
             <Provider store={store}>
-                <MuiThemeProvider>
+                <MuiThemeProvider muiTheme={_theme}>
                     <div>
                         <Router history={history as any} routes={routes} />
                         <Notifs />

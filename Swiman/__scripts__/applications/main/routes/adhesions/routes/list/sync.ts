@@ -1,7 +1,6 @@
 ﻿// *** Constants
 export const Constants = {
-    view_member: "routes/members/view/view_member",
-    search_adhesions: "routes/members/view/search_adhesions"
+    search_adhesions: "routes/members/list/search_adhesions"
 }
 
 // *** Actions
@@ -10,39 +9,36 @@ import * as ApiModels from "modules/api/models";
 import * as ApiActions from "modules/api/actions";
 
 export const Actions = {
-    init: actionCreator("MembersView/init"),
-    initAdhesions: actionCreator("MembersView/initAdhesions")
+    init: actionCreator("AdhesionsList/init"),
 }
 
 // *** Reducer
 import { isType, IAction } from "modules/redux";
 
 interface IState {
-    member?: ApiModels.Member
-
     adhesions?: ApiModels.Adhesion[]
+    searchCount?: number
+    searchPage?: number
+    searchLimit?: number
+
 }
 const InitialState: IState = {
+    adhesions: [],
+    searchLimit: 10
 }
 const Reducer = (state: IState = InitialState, action: IAction<any>): IState => {
 
     if (isType(action, Actions.init)) return InitialState;
-    if (isType(action, Actions.initAdhesions)) return { ...state, adhesions: [] }
 
-    if (isType(action, ApiActions.members.GetMemberByIdSuccess) &&
-        action.payload.request.request_id == Constants.view_member) {
-        return {
-            ...state,
-            member: action.payload.response
-        }
-    }
-
+    //search
     if (isType(action, ApiActions.members.SearchAdhesionsSuccess) &&
         action.payload.request.request_id == Constants.search_adhesions) {
         return {
             ...state,
-            adhesions: action.payload.response.adhesions
-        }
+            adhesions: action.payload.response.adhesions,
+            searchCount: action.payload.response.count,
+            searchPage: action.payload.response.page
+        };
     }
 
     return state;
@@ -50,9 +46,9 @@ const Reducer = (state: IState = InitialState, action: IAction<any>): IState => 
 
 // ** Load Reducer
 import { injectAsyncReducer } from "modules/redux";
-export interface IMembersViewReducer {
-    MembersView: IState
+export interface IAdhesionsListReducer {
+    AdhesionsList: IState
 }
 export const loadReducer = (store) => {
-    injectAsyncReducer(store, "MembersView", Reducer);
+    injectAsyncReducer(store, "AdhesionsList", Reducer);
 }
