@@ -1,0 +1,32 @@
+{
+  "name": "swimman-server",
+  "version": "1.0.0",
+  "description": "Serveur de l'application swimMan",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "dev": "webpack --watch",
+    "watch:build": "webpack --watch",
+    "watch:server": "nodemon './../../../build/server.js' --watch './../../../build'"
+  },
+  "author": "David Violet",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "2.5.2",
+    "webpack": "3.6.0",
+    "ts-loader": "2.3.7",
+    "nodemon": "1.12.1",
+    "webpack-shell-plugin": "0.5.0"
+  },
+  "dependencies": {
+    "hapi": "16.6.0",
+    "apollo-server-hapi": "1.1.2",
+    "graphql": "0.11.3",
+    "graphql-tools": "1.2.2",
+    "sequelize": "4.8.3",
+    "mysql2": "1.4.2",
+    "@types/hapi": "16.1.9",
+    "@types/sequelize": "4.0.73"
+  }
+}
