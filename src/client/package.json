@@ -14,6 +14,13 @@
     "typescript": "2.5.2",
     "webpack": "3.6.0",
     "ts-loader": "2.3.7",
+    "node-sass":"4.5.3",
+    "sass-loader": "6.0.6",
+    "css-loader": "0.28.7",
+    "style-loader": "0.18.2",
+    "file-loader": "0.11.2",
+    "url-loader": "0.5.9",
+    "extract-text-webpack-plugin": "3.0.0",
     "html-webpack-plugin": "2.30.1",
     "webpack-dev-server": "2.8.2"
   },
@@ -30,7 +37,10 @@
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
-    "json-to-graphql": "0.1.1",
+    "material-ui": "1.0.0-beta.11",
+    "moment": "2.18.1",
+    "font-awesome": "4.7.0",
+    "fullcalendar": "3.5.1",
     "@types/deep-extend": "^0.4.30",
     "@types/es6-promise": "0.0.33",
     "@types/history": "^4.6.0",
@@ -43,6 +53,7 @@
     "@types/react-router-dom": "^4.0.7",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
-    "@types/webpack": "3.0.11"
+    "@types/webpack": "3.0.11",
+    "@types/fullcalendar": "3.5.0"
   }
 }
