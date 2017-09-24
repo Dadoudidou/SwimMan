@@ -26,7 +26,9 @@
     "graphql-tools": "1.2.2",
     "sequelize": "4.8.3",
     "mysql2": "1.4.2",
+    "jsonwebtoken": "8.0.1",
     "@types/hapi": "16.1.9",
-    "@types/sequelize": "4.0.73"
+    "@types/sequelize": "4.0.73",
+    "@types/jsonwebtoken": "7.2.3"
   }
 }
