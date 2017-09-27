@@ -2,6 +2,7 @@ import * as Hapi from "hapi"
 import { graphiqlHapi, graphqlHapi } from "apollo-server-hapi";
 import { config } from "./config"
 import * as jwt from "jsonwebtoken"
+import { AuthJWTHapi, IAuthJwtHapiOptions } from "./AuthJWTHapi"
 
 let server = new Hapi.Server();
 server.connection(config.server);
@@ -28,30 +29,13 @@ let checkAuth = (request: Hapi.Request, reply: Hapi.ReplyWithContinue) => {
     })
 }
 
-// -- register graphql plugin
+// -- graphQL
 import { schema as grapgql_schema } from "./routes/graphql"
-server.register({
-    register: graphqlHapi,
-    options: {
-        path: "/graphql",
-        graphqlOptions: {
-            schema: grapgql_schema
-        }
-    }
-})
+// -- auth
+import { handler_auth } from "./routes/auth"
 
-// -- register graphiql plugin
-server.register({
-    register: graphiqlHapi,
-    options: {
-        path: "/graphiql",
-        graphiqlOptions: {
-            endpointURL: "/graphql"
-        }
-    }
-})
 
-server.ext("onRequest", (request, reply) => {
+/*server.ext("onRequest", (request, reply) => {
     let _uri = request.path;
     let _method = request.method;
     if(_uri == "/test" && _method == "post"){
@@ -59,43 +43,64 @@ server.ext("onRequest", (request, reply) => {
     } else {
         reply.continue();        
     }
-})
+})*/
 
-server.route({
-    method: "POST",
-    path: "/test",
-    handler: (request,reply) => {
-        reply({
-            success: "hello"
-        })     
-    }
-})
+server.register(AuthJWTHapi, (err) => {
+    if(err) throw err;
 
-server.route({
-    method: "POST",
-    path: "/auth",
-    handler: (request, reply) => {
-        //paramètres GET QUERY
-        let _user = request.query.user;
-        let _pwd = request.query.password;
-        _user = (request.payload.user) ? request.payload.user : _user;
-        _pwd = (request.payload.password) ? request.payload.password : _pwd;
-        if(_user == "dadou" && _pwd == "dadou"){
-            reply({
-                success: true,
-                message: "",
-                token: jwt.sign({ userid: 1 }, config.secret, {
-                    expiresIn: 60*60*5
-                })
-            })
-        } else {
-            reply({
-                success: false,
-                message: ""
-            })
+    //enregistrement de la stratégie d'authentification
+    server.auth.strategy("jwt", "jwt", { 
+        secret: config.secret,
+        authorize: (request, payload, callback) => {
+            callback(undefined, true, { id: 1 });
         }
-    }
-});
+     } as IAuthJwtHapiOptions
+    );
+     // -- /test
+    server.route({
+        method: "POST",
+        path: "/test",
+        config: {
+            auth: "jwt"
+        },
+        handler: (request,reply) => {
+            reply({
+                success: "hello",
+                credentials: request.auth.credentials
+            })     
+        }
+    })
+    // -- /graphql
+    server.register({
+        register: graphqlHapi,
+        options: {
+            path: "/graphql",
+            graphqlOptions: {
+                schema: grapgql_schema
+            }
+        }
+    })
+    // -- /graphiql
+    server.register({
+        register: graphiqlHapi,
+        options: {
+            path: "/graphiql",
+            graphiqlOptions: {
+                endpointURL: "/graphql"
+            }
+        }
+    })
+    // -- /auth
+    server.route({
+        method: "POST",
+        path: "/auth",
+        handler: (request, reply) => {
+            handler_auth(request, reply);
+        }
+    });
+})
+
+
 
 // -- start server
 server.start((err) => {

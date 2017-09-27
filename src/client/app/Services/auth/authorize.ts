@@ -3,7 +3,11 @@ import { get } from "app/Services/session"
 
 export const authorize = (droits: number[], callback: (auth: boolean) => void) => {
     
+    
+
     let _user: ApiModels.Utilisateur = get("user");
+
+
     if(!_user) { callback(false); return; }
     if(!_user.droits) { callback(false); return; }
     

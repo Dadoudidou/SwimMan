@@ -4,6 +4,7 @@ import { StoreManager } from "modules/redux-store-manager"
 import ThunkMiddleware from "redux-thunk"
 import ApiMiddleware from "./Services/api/api-middleware"
 import { makeGraphQlMiddleware } from "modules/redux-actions-graphql"
+import { makeFetchMiddleware } from "modules/redux-actions-fetch"
 import WrapFetch from "./Services/fetch"
 
 let graphqlApiMiddleware = makeGraphQlMiddleware({
@@ -19,10 +20,24 @@ let graphqlApiMiddleware = makeGraphQlMiddleware({
     }
 })
 
+let fetchDefaultMiddleware = makeFetchMiddleware({
+    acton_type: "fetch",
+    fetch: WrapFetch,
+    fetchOptions: {
+        method: "post",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+    }
+})
+
+
 let middlewares = [
     ThunkMiddleware,
     ApiMiddleware,
-    graphqlApiMiddleware
+    graphqlApiMiddleware,
+    fetchDefaultMiddleware
 ];
 
 let _storeManager = new StoreManager();

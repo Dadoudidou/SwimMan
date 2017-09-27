@@ -4,8 +4,8 @@ import { withDroits } from "app/Services/auth"
 export const loadRoutes = (parent = ""): IRoutesConfig[] => {
 
     return [{
-        path: parent + "/main",
-        main: withDroits({ droits:[101], redirectTo: "/login" })(require("./index").default)
+        path: parent + "/test",
+        main: require("./index").default
     }]
 
 }

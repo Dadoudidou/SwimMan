@@ -9,6 +9,8 @@ import { DataTypes } from "./dataTypes"
 import { IEntity } from "./Entities/IEntity"
 
 import { IUserAttributes, GetUserModel } from "./Entities/Users/User"
+import { IGroupAttributes, GetGroupModel } from "./Entities/Users/Group"
+import { IPermissionAttributes, GetPermissionModel } from "./Entities/Users/Permission"
 
 import { IMemberAttributes, GetMemberModel } from "./Entities/Members/Member"
 import { IMemberMetaAttributes, GetMemberMetaModel } from "./Entities/Members/MemberMeta"
@@ -27,6 +29,8 @@ export interface IModels {
     Campaign?: IEntity<ICampaignAttributes>
 
     User?: IEntity<IUserAttributes>
+    Group?: IEntity<IGroupAttributes>
+    Permission?: IEntity<IPermissionAttributes>
 
     Member?: IEntity<IMemberAttributes>
     MemberMeta?: IEntity<IMemberMetaAttributes>
@@ -42,6 +46,8 @@ export interface IModels {
 let __models: IModels = {};
 __models.Campaign = GetCampaignModel(connector, new DataTypes());
 __models.User = GetUserModel(connector, new DataTypes());
+__models.Group = GetGroupModel(connector, new DataTypes());
+__models.Permission = GetPermissionModel(connector, new DataTypes());
 __models.Member = GetMemberModel(connector, new DataTypes());
 __models.MemberMeta = GetMemberMetaModel(connector, new DataTypes());
 __models.Category = GetCategoryModel(connector, new DataTypes());

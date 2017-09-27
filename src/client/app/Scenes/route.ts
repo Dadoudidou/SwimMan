@@ -17,7 +17,8 @@ export const loadRoutes = (parent = ""): IRoutesConfig[] => {
     */
 
     return [
-        ...require("./Main/route").loadRoutes(parent),
+        ...require("./Dashboard/route").loadRoutes(parent),
+        ...require("./Test/route").loadRoutes(parent),
         ...require("./Users/route").loadRoutes(parent),
     ]
 }

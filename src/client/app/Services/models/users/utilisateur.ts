@@ -3,8 +3,8 @@ import { Droit } from "./droit"
 
 export class Utilisateur
 {
-    nom: string
-    prenom: string
+    last_name: string
+    first_name: string
 
     droits: number[]
 

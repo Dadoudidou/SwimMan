@@ -1,11 +1,16 @@
 import * as Sequelize from "sequelize"
 import { IEntity } from "./../IEntity"
+import { IGroupAttributes } from "./Group"
 
 export interface IUserAttributes {
     id: number
     pseudo: string
     mdp: string
     last_connected: Date
+    first_name: string
+    last_name: string
+
+    getGroups: (opt?: Sequelize.FindOptions<IGroupAttributes>) => Promise<IGroupAttributes[]>
 }
 
 export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {
@@ -23,12 +28,24 @@ export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequeliz
         },
         last_connected: {
             type: DataTypes.DATE
-        }
+        },
+        first_name: {
+            type: DataTypes.STRING
+        },
+        last_name: {
+            type: DataTypes.STRING
+        },
     });
 
     let __model = _model as IEntity<IUserAttributes>;
 
-    __model.associate = (models) => { }
+    __model.associate = (models) => { 
+        __model.belongsToMany(models.Group, {
+            through: "users_groups_relationships",
+            as: "groups",
+            foreignKey: "user_id"
+        });
+    }
 
     return __model;
 }
