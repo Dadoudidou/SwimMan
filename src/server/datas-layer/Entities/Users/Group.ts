@@ -3,12 +3,15 @@ import { IEntity } from "./../IEntity"
 import { IPermissionAttributes } from "./Permission"
 import { IUserAttributes } from "./User"
 
-export interface IGroupAttributes {
+export interface IGroupAttributes extends Sequelize.Instance<IGroupAttributes> {
     id: number
     nom: string
 
     getPermissions: (opt?: Sequelize.FindOptions<IPermissionAttributes>) => Promise<IPermissionAttributes[]>
     getUsers: (opt?: Sequelize.FindOptions<IUserAttributes>) => Promise<IUserAttributes[]>
+
+    setUsers: (values?: IUserAttributes[]) => Promise<void>
+    setPermissions: (values?: IPermissionAttributes[]) => Promise<void>
 }
 
 export const GetGroupModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {

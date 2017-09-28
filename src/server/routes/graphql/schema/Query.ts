@@ -3,8 +3,6 @@ import * as sequelize from "sequelize"
 import { UpdateArgs } from "./../utils"
 
 export const typeDefs = `
-
-
 type Query {
     users: QueryUsers
     activities: QueryActivities
@@ -13,8 +11,7 @@ type Query {
 }
 
 type QueryUsers{
-    user(id: Int): User
-    users: [User]
+    ${require("./User").QueryDefs}
 }
 
 type QueryActivities {
@@ -73,14 +70,7 @@ export const resolver = {
             return Models.Section.find({ where: args });
         },
     },
-    QueryUsers: {
-        user(root, args){
-            return Models.User.find({ where: args });
-        },
-        users(root, args){
-            return Models.User.findAll();
-        },
-    },
+    QueryUsers: { ...require("./User").QueryResolvers },
     QueryMembers: {
         members(root, args){
             return Models.Member.findAll({ where: UpdateArgs(args) });

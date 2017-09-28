@@ -2,7 +2,7 @@ import * as Sequelize from "sequelize"
 import { IEntity } from "./../IEntity"
 import { IGroupAttributes } from "./Group"
 
-export interface IUserAttributes {
+export interface IUserAttributes extends Sequelize.Instance<IUserAttributes> {
     id: number
     pseudo: string
     mdp: string
@@ -11,6 +11,7 @@ export interface IUserAttributes {
     last_name: string
 
     getGroups: (opt?: Sequelize.FindOptions<IGroupAttributes>) => Promise<IGroupAttributes[]>
+    setGroups: (values?: IGroupAttributes[]) => Promise<void>
 }
 
 export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {

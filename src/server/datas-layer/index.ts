@@ -2,7 +2,7 @@ import { config } from "./../config";
 import { mysqlConnector } from "./connectors/mysqlConnector"
 
 //connection bdd
-let connector = mysqlConnector(config.connectors["default"]);
+export const connector = mysqlConnector(config.connectors["default"]);
 
 //entities
 import { DataTypes } from "./dataTypes"
