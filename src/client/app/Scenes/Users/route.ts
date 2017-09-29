@@ -12,7 +12,12 @@ export const loadRoutes = (parent = ""): IRoutesConfig[] => {
         {
             path: parent + "/login",
             main: Login
+        },
+        {
+            path: parent + "/users/groups",
+            main: require("./Groups/Groups").default
         }
+
     ]
 
 }

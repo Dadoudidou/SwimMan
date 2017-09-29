@@ -10,6 +10,9 @@
         "declaration": false,
         "jsx": "react"
     },
+    "lib": [
+        "es6", "dom", "esnext.asynciterable"
+    ],
     "exclude": [
         "node_modules"
     ]

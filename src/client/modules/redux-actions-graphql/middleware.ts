@@ -1,7 +1,7 @@
 
 import { IAction } from "modules/redux-actions"
 import { IActionCreatorSettings, IRequest } from "./index"
-
+import { ICombineActionCreatorSettings } from "./combine"
 
 export interface IMakeGraphQlMiddleware {
     acton_type: string
@@ -43,12 +43,26 @@ export const makeGraphQlMiddleware = (options: IMakeGraphQlMiddleware) => {
             if(!data) throw new Error("no value returns");
             return data;
         }).then(data => {
-            //dispatch l'information
-            store.dispatch(_metas.response({request: _action.payload, response: data}));
+            if(_action.action_id == "___combine___"){
+                let __metas = _action.metas as ICombineActionCreatorSettings;
+                __metas.requests.forEach(request => {
+                    store.dispatch(request.actionCreator.metas.response({ request: _action.payload, response: data }));
+                })
+            } else {
+                //dispatch l'information
+                store.dispatch(_metas.response({request: _action.payload, response: data}));
+            }
             return data;
         }).catch(err => {
-            //dispatch l'information
-            store.dispatch(_metas.error({ request: _action.payload, response: err }));
+            if(_action.action_id == "___combine___"){
+                let __metas = _action.metas as ICombineActionCreatorSettings;
+                __metas.requests.forEach(request => {
+                    store.dispatch(request.actionCreator.metas.error({ request: _action.payload, response: err }));
+                })
+            } else {
+                //dispatch l'information
+                store.dispatch(_metas.error({ request: _action.payload, response: err }));
+            }
             return err;
         });
     }

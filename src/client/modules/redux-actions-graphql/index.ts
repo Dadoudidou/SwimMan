@@ -1,4 +1,5 @@
 import { 
+    IAction as IBaseAction,
     actionAsyncCreator, 
     actionCreator, 
     IActionCreator, 
@@ -32,7 +33,7 @@ export interface IResponse<T_INPUT, T_OUTPUT, T_RESPONSE>
 export interface IOptions<T_INPUT, T_OUTPUT, T_RESPONSE>
 {
     name: string
-    query: (args: IRequest<T_INPUT, T_RESPONSE>) => string
+    query: (args: IRequest<T_INPUT, T_OUTPUT>) => string
     response: IActionCreator<IResponse<T_INPUT, T_OUTPUT, T_RESPONSE>>
     error: IActionCreator<IResponse<T_INPUT,T_OUTPUT, any>>
 }
@@ -41,9 +42,13 @@ export interface IOptions<T_INPUT, T_OUTPUT, T_RESPONSE>
  * Interface de retour de la fonction principale
  */
 export interface IActionCreatorSettings<T_INPUT, T_OUTPUT, T_RESPONSE> extends IBaseActionCreatorSettings {
-    query: (args: IRequest<T_INPUT, T_RESPONSE>) => string
+    query: (args: IRequest<T_INPUT, T_OUTPUT>) => string
     response: IActionCreator<IResponse<T_INPUT, T_OUTPUT, T_RESPONSE>>
     error: IActionCreator<IResponse<T_INPUT,T_OUTPUT, any>>
+}
+
+export interface IGraphQlAction<T_INPUT, T_OUTPUT, T_RESPONSE> extends IBaseAction<IRequest<T_INPUT, Partial<T_OUTPUT>>> {
+    metas: IActionCreatorSettings<T_INPUT, T_OUTPUT, T_RESPONSE>
 }
 
 /**
@@ -61,5 +66,6 @@ export const makeGraphqlRequestCreator = (action_type: string) => {
 }
 
 export { IMakeGraphQlMiddleware, makeGraphQlMiddleware } from "./middleware"
+export { makeCombineGraphqlAction } from "./combine"
 
 
