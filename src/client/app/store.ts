@@ -6,6 +6,7 @@ import ApiMiddleware from "./Services/api/api-middleware"
 import { makeGraphQlMiddleware } from "modules/redux-actions-graphql"
 import { makeFetchMiddleware } from "modules/redux-actions-fetch"
 import WrapFetch from "./Services/fetch"
+import { ApolloClient, createNetworkInterface } from "react-apollo"
 
 let graphqlApiMiddleware = makeGraphQlMiddleware({
     acton_type: "api",
@@ -32,14 +33,37 @@ let fetchDefaultMiddleware = makeFetchMiddleware({
     }
 })
 
+export const graphQlApiClient = new ApolloClient({
+    reduxRootSelector: state => state.apollo,
+    networkInterface: createNetworkInterface({
+        uri: "/graphql"
+    }).use([
+        { applyMiddleware: (req, next) => {
+            if(!req.options.headers) req.options.headers = {};
+            let get = require("app/Services/session").get;
+            let _token = get("token");
+            if(_token){
+                req.options.headers.authorization = `JWT ${_token}`;
+            }
+            next();
+        }}
+    ])
+});
 
 let middlewares = [
     ThunkMiddleware,
     ApiMiddleware,
+    graphQlApiClient.middleware(),
     graphqlApiMiddleware,
     fetchDefaultMiddleware
 ];
-
 let _storeManager = new StoreManager();
-let _defaultStore = _storeManager.createStore("default", {}, middlewares).getStore("default");
+let _defaultStore = _storeManager.createStore(
+    "default", 
+    {
+        apollo: graphQlApiClient.reducer()
+    }, 
+    {}, 
+    middlewares).getStore("default");
+
 export const getStore = () => _defaultStore;

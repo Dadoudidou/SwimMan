@@ -3,6 +3,10 @@ import * as jwt from "jsonwebtoken"
 import * as Boom from "boom";
 
 
+// ----------------- UTILS
+
+// ----------------- HAPI Plugin
+
 export interface IAuthJwtHapiOptions {
     secret: string
     verifyOptions?: jwt.VerifyOptions

@@ -44,17 +44,17 @@ export const withDroits = (options: IWithDroitsOptions) => {
                 }
 
                 //non autorisé - redirection
-                if(options.redirectTo){
+                //if(options.redirectTo){
                     return (
                         <Redirect 
-                            to={options.redirectTo} />
+                            to={options.redirectTo || "/dashboard"} />
                     )
-                }
+                //}
 
                 //non autorisé - 
-                return (
+                /*return (
                     <span>Non autorisé</span>
-                )
+                )*/
                 
             }
         }

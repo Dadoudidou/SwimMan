@@ -12,8 +12,9 @@ import * as schema from "app/Services/api/schema"
 let _apiGlobalName = "api/users/";
 
 interface ILoginInput {
-    user: string
-    password: string
+    user?: string
+    password?: string
+    token?: string
 }
 let _apiLogin = _apiGlobalName + "Login";
 export const LoginSuccess = actionCreator<IResponse<ILoginInput, any>>(_apiLogin + "success");

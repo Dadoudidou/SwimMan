@@ -14,7 +14,7 @@ const styles = (theme: Theme ) => ({
     
 })
 
-interface IPartialAppBarProps extends StyledComponentProps<IStyles> {}
+interface IPartialAppBarProps extends StyledComponentProps<any> {}
 
 class PartialAppBar extends React.PureComponent<IPartialAppBarProps, any>
 {

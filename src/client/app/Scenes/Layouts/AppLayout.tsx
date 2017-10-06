@@ -6,17 +6,13 @@ import { Theme } from "material-ui/styles/createMuiTheme"
 import { classNames } from "modules/classnames"
 
 import PartialAppBar from "./Partials/AppBar"
+import PartialSidebar from "./Partials/AppSidebar"
 
 // -- styles
 const drawerWidth = 240;
+type IStyles = "root" | "drawer" | "drawerContent" | "drawerContentShift" | "content"
 
-interface IStyles {
-    root: string
-    drawer: string
-    drawerContent: string
-    drawerContentShift: string
-    content: string
-}
+
 
 const styles = (theme: Theme ) => ({
     root: {
@@ -62,7 +58,7 @@ class AppLayout extends React.PureComponent<IAppLayoutProps, any>
                         className={classNames(this.props.classes.content)}>
 
                         {/* CONTENT */}
-                        <Typography type="body1" noWrap>
+                        <Typography component="div" type="body1" noWrap>
                             {this.props.children}
                         </Typography>
                     </main>
@@ -76,7 +72,7 @@ class AppLayout extends React.PureComponent<IAppLayoutProps, any>
                     classes={{
                         paper: this.props.classes.drawer
                     }}>
-                    test
+                    <PartialSidebar />
                 </Drawer>
             </div>
         )

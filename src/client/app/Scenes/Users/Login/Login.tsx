@@ -7,12 +7,7 @@ import { Grid, Paper, withStyles, StyledComponentProps, TextField, Button, Typog
 
 require("./Login.scss");
 require("./reducer");
-
-interface ILoginStyles {
-    paper: string,
-    form: string,
-    error: string
-}
+type LoginStyles = "paper" | "form" | "error"
 const styles = theme => ({
     paper: {
         padding: 16
@@ -27,7 +22,7 @@ const styles = theme => ({
     }
 })
 
-interface ILoginProps extends RouteComponentProps<any>, StyledComponentProps<ILoginStyles> {
+interface ILoginProps extends RouteComponentProps<any>, StyledComponentProps<LoginStyles> {
     loading?: boolean
     connected?: boolean
     errorMessage?: string
@@ -123,6 +118,7 @@ export default connect(
                         // -- stocke le token
                         set("user", data.user);
                         set("token", data.token);
+                        localStorage.setItem("__token", data.token);
                         // -- redirection
                         getHistory().push("/dashboard");
                     }

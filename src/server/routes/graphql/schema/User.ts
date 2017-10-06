@@ -4,6 +4,7 @@ import { IPermissionAttributes } from "./../../../datas-layer/Entities/Users/Per
 import { IUserAttributes } from "./../../../datas-layer/Entities/Users/User"
 import { Models, connector } from "./../../../datas-layer"
 import * as boom from "boom"
+import { GraphQlContext } from "./../index"
 
 /** Définition des types */
 export const typeDefs = `
@@ -12,7 +13,7 @@ type User {
     pseudo: String
     first_name: String
     last_name: String
-    last_connected: String
+    last_connected: Date
     groups: [Group]
 }
 input _User {
@@ -56,6 +57,8 @@ export const MutationsDefs = `
     updatePermission(id: Int!, name: String, description: String): Permission
     removePermission(id: Int!): Boolean
     setPermissionsToGroup(permission_ids: [Int]!, group_id: Int!): Group
+    addPermissionToGroup(permission_id: Int!, group_id: Int!): Group
+    removePermissionToGroup(permission_id: Int!, group_id: Int!): Group
     # user manage
     addUser(user: _User!): User
     updateUser(id: Int!, user: _User!): User
@@ -91,7 +94,9 @@ export const QueryResolvers = {
     user(root, args){
         return Models.User.find({ where: args });
     },
-    users(root, args){
+    users(root, args, context: GraphQlContext){
+        console.log("-----------");
+        console.log(context.auth.credentials.droits);
         return Models.User.findAll();
     },
     group(root, args){
@@ -176,6 +181,43 @@ export const MutationsResolvers = {
                 return (group as any).setPermissions(permissions);
             }).then(() => {
                 return group;
+            })
+        })
+    },
+    addPermissionToGroup(root, args){
+        return Models.Group.find({
+            where: { id: args.group_id }
+        }).then(group => {
+            if(!group) throw new Error(`Not found group with id ${args.group_id}`)
+            return Models.Permission.find({
+                where: { id: args.permission_id }
+            }).then(permission => {
+                if(!permission) throw new Error(`Not found permission with id ${args.permission_id}`)
+                return group.getPermissions().then(permissions => {
+                    let _index = permissions.map(x => x.id).indexOf(permission.id);
+                    if(_index > -1) return group;
+                    return group.setPermissions([...permissions, permission]).then(() => group)
+                })
+            })
+        })
+    },
+    removePermissionToGroup(root, args){
+        return Models.Group.find({
+            where: { id: args.group_id }
+        }).then(group => {
+            if(!group) throw new Error(`Not found group with id ${args.group_id}`)
+            return Models.Permission.find({
+                where: { id: args.permission_id }
+            }).then(permission => {
+                if(!permission) throw new Error(`Not found permission with id ${args.permission_id}`)
+                return group.getPermissions().then(permissions => {
+                    let _index = permissions.map(x => x.id).indexOf(permission.id);
+                    if(_index == -1) return group;
+                    return group.setPermissions([
+                        ...permissions.slice(0, _index),
+                        ...permissions.slice(_index + 1)
+                    ]).then(() => group)
+                })
             })
         })
     },

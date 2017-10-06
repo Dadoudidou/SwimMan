@@ -13,7 +13,7 @@ const styles = (theme: Theme ) => ({
     
 })
 
-interface IPartialAppBarUserProps extends StyledComponentProps<IStyles> {}
+interface IPartialAppBarUserProps extends StyledComponentProps<any> {}
 
 interface IPartialAppBarUserState {
     open: boolean

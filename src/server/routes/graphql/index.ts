@@ -18,3 +18,11 @@ var resolvers = {
 }
 
 export const schema = makeExecutableSchema({ typeDefs, resolvers } as any);
+
+import { AuthCredential } from "../../index"
+export type GraphQlContext = {
+    auth: {
+        isAuthenticated: boolean
+        credentials: AuthCredential
+    }
+}

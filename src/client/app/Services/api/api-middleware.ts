@@ -6,6 +6,7 @@ import { getTracker } from "app/Services/analytics"
 
 const apiMiddleware = store => next => action => {
 
+
     //filtre des actions
     if(!action || !action.type || action.type != "api"){
         return next(action);
@@ -14,6 +15,8 @@ const apiMiddleware = store => next => action => {
     let _store = store as Store<any>;
     let _action = action as IAction<IRequest<any, any>>;
     let _metas = _action.metas as IActionCreatorSettings<any, any, any>;
+
+    
 
     //getTracker().event(_action.type, _action.action_id);
 

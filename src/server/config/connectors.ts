@@ -12,7 +12,8 @@ export const connectors = {
             options: {
                 define: {
                     timestamps: false
-                }
+                },
+                logging: false
             }
         } as IConnectorConfig
     }

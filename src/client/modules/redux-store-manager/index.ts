@@ -26,20 +26,25 @@ export class StoreManager {
         return this.stores[key.toLowerCase()];
     }
 
-    createStore(key: string, initialState = {}, middlewares: Redux.Middleware[] = []): StoreManager {
+    createStore(key: string, reducers:{ [key: string]: Redux.Reducer<any> } = {}, initialState = {}, middlewares: Redux.Middleware[] = []): StoreManager {
         let __this = this;
 
         // *** middlewares
 
         // *** store
         let _store = Redux.createStore(
-            Redux.combineReducers(this.rootReducer),
+            Redux.combineReducers({ 
+                ...this.rootReducer,
+                ...reducers
+            }),
             initialState,
             Redux.applyMiddleware(...middlewares)
         ) as IStore<any>
 
         // *** reducers asynchrones
-        _store.asyncReducers = {};
+        _store.asyncReducers = {
+            ...reducers
+        };
         _store.injectAsyncReducer = (reducerKey:string, reducer: Redux.Reducer<any>) => {
             __this.injectAsyncReducer(key, reducerKey, reducer);
         }
