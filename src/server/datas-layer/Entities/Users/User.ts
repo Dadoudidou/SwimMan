@@ -1,6 +1,7 @@
 import * as Sequelize from "sequelize"
 import { IEntity } from "./../IEntity"
 import { IGroupAttributes } from "./Group"
+import { ILogAttributes } from "./../System/Log"
 
 export interface IUserAttributes extends Sequelize.Instance<IUserAttributes> {
     id: number
@@ -12,6 +13,8 @@ export interface IUserAttributes extends Sequelize.Instance<IUserAttributes> {
 
     getGroups: (opt?: Sequelize.FindOptions<IGroupAttributes>) => Promise<IGroupAttributes[]>
     setGroups: (values?: IGroupAttributes[]) => Promise<void>
+    getLogs: (opt?: Sequelize.FindOptions<ILogAttributes>) => Promise<ILogAttributes[]>
+    setLogs: (values?: ILogAttributes[]) => Promise<void>
 }
 
 export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {
@@ -21,10 +24,10 @@ export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequeliz
             primaryKey: true,
             autoIncrement: true
         },
-        pseudo: {
+        login: {
             type: DataTypes.STRING
         },
-        mdp: {
+        password: {
             type: DataTypes.STRING
         },
         last_connected: {
@@ -46,6 +49,10 @@ export const GetUserModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequeliz
             as: "groups",
             foreignKey: "user_id"
         });
+        __model.hasMany(models.Log, {
+            as: "logs",
+            foreignKey: "user_id"
+        })
     }
 
     return __model;

@@ -2,6 +2,7 @@ import { UpdateArgs } from "./../utils"
 
 export const typeDefs = `
 scalar Date
+scalar JSON
 type Campaign {
     id: Int
     start: Date
@@ -18,6 +19,17 @@ export const resolver = {
         },
         __serialize(value: Date){
             return value.toISOString();
+        },
+        __parseLiteral(ast){
+            return null;
+        }
+    },
+    JSON: {
+        __parseValue(value){
+            return JSON.stringify(value);
+        },
+        __serialize(value: any){
+            return JSON.parse(value);
         },
         __parseLiteral(ast){
             return null;

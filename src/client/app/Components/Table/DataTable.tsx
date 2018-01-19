@@ -1,7 +1,10 @@
 import * as React from "react"
 import {
-    Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel
+    Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
+    withStyles, WithStyles
 } from "material-ui"
+import { StyleRulesCallback } from "material-ui/styles/WithStyles"
+import { classNames } from "modules/classnames"
 
 export type HeaderColumn = {
     /** Texte de l'entête */
@@ -28,6 +31,18 @@ export type HeaderColumn = {
     isNumeric?: boolean
 }
 
+type TStyle = "rowDense" | "cell"
+
+const styles: StyleRulesCallback<TStyle> = theme => ({
+    rowDense: {
+        height: (theme.typography.fontSize as number) * 2
+    },
+    cell: {
+        paddingLeft: theme.spacing.unit,
+        paddingRight: theme.spacing.unit
+    }
+})
+
 type DataTableProps = {
     data: any[]
     filterable?: boolean
@@ -40,7 +55,7 @@ type DataTableProps = {
 
 type DataTableState = {}
 
-class DataTable extends React.PureComponent<DataTableProps, DataTableState>
+class DataTable extends React.PureComponent<DataTableProps & WithStyles<TStyle>, DataTableState>
 {
     static defaultProps: Partial<DataTableProps> = {
         onRowClick: () => {},
@@ -64,11 +79,15 @@ class DataTable extends React.PureComponent<DataTableProps, DataTableState>
                     <TableRow >
                         {_cols.map((col, index) => {
                             let _style: React.CSSProperties = {};
-                            if(col.width) _style.width = col.width;
+                            if(col.width) {
+                                _style.width = col.width;
+                                //_style.paddingLeft = 0;
+                                //_style.paddingRight = 0;
+                            }
                             return (
                                 <TableCell 
                                     key={col.id}
-                                    className={col.headerClassName}
+                                    className={classNames(this.props.classes.cell, col.headerClassName)}
                                     style={_style}>
                                     {col.Header}
                                 </TableCell>
@@ -82,15 +101,21 @@ class DataTable extends React.PureComponent<DataTableProps, DataTableState>
                             <TableRow 
                                 key={data.id}
                                 hover={this.props.hoverable}
-                                onClick={(ev) => { this.props.onRowClick(ev, data); }}>
+                                onClick={(ev) => { this.props.onRowClick(ev, data); }}
+                                className={classNames({
+                                    [this.props.classes.rowDense]: this.props.dense
+                                })}>
                             {_cols.map((col, index) => {
                                 let _style: React.CSSProperties = {};
-                                if(col.width) _style.width = col.width;
+                                if(col.width) {
+                                    _style.width = col.width;
+                                    _style.paddingLeft = 0;
+                                    _style.paddingRight = 0;
+                                }
                                 return (
                                     <TableCell 
                                         key={col.id}
-                                        className={col.dataClassName}
-                                        style={_style}
+                                        className={classNames(this.props.classes.cell, col.dataClassName)}
                                         onClick={(ev) => { this.props.onCellClick(ev, data, col); }}>
                                         {col.Data(data)}
                                     </TableCell>
@@ -105,4 +130,4 @@ class DataTable extends React.PureComponent<DataTableProps, DataTableState>
     }
 }
 
-export default DataTable;
+export default withStyles(styles)<DataTableProps>(DataTable);

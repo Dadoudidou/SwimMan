@@ -3,7 +3,9 @@ import * as jwt from "jsonwebtoken";
 import { config } from "./../../config";
 import * as boom from "boom";
 import { Models } from "./../../datas-layer"
-
+import { IUserAttributes } from "./../../datas-layer/Entities/Users/User"
+import { getLogger } from "services/Logger"
+import { addHistoric } from "services/Historic"
 
 export type JWTTokenPayload = {
     user: {
@@ -11,11 +13,16 @@ export type JWTTokenPayload = {
     }
 }
 
-export const authModelUser = (argsUser: any, reply: (reply: any) => any) => {
+
+
+export const authModelUser = (argsUser: any, reply: (reply: any, user?: IUserAttributes) => any) => {
     return Models.User.find({
         where: argsUser
     }).then(user => {
-        if(!user) reply(boom.badRequest("L'identifiant ou le mot de passe n'est pas valide."));
+        if(!user) {
+            getLogger().warn("Mauvaise identification", { args: argsUser });
+            return reply(boom.badRequest("L'identifiant ou le mot de passe n'est pas valide."));
+        }
         
         // -- requetes des groupes et permissions
         user.getGroups({ 
@@ -28,9 +35,15 @@ export const authModelUser = (argsUser: any, reply: (reply: any) => any) => {
                 __permissions_ids = __permissions_ids.concat( (groups[i] as any).permissions.map(x => x.id) )
             }
 
+            // -- MAJ last connected
+            user.last_connected = new Date();
+            user.save();
+
             // -- reponse
-            reply({
+            return reply({
+                userModel: user,
                 user: {
+                    id: user.id,
                     first_name: user.first_name,
                     last_name: user.last_name,
                     droits: __permissions_ids
@@ -46,7 +59,7 @@ export const authModelUser = (argsUser: any, reply: (reply: any) => any) => {
                         expiresIn: 60*60*24
                     }
                 )
-            })
+            }, user)
         });        
     });
 }
@@ -76,11 +89,18 @@ export const handler_auth = (request: Hapi.Request, reply: Hapi.ReplyNoContinue)
             }
             if(!decoded.user) return reply(boom.unauthorized());
             if(!decoded.user.id) return reply(boom.unauthorized());
-            return authModelUser({ id: decoded.user.id }, reply);
+            return authModelUser({ id: decoded.user.id }, (obj, user) => {
+                return reply(obj);
+            });
         })
         return;
     }
 
     // -- test login password
-    return authModelUser({ pseudo: _user, mdp: _pwd }, reply);
+    return authModelUser({ login: _user, password: _pwd }, (obj, user) => {
+        addHistoric(user, "Connection", {
+            ip: request.raw.req.connection.remoteAddress
+        })
+        return reply(obj);
+    });
 }

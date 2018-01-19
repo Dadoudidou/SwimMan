@@ -8,6 +8,7 @@ import { authorize } from "./authorize"
 export interface IWithDroitsOptions {
     droits: number[]
     redirectTo?: LocationDescriptor
+    authorize?: (auth: boolean, props: any, callback: (auth: boolean) => void) => void
 }
 
 export const withDroits = (options: IWithDroitsOptions) => {
@@ -26,7 +27,12 @@ export const withDroits = (options: IWithDroitsOptions) => {
                 this.authCallback = this.authCallback.bind(this);
             }
             componentWillMount(){
-                authorize(options.droits, this.authCallback);
+                authorize(options.droits, (auth) => {
+                    if(options.authorize)
+                        options.authorize(auth, this.props, this.authCallback);
+                    else
+                        this.authCallback(auth);
+                });
             }
             authCallback(auth: boolean) {
                 this.setState({ ...this.state, authorize: auth, loading: false });

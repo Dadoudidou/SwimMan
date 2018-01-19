@@ -12,7 +12,10 @@ module.exports = {
     target: "node",
     resolve: {
         extensions: [".json", ".ts", ".tsx", ".js"],
-        alias: { },
+        alias: { 
+            "config": path.resolve(__dirname, "./config"),
+            "services": path.resolve(__dirname, "./services")
+        },
         modules: [
             path.resolve(__dirname, "."),
             "node_modules"

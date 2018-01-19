@@ -1,5 +1,6 @@
 import * as Hapi from "hapi"
-import { graphiqlHapi, graphqlHapi } from "apollo-server-hapi";
+import * as HapiBasicAuth from "hapi-auth-basic"
+import { graphiqlHapi, graphqlHapi, HapiGraphiQLPluginOptions } from "apollo-server-hapi";
 import { config } from "./config"
 import * as jwt from "jsonwebtoken"
 import { AuthJWTHapi, IAuthJwtHapiOptions } from "./AuthJWTHapi"
@@ -31,26 +32,67 @@ let checkAuth = (request: Hapi.Request, reply: Hapi.ReplyWithContinue) => {
 }
 
 // -- graphQL
-import { schema as grapgql_schema } from "./routes/graphql"
+import { schema as grapgql_schema, AuthCredential, GraphQlContext } from "./routes/graphql"
 // -- auth
 import { handler_auth, JWTTokenPayload, authModelUser } from "./routes/auth"
 
+// AUTHENTIFICATION BASIC
+server.register(HapiBasicAuth, (err) => {
+    if(err) throw err;
 
-export type AuthCredential = {
-    id: number
-    droits: number[]
-}
+    server.auth.strategy("basic-authentification", "basic", {
+        validateFunc: (request, username, password, callback) => {
+            authModelUser({ login: username, password: password }, (result) => {
+                if(result.token){
+                    if(result.user && result.user.droits && result.user.droits.indexOf(1) > -1)
+                        callback(undefined, true, result);
+                    else
+                        callback(undefined, false, undefined);
+                } else {
+                    callback(undefined, false, undefined);
+                }
+            })
+        }
+    });
 
-/*server.ext("onRequest", (request, reply) => {
-    let _uri = request.path;
-    let _method = request.method;
-    if(_uri == "/test" && _method == "post"){
-        checkAuth(request, reply);
-    } else {
-        reply.continue();        
-    }
-})*/
+    // -- /graphiql
+    server.register({
+        register: graphiqlHapi,
+        options: {
+            path: "/graphiql",
+            route: {
+                description: "GraphiQL Endpoint (documentation)",
+                auth: "basic-authentification",
+                ext: {
+                    onPreResponse: [{
+                        method: async (request, reply) => {
+                            let _response = request.response;
+                            let _token = (request.auth && request.auth.credentials) ? request.auth.credentials.token : undefined;
 
+                            if(_response.isBoom || !_response.source || !_token){
+                                return reply.continue();
+                            }
+
+                            return reply(request.response.source.replace("</head>", `
+                                <script>
+                                window.__TOKEN = "${_token}";
+                                console.info("A new AccessToken '${_token}' was automatically injected into this debug session.");
+                                </script>
+                                </head>
+                            `))
+                        }
+                    }]
+                }
+            },
+            graphiqlOptions: {
+                endpointURL: "/graphql",
+                passHeader: "'Authorization': window.__TOKEN ? 'JWT ' + window.__TOKEN : ''"
+            },
+        } as HapiGraphiQLPluginOptions
+    })
+})
+
+// AUTHENTIFICATION JWT
 server.register(AuthJWTHapi, (err) => {
     if(err) throw err;
 
@@ -62,34 +104,28 @@ server.register(AuthJWTHapi, (err) => {
             if(!payload) callback(undefined, false, undefined);
             if(!payload.user) callback(undefined, false, undefined);
             if(!payload.user.id) callback(undefined, false, undefined);
+
             authModelUser({ id: payload.user.id }, (result) => {
                 if(result.token){
                     if(result.user && result.user.droits && result.user.droits.indexOf(1) > -1)
-                        callback(undefined, true, { id: payload.user.id, droits: result.user.droits });
+                        callback(undefined, true, { 
+                            user: {
+                                id: payload.user.id,
+                                droits: result.user.droits,
+                                model: result.userModel
+                            }
+                        } as AuthCredential);
                     else
                         callback(undefined, false, undefined);
                 } else {
                     callback(undefined, false, undefined);
                 }
             })
-            //callback(undefined, true, { id: 1 });
+
         }
      } as IAuthJwtHapiOptions
     );
-     // -- /test
-    server.route({
-        method: "POST",
-        path: "/test",
-        config: {
-            auth: "jwt"
-        },
-        handler: (request,reply) => {
-            reply({
-                success: "hello",
-                credentials: request.auth.credentials
-            })     
-        }
-    })
+
     // -- /graphql
     server.register({
         register: graphqlHapi,
@@ -98,26 +134,19 @@ server.register(AuthJWTHapi, (err) => {
             route: {
                 auth: "jwt"
             },
-            graphqlOptions: request => {
+            graphqlOptions: (request: Hapi.Request) => {
+                
                 return {
                     schema: grapgql_schema,
                     context: {
-                        auth: request.auth
+                        auth: request.auth,
+                        request: request
                     }
                 }
             }
         }
     })
-    // -- /graphiql
-    server.register({
-        register: graphiqlHapi,
-        options: {
-            path: "/graphiql",
-            graphiqlOptions: {
-                endpointURL: "/graphql"
-            }
-        }
-    })
+    
     // -- /auth
     server.route({
         method: "POST",
@@ -136,5 +165,5 @@ server.start((err) => {
         getLogger().error(`Error`, err);
         throw err;
     }
-    getLogger().info(`Server running at ${server.info.uri}`);
+    getLogger().debug(`Server running at ${server.info.uri}`);
 })

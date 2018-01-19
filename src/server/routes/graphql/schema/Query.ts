@@ -5,6 +5,7 @@ import { UpdateArgs } from "./../utils"
 export const typeDefs = `
 type Query {
     users: QueryUsers
+    system: QuerySystem
     activities: QueryActivities
     members: QueryMembers
     campaigns: [Campaign]
@@ -12,6 +13,10 @@ type Query {
 
 type QueryUsers{
     ${require("./User").QueryDefs}
+}
+
+type QuerySystem {
+    ${require("./System").QueryDefs}
 }
 
 type QueryActivities {
@@ -46,6 +51,7 @@ export const resolver = {
 
     Query: {
         users(){ return resolver.QueryUsers; },
+        system(){ return resolver.QuerySystem; },
         activities(){ return resolver.QueryActivities; },
         members(){ return resolver.QueryMembers },
         campaigns(){ return Models.Campaign.findAll(); }
@@ -71,6 +77,7 @@ export const resolver = {
         },
     },
     QueryUsers: { ...require("./User").QueryResolvers },
+    QuerySystem: { ...require("./System").QueryResolvers },
     QueryMembers: {
         members(root, args){
             return Models.Member.findAll({ where: UpdateArgs(args) });

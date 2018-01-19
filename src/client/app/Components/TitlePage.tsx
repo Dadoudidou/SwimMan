@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Toolbar, Typography, withStyles, StyledComponentProps } from "material-ui"
+import { Toolbar, Typography, withStyles, WithStyles, StyledComponentProps } from "material-ui"
 
 type IStyle = "title" | "spacer" | "actions"
 
@@ -17,18 +17,19 @@ const styles = theme => {
     };
 };
 
-interface ITitlePageProps extends StyledComponentProps<IStyle> {
+type TitlePageProps = {
     titleName?: string
     subTitle?: string
     actions?: React.ReactNode
-}
+} 
 
-class TitlePage extends React.PureComponent<ITitlePageProps, any>{
+class TitlePage extends React.PureComponent<TitlePageProps & WithStyles<IStyle>, any>{
     render(){
         return (
             <Toolbar>
                 <div className={this.props.classes.title}>
                     <Typography type="title">{this.props.titleName}</Typography>
+                    {(this.props.subTitle) ? <br /> : undefined}
                     {
                         (this.props.subTitle) ?
                         <Typography type="caption">{this.props.subTitle}</Typography>
@@ -44,4 +45,4 @@ class TitlePage extends React.PureComponent<ITitlePageProps, any>{
     }
 }
 
-export default withStyles(styles)(TitlePage);
+export default withStyles(styles)<TitlePageProps>(TitlePage);

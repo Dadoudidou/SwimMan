@@ -23,7 +23,6 @@ const styles:StyleRulesCallback<TStyles> = theme => ({
 // ------------ DATAS
 type Data = {
     id: number
-    pseudo: string
     first_name: string
     last_name: string
     last_connected: string
@@ -108,5 +107,5 @@ class List extends React.PureComponent<ChildProps<ListProps, ListData>, ListStat
 
 // ------------ REQUEST
 export default compose(
-    graphql(gql(`query { users { users { id pseudo first_name last_name last_connected groups { id nom } } } }`)),
+    graphql(gql(`query { users { users { id first_name last_name last_connected groups { id nom } } } }`)),
 )(withStyles(styles)(List));

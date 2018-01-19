@@ -3,13 +3,26 @@ import { get, set } from "app/Services/session"
 import { ApiActions } from "app/Services/api"
 import { getStore } from "./../../store"
 
-const testDroits = (user: { droits: number[] }, droits: number[]) => {
+export const testDroits = (user: { droits: number[] }, droits: number[] | number[][]) => {
     if(!user) return false;
     if(!user.droits) return false;
+    if(!droits) return false;
+    if(droits.length == 0) return false;
+
+    if(Array.isArray(droits[0])){
+        let _auth = false;
+        let i = 0;
+        while(_auth == false && i < droits.length){
+            _auth = testDroits(user, droits[i] as number[])
+            i++;
+        }
+        return _auth;
+    }
+
     let _auth = true;
     let i = 0;
     while(_auth == true && i < droits.length){
-        if(user.droits.indexOf(droits[i]) == -1)
+        if(user.droits.indexOf(droits[i] as number) == -1)
             _auth = false;
         i++;
     }

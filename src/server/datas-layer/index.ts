@@ -11,6 +11,7 @@ import { IEntity } from "./Entities/IEntity"
 import { IUserAttributes, GetUserModel } from "./Entities/Users/User"
 import { IGroupAttributes, GetGroupModel } from "./Entities/Users/Group"
 import { IPermissionAttributes, GetPermissionModel } from "./Entities/Users/Permission"
+import { GetLogModel, ILogAttributes } from "./Entities/System/Log"
 
 import { IMemberAttributes, GetMemberModel } from "./Entities/Members/Member"
 import { IMemberMetaAttributes, GetMemberMetaModel } from "./Entities/Members/MemberMeta"
@@ -27,6 +28,8 @@ export interface IModels {
     [key: string]: IEntity<any>
 
     Campaign?: IEntity<ICampaignAttributes>
+
+    Log?: IEntity<ILogAttributes>
 
     User?: IEntity<IUserAttributes>
     Group?: IEntity<IGroupAttributes>
@@ -45,6 +48,7 @@ export interface IModels {
 //création des entities
 let __models: IModels = {};
 __models.Campaign = GetCampaignModel(connector, new DataTypes());
+__models.Log = GetLogModel(connector, new DataTypes());
 __models.User = GetUserModel(connector, new DataTypes());
 __models.Group = GetGroupModel(connector, new DataTypes());
 __models.Permission = GetPermissionModel(connector, new DataTypes());

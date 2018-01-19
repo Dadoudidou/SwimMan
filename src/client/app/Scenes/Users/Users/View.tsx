@@ -14,6 +14,7 @@ import { Button, withStyles, StyledComponentProps, Typography, Tab, Tabs } from 
 import { StyleRulesCallback } from "material-ui/styles/WithStyles"
 
 import TabGroups from "./components/Groups"
+import TabHistorics from "./components/Historic"
 
 // ------------ STYLES
 type TStyles = "root"
@@ -27,7 +28,6 @@ type RouteParams = {
 }
 type Data = {
     id: number
-    pseudo: string
     first_name: string
     last_name: string
     last_connected: string
@@ -77,7 +77,7 @@ class View extends React.PureComponent<ChildProps<ViewProps, ViewData>, ViewStat
             <Layout>
                 <TitlePage 
                     titleName={this.props.data.users.user.first_name + " " + this.props.data.users.user.last_name}
-                    subTitle={(data.users.user.last_connected) ? "Dernière connexion le " + moment(data.users.user.last_connected).format("LLL") : undefined}
+                    subTitle={(data.users.user.last_connected) ? "Dernière activité le " + moment(data.users.user.last_connected).format("LLL") : undefined}
                 />
                 <Tabs 
                     value={this.state.tabValue} onChange={this.handle_onChangeTab}
@@ -89,9 +89,8 @@ class View extends React.PureComponent<ChildProps<ViewProps, ViewData>, ViewStat
                     <Tab value="historic" label="Historique" />
                 </Tabs>
                 <TabContainer>
-                    {
-                        (this.state.tabValue == "groups" && <TabGroups user_id={this.props.match.params.id} />)
-                    }
+                    {(this.state.tabValue == "groups" && <TabGroups user_id={this.props.match.params.id} />)}
+                    {(this.state.tabValue == "historic" && <TabHistorics user_id={this.props.match.params.id} />)}
                 </TabContainer>
             </Layout>
         )
@@ -100,7 +99,7 @@ class View extends React.PureComponent<ChildProps<ViewProps, ViewData>, ViewStat
 
 // ------------ REQUEST
 export default compose(
-    graphql(gql(`query ($id: Int!) { users { user(id:$id) { id pseudo first_name last_name last_connected groups { id nom } } } }`),
+    graphql(gql(`query ($id: Int!) { users { user(id:$id) { id first_name last_name last_connected groups { id nom } } } }`),
     {
         options: (props: ViewProps) => {
             return {

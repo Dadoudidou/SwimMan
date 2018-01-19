@@ -37,7 +37,7 @@
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
-    "material-ui": "1.0.0-beta.13",
+    "material-ui": "1.0.0-beta.16",
     "moment": "2.18.1",
     "font-awesome": "4.7.0",
     "fullcalendar": "3.5.1",

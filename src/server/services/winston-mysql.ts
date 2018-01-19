@@ -8,6 +8,7 @@ export type WinstonMysqlTransportOptions = {
     table: string
     password?: string
     fields?: { [key: string]: string }
+    metaFunc?: (level: string, msg: string, meta: any) => any
 } & winston.TransportOptions
 
 export class WinstonMysqlTransport extends winston.Transport {
@@ -34,18 +35,24 @@ export class WinstonMysqlTransport extends winston.Transport {
             ...this.options,
             ...opts
         }
-        //this.connection = mysql.createConnection(opts);
+        this.connection = mysql.createConnection(opts);
     }
 
     log(level: string, msg: string, metaOrCallback: winston.LogCallback | any | any[], callback: winston.LogCallback){
 
         function formatQuotes(req: string): string {
             if(!req) return null;
-            return req.replace(/'/,"\'").replace(/"/,"\"");
+            return req.replace(/(['"])/g,"\\$1");
         }
 
         let _cols: string[] = [];
         let _vals: string[] = [];
+
+        let _callback = (typeof(metaOrCallback) != "function") ? callback : metaOrCallback;
+        let _meta = (typeof(metaOrCallback) != "function") ? metaOrCallback : undefined;
+        if(this.options.metaFunc){
+            _meta = this.options.metaFunc(level, msg, _meta)
+        }
 
         for(let key in this.options.fields){
             switch(key){
@@ -65,38 +72,40 @@ export class WinstonMysqlTransport extends winston.Transport {
                 break;
 
                 case "meta" : 
-                if(typeof metaOrCallback != "function"){
+                if(_meta != undefined && _meta != null){
+                    let __meta = {};
+                    for(let key in _meta){
+                        if( this.options.fields[key] == undefined ) __meta[key] = _meta[key];
+                    }
                     _cols.push(this.options.fields.meta);
-                    _vals.push(formatQuotes(JSON.stringify(metaOrCallback)));
+                    _vals.push(formatQuotes(JSON.stringify(__meta)));
                 }
                 break;
 
                 default:
-                if(typeof metaOrCallback != "function" && 
-                typeof metaOrCallback == "object" && 
-                !Array.isArray(metaOrCallback)){
-                    if(metaOrCallback[key] != undefined && 
-                    (typeof metaOrCallback[key] == "string" ||
-                    typeof metaOrCallback[key] == "number")) {
+                if(typeof _meta != "function" && 
+                typeof _meta == "object" && 
+                !Array.isArray(_meta)){
+                    if(_meta[key] != undefined && 
+                    (typeof _meta[key] == "string" ||
+                    typeof _meta[key] == "number")) {
                         _cols.push(this.options.fields[key]);
-                        _vals.push(formatQuotes(String(metaOrCallback[key])));
+                        _vals.push(formatQuotes(String(_meta[key])));
                     }
                 }
             }
         }
 
-
+        
         // -- construction requete
         let _req = `INSERT INTO ${this.options.table} (${_cols.join(", ")}) VALUES ('${_vals.join("','")}')`;
         //console.log(_req);
         // -- sauvegarde en bdd
-        //this.connection.execute(_req);
+        this.connection.execute(_req);
 
         // -- callback
-        if(typeof metaOrCallback == "function"){
-            metaOrCallback(undefined, level, msg, metaOrCallback);
-        } else if(callback) {
-            callback(undefined, level, msg, metaOrCallback);
+        if(_callback) {
+            _callback(undefined, level, msg, _meta);
         }
     }
 

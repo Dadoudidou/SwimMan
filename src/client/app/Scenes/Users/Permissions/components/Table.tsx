@@ -5,7 +5,7 @@ import { graphql, ChildProps } from "react-apollo"
 import gql from "graphql-tag"
 
 import {
-    StyledComponentProps, withStyles,
+    StyledComponentProps, withStyles, WithStyles,
     Table, TableBody, TableCell, TableHead, TableRow,
     Typography, Button, IconButton
 } from "material-ui"
@@ -41,9 +41,9 @@ const styles: StyleRulesCallback<TStyles> = theme => ({
 
 type IPermissionTableProps = {
     onEditPermission?: (permission: {id, name, description}) => void
-} & StyledComponentProps<TStyles>
+}
 
-class PermissionTable extends React.PureComponent<ChildProps<IPermissionTableProps, PermissionsDatas>, any>{
+class PermissionTable extends React.PureComponent<ChildProps<IPermissionTableProps & WithStyles<TStyles>, PermissionsDatas>, any>{
     static defaultProps: IPermissionTableProps = {
         onEditPermission: () => {}
     }
@@ -141,4 +141,5 @@ query permissionTableQuery {
 }
 `);
 
-export default graphql<any, IPermissionTableProps>(permissionTableQuery)(withStyles(styles)(PermissionTable))
+
+export default graphql<any, IPermissionTableProps>(permissionTableQuery)(withStyles(styles)<IPermissionTableProps>(PermissionTable))

@@ -5,16 +5,20 @@ import { IUserAttributes } from "./../../../datas-layer/Entities/Users/User"
 import { Models, connector } from "./../../../datas-layer"
 import * as boom from "boom"
 import { GraphQlContext } from "./../index"
+import { withDroit, withOwnProfile } from "./../utils/withDroit"
+import { addHistoric } from "./../utils/Historic"
+
 
 /** Définition des types */
 export const typeDefs = `
 type User {
     id: Int
-    pseudo: String
+    login: String
     first_name: String
     last_name: String
     last_connected: Date
     groups: [Group]
+    historics: [Historic]
 }
 input _User {
     pseudo: String
@@ -33,6 +37,12 @@ type Permission {
     name: String
     description: String
     groups: [Group]
+}
+type Historic {
+    id: Int
+    timestamp: String
+    message: String
+    meta: JSON
 }
 `
 
@@ -72,6 +82,16 @@ export const TypesResolvers = {
     User: {
         groups(user: IUserAttributes, args){
             return user.getGroups();
+        },
+        historics(user: IUserAttributes, args){
+            return user.getLogs({
+                where: {
+                    type: "historic"
+                },
+                order: [
+                    ["timestamp", "DESC"]
+                ]
+            });
         }
     },
     Group: {
@@ -91,34 +111,33 @@ export const TypesResolvers = {
 
 /** Résolution des requêtes */
 export const QueryResolvers = {
-    user(root, args){
+    user: withDroit([1], withOwnProfile("id", (root, args) => {
         return Models.User.find({ where: args });
-    },
-    users(root, args, context: GraphQlContext){
-        console.log("-----------");
-        console.log(context.auth.credentials.droits);
+    })),
+    users: withDroit([1, 3],(root, args, context: GraphQlContext) => {
         return Models.User.findAll();
-    },
-    group(root, args){
+    }),
+    group: withDroit([1],(root, args) => {
         return Models.Group.find({ where: args });
-    },
-    groups(root, args){
+    }),
+    groups: withDroit([1],(root, args) => {
         return Models.Group.findAll();
-    },
-    permission(root, args){
+    }),
+    permission: withDroit([1],(root, args) => {
         return Models.Permission.find({ where: args });
-    },
-    permissions(root, args){
+    }),
+    permissions: withDroit([1],(root, args) => {
         return Models.Permission.findAll();
-    }
+    })
 }
 
 /** Résolution des modifications */
 export const MutationsResolvers = {
-    addGroup(root, args){
+    addGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Group.create({
             nom: args.name
         }).then(group => {
+            addHistoric(context, `Création du groupe d'utilisateur '${args.name}'`);
             if(!args.permission_ids) return group as any;
             return Models.Permission.findAll({
                 where: { id: args.permission_ids }
@@ -126,49 +145,58 @@ export const MutationsResolvers = {
                 return (group as any).setPermissions(permissions);
             }).then(() => group)
         });
-    },
-    updateGroup(root, args){
+    }),
+    updateGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Group.find({
             where: { id: args.id }
         }).then(group => {
             if(!group) throw new Error(`Not found group with id ${args.id}`)
             if(args.name) group.nom = args.name;
+            addHistoric(context, `Modification du groupe d'utilisateur '${group.nom}'`, group);
             return group.save();
         })
-    },
-    removeGroup(root, args){
+    }),
+    removeGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Group.find({
             where: { id: args.id }
         }).then(group => {
             if(!group) throw new Error(`Not found group with id ${args.id}`)
+            addHistoric(context, `Suppression du groupe d'utilisateur '${group.nom}'`, group);
             return group.destroy();
-        }).then(() => true);
-    },
-    addPermission(root, args){
+        }).then(() => {
+            return true;
+        });
+    }),
+    addPermission: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Permission.create({
             name: args.name,
             description: args.description
-        } as IPermissionAttributes);
-    },
-    updatePermission(root, args){
+        } as IPermissionAttributes).then(permission => {
+            addHistoric(context, `Création d'un droit utilisateur '${permission.name}'`, permission);
+            return permission;
+        });
+    }),
+    updatePermission: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Permission.find({
             where: { id: args.id }
         }).then(permission => {
             if(!permission) throw new Error(`Not found permission with id ${args.id}`)
             if(args.name) permission.name = args.name;
             if(args.description) permission.description = args.description;
+            addHistoric(context, `Modification d'un droit utilisateur '${permission.name}'`, permission);
             return permission.save();
         })
-    },
-    removePermission(root, args){
+    }),
+    removePermission: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Permission.find({
             where: { id: args.id }
         }).then(permission => {
             if(!permission) throw new Error(`Not found permission with id ${args.id}`)
+            addHistoric(context, `Suppression d'un droit utilisateur '${permission.name}'`, permission);
             return permission.destroy();
         }).then(() => true);
-    },
-    setPermissionsToGroup(root, args){
+    }),
+    setPermissionsToGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         // -- group
         return Models.Group.find({ 
             where: { id: args.group_id }
@@ -180,11 +208,12 @@ export const MutationsResolvers = {
             }).then(permissions => {
                 return (group as any).setPermissions(permissions);
             }).then(() => {
+                
                 return group;
             })
         })
-    },
-    addPermissionToGroup(root, args){
+    }),
+    addPermissionToGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Group.find({
             where: { id: args.group_id }
         }).then(group => {
@@ -196,12 +225,13 @@ export const MutationsResolvers = {
                 return group.getPermissions().then(permissions => {
                     let _index = permissions.map(x => x.id).indexOf(permission.id);
                     if(_index > -1) return group;
+                    addHistoric(context, `Ajout du droit '${permission.name}' au groupe ${group.nom}`);
                     return group.setPermissions([...permissions, permission]).then(() => group)
                 })
             })
         })
-    },
-    removePermissionToGroup(root, args){
+    }),
+    removePermissionToGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.Group.find({
             where: { id: args.group_id }
         }).then(group => {
@@ -216,15 +246,20 @@ export const MutationsResolvers = {
                     return group.setPermissions([
                         ...permissions.slice(0, _index),
                         ...permissions.slice(_index + 1)
-                    ]).then(() => group)
+                    ]).then(() => {
+                        addHistoric(context, `Suppression du droit '${permission.name}' du groupe ${group.nom}`);
+                        return group;
+                    })
                 })
             })
         })
-    },
-    addUser(root, args){
-        return Models.User.create(args.user);
-    },
-    updateUser(root, args){
+    }),
+    addUser: withDroit([1],(root, args, context: GraphQlContext) => {
+        return Models.User.create(args.user).then(user => {
+            addHistoric(context, `Ajout de l'utilisateur '${user.first_name} ${user.last_name}'`, user);
+        });
+    }),
+    updateUser: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.User.find({ 
             where: { id: args.id }
         }).then(user => {
@@ -232,18 +267,20 @@ export const MutationsResolvers = {
             for(let key in args.user){
                 user[key] = args.user[key];
             }
+            addHistoric(context, `Modification de l'utilisateur '${user.first_name} ${user.last_name}'`, user);
             return user.save();
         })
-    },
-    removeUser(root, args){
+    }),
+    removeUser: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.User.find({ 
             where: { id: args.id }
         }).then(user => {
             if(!user) throw new Error(`Not found user with id ${args.id}`)
+            addHistoric(context, `Suppression de l'utilisateur '${user.first_name} ${user.last_name}'`, user);
             return user.destroy();
         }).then(() => true);
-    },
-    addUserToGroup(root, args){
+    }),
+    addUserToGroup: withDroit([1],(root, args, context: GraphQlContext) => {
         return Models.User.find({ 
             where: { id: args.user_id }
         }).then(user => {
@@ -255,12 +292,13 @@ export const MutationsResolvers = {
                 return user.getGroups().then(groups => {
                     let _index = groups.map(x => x.id).indexOf(group.id);
                     if(_index > -1) return user;
+                    addHistoric(context, `Ajout de l'utilisateur '${user.first_name} ${user.last_name}' dans le groupe '${group.nom}'`);
                     return (user as any).setGroups([...groups, group]).then(() => user);
                 })
             })
         });
-    },
-    removeUserFromGroup(root, {user_id, group_id}){
+    }),
+    removeUserFromGroup: withDroit([1],(root, {user_id, group_id}, context: GraphQlContext) => {
         return Models.User.find({ 
             where: { id: user_id }
         }).then(user => {
@@ -272,6 +310,7 @@ export const MutationsResolvers = {
                 return user.getGroups().then(groups => {
                     let _index = groups.map(x => x.id).indexOf(group.id);
                     if(_index == -1) return user;
+                    addHistoric(context, `Suppression de l'utilisateur '${user.first_name} ${user.last_name}' du groupe '${group.nom}'`);
                     return (user as any).setGroups([
                         ...groups.slice(0,_index), 
                         ...groups.slice(_index + 1)
@@ -279,5 +318,5 @@ export const MutationsResolvers = {
                 })
             })
         });
-    }
+    })
 }

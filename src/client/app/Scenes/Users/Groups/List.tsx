@@ -10,7 +10,7 @@ import TitlePage from "app/Components/TitlePage";
 import DataTable from "app/Components/Table/DataTable";
 import AlertDialog from "app/Components/AlertDialog";
 
-import { Button, IconButton, withStyles, StyledComponentProps } from "material-ui"
+import { Button, IconButton, withStyles, WithStyles, StyledComponentProps } from "material-ui"
 import { StyleRulesCallback } from "material-ui/styles/WithStyles"
 import GroupDialog from "./components/GroupDialog"
 
@@ -38,13 +38,13 @@ type ListProps = {
     updateGroup: MutationFunc<any, { id: number, name?: string }>
     removeGroup: MutationFunc<any, { id: number }>
 
-} & StyledComponentProps<TStyles>
+}
 
 type ListState = {
     editGroup?: { nom?: string }
 }
 
-class List extends React.PureComponent<ChildProps<ListProps, ListData>, ListState>
+class List extends React.PureComponent<ChildProps<ListProps & WithStyles<TStyles>, ListData>, ListState>
 {
     state: ListState = { editGroup: undefined }
     removeGroupAlert: AlertDialog
@@ -159,4 +159,4 @@ export default compose(
     { name: "removeGroup" , options: { refetchQueries: [
         { query: gql(`query { users { groups { id nom users { id } } } }`) }
     ]}})
-)(withStyles(styles)(List));
+)(withStyles(styles)<ListProps>(List));

@@ -27,9 +27,9 @@ const internals = {
     implementation: (server: Hapi.Server, options: IAuthJwtHapiOptions): Hapi.SchemeMethodResult => {
         return {
             authenticate:(request, reply) => {
+                const req = request.raw.req;
 
                 // -- vérification authorization
-                const req = request.raw.req;
                 const authorization = req.headers.authorization as string;
                 if(!authorization){
                     return reply(Boom.unauthorized(undefined, "Jwt"));
