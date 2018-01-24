@@ -1,9 +1,13 @@
 import * as Sequelize from "sequelize"
 import { IEntity } from "./../IEntity"
+import { ISectionAttributes } from "./Section"
 
-export interface IActivityAttributes {
+export interface IActivityAttributes extends Sequelize.Instance<IActivityAttributes> {
     id: number
     name: string
+
+    getSections: (opt?: Sequelize.FindOptions<ISectionAttributes>) => Promise<ISectionAttributes[]>
+    setSections: (values?: ISectionAttributes[]) => Promise<void>
 }
 
 export const GetActivityModel = (sequelize: Sequelize.Sequelize, DataTypes: Sequelize.DataTypes) => {
